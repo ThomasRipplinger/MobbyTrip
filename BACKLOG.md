@@ -1,0 +1,56 @@
+
+get bootstrap
+data structures for trips w. demo data
+data structures for locations w. demo data
+initial project
+jumbotron and trip tiles for landing page
+single trip tile
+trip tile margins optimieren (Bootstrap grid ...)
+womo foto suchen und als Jumbotron Hintergrund
+save single trip locally
+load single trip from local store
+load json data into trip list
+Form "add new trip" 
+- erscheint unter Jumbotron mit 
+  Ort Start/Ende, Startdatum, Dauer, Beschreibung
+- Nach Schließen erscheint neue Kachel 
+banner kleiner machen(Höhe)
+add "desc." to trip form - als Textbox über die ganze Höhe
+neue Kachel am Anfang zeigen
+display trip details
+- trip detail Struktur: Geomap, Camping Info, Sights, Foto Gallery
+- show detail form
+## ----- DONE ------
+- Selektierte Tripkachel bleibt, andere Kacheln verschwinden
+- nach Schließen: Layout der Landing page wieder herstellen
+
+edit Trip data
+neue Kachel hervorheben
+neue Kachel langsam ein-sliden
+desc NEBEN dem anderen Form anzeigen
+add photo to trip form
+bei "enter" nicht Cancel aktivieren...!
+bei "anlegen ok" kurz einen grünen Haken od. OK erscheinen lassen
+make trip ID unique, use datetime
+alle Tiles gleich hoch machen
+
+Layout verschönern (Farbschema, Schriftart?)
+select typeface
+select color schema
+Logo 'womoTrips' zweifarbig (Header?)
+
+## ----- TODO ------
+
+delete trip
+trip details and location page w. demo data
+link trip location to trip list
+add camping info (adress, phone, cost, comment, rating)
+add photo carousel
+load json data into location list
+create new location
+edit/delete location
+
+save project in github 
+include google maps for route overview
+convert online map to img and download / link img
+

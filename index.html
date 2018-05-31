@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>WoMoTrips</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous"> -->
+    <link rel="stylesheet" type="text/css" media="screen" href="resources/bootstrap-4.1.1-dist/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
+</head>
+
+<body>
+
+    <header>
+        <div>
+            <span></span>
+        </div>
+    </header>
+
+    <main role="main">
+
+        <!-- Landing page JUMBOTRON -->
+        <div class="jumbotron container-fluid py-4">
+            <!-- <img src='./resources/images/banner.png'> -->
+            <h1 class="display-4">Festhalten und Wiederfinden was schön war</h1>
+            <p>Willkommen beim WoMoTrips, dem Logbuch für Ihre Reisen. 
+                Ihr persönliches Archiv für Routen, besuchte Orte, gute Stell- und Campingplätze. 
+                Damit die Planung der nächsten Fahrt einfacher wird als je zuvor.
+            </p>
+            <p>
+                <a class="btnnew btn btn-success btn-lg" href="#" role="button">Neuen Trip anlegen »</a>
+            </p>
+            <!-- <span>
+                <a class="btnsave">SAVE</a>
+                <a class="btnload">LOAD</a>
+            </span> -->
+        </div>
+
+        <!-- NEW TRIP FORM -->
+        <div class="newtrip m-4">
+            <form>
+                <div class="form-group row">
+                    <!-- <label for="triptitle" class="col-sm-1 col-form-label">Überschrift</label> -->
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="title" placeholder="Überschrift z.B. 'Italien 2018'">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <!-- <label for="triplength" class="col-sm-1 col-form-label">Entfernung</label> -->
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" id="length" placeholder="Strecke, z.B. 500 km">
+                    </div>
+                    <!-- <label for="tripduration" class="col-sm-1 col-form-label">Dauer</label> -->
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" id="duration" placeholder="Dauer, z.B. 7 Tage">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <!-- <label for="startlocation" class="col-sm-1 col-form-label">Start (Ort)</label> -->
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="startlocation" placeholder="z.B. 'Start, z.B. Sisteron'">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <!-- <label for="endlocation" class="col-sm-1 col-form-label">Ende (Ort)</label> -->
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="endlocation" placeholder="z.B. 'Ende, z.B. Beziers'">
+                    </div>
+                </div>
+                <!-- <div class="col"> -->
+                <div class="form-group row">
+                    <div class="col-sm-4">
+                        <textarea class="form-control" rows='4' id="desc" placeholder="Hier ein paar Worte zur Beschreibung..."></textarea>
+                    </div>
+                </div>
+                <div class="form-group row mr-4">
+                    <div class="col-sm-1"></div>
+                    <button class="btncancel btn btn-secondary col-sm-1">Verwerfen</button>
+                    <div class="col-sm-1"></div>
+                    <button class="btnsave btn btn-success col-sm-1">Anlegen</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- TRIP TILES -->
+        <div class="container-fluid">
+            <div class="row triptiles">
+                <!-- trip tiles added here via JS -->
+            </div>
+        </div>
+
+        <!-- TRIP DETAILS -->
+        <div class="tripdetail m-4">
+            <div class="tripdetail-container">
+
+                
+                <div class="locationlist col-sm-2">
+                    <div class="location p-2">Location 01</div>
+                    <div class="location p-2">Location 01</div>
+                    <div class="location p-2">Location 01</div>
+                    <div class="location p-2">Location 01</div>
+                </div>
+                
+                <div class="locationdata col-sm-6">
+                    
+                    <div class="geomap-detail">
+                        Geo Location hier...
+                    </div>
+                    <div class="camping-detail">
+                        Camping Info hier...
+                    </div>
+                    <div class="sights-detail">
+                        Sights info hier...
+                    </div>
+                    <div class="photogallery-detail">
+                        Fotos hier...
+                    </div>
+                    
+                </div>
+                
+                <div class="col-sm-2">
+                    <p>
+                        <a class="btnclose btn btn-secondary" href="#" role="button">Schließen</a>
+                    </p>
+                </div>
+                
+            </div>
+        </div>  
+
+    </main>
+    
+    <footer>
+        <hr>
+        <span>(C) TR 2018</span>
+    </footer>
+
+
+<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script> -->
+<!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script> -->
+
+</body>
+
+</html>

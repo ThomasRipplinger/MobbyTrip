@@ -1,0 +1,95 @@
+body {
+    background-color: beige;
+    overflow: scroll;
+}
+
+header {
+    font-size: 1.5rem;
+    color: darkblue;
+    background-color: beige;
+    padding: 0.2rem 0 0.2rem 1rem;
+}
+
+.jumbotron {
+    background-image: url('../resources/images/banner.png');
+    background-blend-mode: color-burn;
+    background-position: center;
+    background-size: cover; 
+    width: 100%;
+    opacity: 0.9;
+}
+
+.jumbotron p {
+    font-size: 1.5rem;
+    font-weight: 300;
+}
+
+.triptile {
+    /* margin: 0 0.5rem 0.5rem 0; */
+    background-size: cover;
+    border-right: 5px solid beige;
+    border-bottom: 5px solid beige;
+}
+
+.trip-length, .trip-duration {
+    font-size: 0.8rem;
+    font-weight: 800;
+    margin-right: 1rem;
+}
+
+.triptile#t001 {
+    background-image: url('../resources/images/route01.png');
+    /* margin-right: 0.5rem; */
+}
+
+.triptile#t002 {
+    background-image: url('../resources/images/route01.png');
+}
+
+.triptile#t003 {
+    background-image: url('../resources/images/route01.png');
+}
+
+.newtrip, .tripdetail {
+    display: none;
+}
+
+.tripdetail-container {
+    display: flex;
+}
+
+.location {
+    min-height: 3rem;
+    font-weight: 500;
+    background-color: rgb(180, 248, 197);
+    border: 2px solid beige;
+    transition: background-color 0.2s linear 10ms;
+}
+
+.location:hover {
+    background-color: rgb(119, 218, 143);
+}
+
+.geomap-detail {
+    min-height: 15rem;
+    /* ############# */
+    border: 1px solid lightblue;
+    background-color: lavenderblush;
+}
+
+.camping-detail, .sights-detail, .photogallery-detail {
+    min-height: 5rem;
+    /* ############# */
+    border: 1px solid lightblue;
+    background-color: lavenderblush;
+}
+
+footer {
+    margin-top: 300px; 
+    /* ############# */
+    font-size: 0.6rem;
+    color: grey;
+    background-color: beige;
+    padding: 2rem 0 0.2rem 1rem;
+}
+
