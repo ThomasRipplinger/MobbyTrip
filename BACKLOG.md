@@ -20,37 +20,39 @@ neue Kachel am Anfang zeigen
 display trip details
 - trip detail Struktur: Geomap, Camping Info, Sights, Foto Gallery
 - show detail form
-## ----- DONE ------
 - Selektierte Tripkachel bleibt, andere Kacheln verschwinden
 - nach Schließen: Layout der Landing page wieder herstellen
+desc NEBEN dem anderen Form anzeigen
+## ----- DONE ------
+trip data anzeigen nach Anwahl "trip anschauen" 
+#create new location
+- location data in FORM umwandeln
+- bei "Speichern": add to data structure
 
-edit Trip data
+#save and load location list
+
+# integrate google maps for route overview - lade map mit Basis "Reiseziel", Umkreis 100km
+#integrate google maps for locations - lade map mit Basis "Reiseziel", Umkreis 20km
+
+#edit Trip data
+#add photo to trip-details form
+#link trip location to trip list
+# save and load data (locally)
 neue Kachel hervorheben
 neue Kachel langsam ein-sliden
-desc NEBEN dem anderen Form anzeigen
-add photo to trip form
 bei "enter" nicht Cancel aktivieren...!
 bei "anlegen ok" kurz einen grünen Haken od. OK erscheinen lassen
 make trip ID unique, use datetime
 alle Tiles gleich hoch machen
-
 Layout verschönern (Farbschema, Schriftart?)
 select typeface
 select color schema
 Logo 'womoTrips' zweifarbig (Header?)
-
-## ----- TODO ------
-
 delete trip
 trip details and location page w. demo data
-link trip location to trip list
 add camping info (adress, phone, cost, comment, rating)
 add photo carousel
-load json data into location list
-create new location
 edit/delete location
-
 save project in github 
-include google maps for route overview
 convert online map to img and download / link img
 

@@ -37,6 +37,10 @@ header {
     margin-right: 1rem;
 }
 
+form {
+    display: flex;
+}
+
 .triptile#t001 {
     background-image: url('../resources/images/route01.png');
     /* margin-right: 0.5rem; */
@@ -60,6 +64,7 @@ header {
 
 .location {
     min-height: 3rem;
+    text-align: center;
     font-weight: 500;
     background-color: rgb(180, 248, 197);
     border: 2px solid beige;
@@ -77,8 +82,8 @@ header {
     background-color: lavenderblush;
 }
 
-.camping-detail, .sights-detail, .photogallery-detail {
-    min-height: 5rem;
+.name-detail, .camping-detail, .sights-detail, .photogallery-detail {
+    min-height: 2rem;
     /* ############# */
     border: 1px solid lightblue;
     background-color: lavenderblush;

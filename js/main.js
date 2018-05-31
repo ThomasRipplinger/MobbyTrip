@@ -13,6 +13,39 @@ $(document).ready(function () {
     //     }
     // });
 
+    var trips = [];
+    var locations = [];
+
+    function initDemoLocations() {
+        locations = [
+            {
+                id: 001,
+                name: 'Sisteron',
+                duration: 1,
+                desc: 'Beschreibung der Location... bla bla bla bla bla bla bla bla ',
+                camping_name: 'L´Ardeche',
+                camping_adress: 'adresse hier...',
+                camping_website: 'www.lardeche.fr',
+                camping_price: '35',
+                camping_rating: 3,
+                camping_desc: 'Kommentar zum Camping hier...'
+            },
+            {
+                name: 'location 002'
+            },
+            {
+                name: 'location 003'
+            },
+            {
+                name: 'location 004'
+            },
+            {
+                name: 'location 005'
+            }
+        ];
+    }
+
+
     $('.jumbotron .btnnew').click(function () {
         $('.newtrip').slideToggle(500, 'linear', function() {
             clearNewTripForm();
@@ -51,7 +84,7 @@ $(document).ready(function () {
             };
 
         var html = {text: ''};
-        createTileHtml(html, trip);
+        makeTileHtml(html, trip);
         $('.newtrip').slideToggle(700, 'linear', function() {
             $('.triptiles').prepend(html.text);
         });
@@ -93,20 +126,6 @@ $(document).ready(function () {
             }
         ];
     
-        var locations = [
-            {
-                id: 001,
-                name: 'Sisteron',
-                duration: 1,
-                desc: 'Beschreibung der Location... bla bla bla bla bla bla bla bla ',
-                camping_name: 'L´Ardeche',
-                camping_adress: 'adresse hier...',
-                camping_website: 'www.lardeche.fr',
-                camping_price: '35',
-                camping_rating: 3,
-                camping_desc: 'Kommentar zum Camping hier...'
-            }
-        ];
         console.log(demotrips);
         
         localStorage.setItem('trips', JSON.stringify(demotrips));
@@ -122,7 +141,7 @@ $(document).ready(function () {
         return;
     }; 
 
-    function createTileHtml(html, trip) {
+    function makeTileHtml(html, trip) {
         html.text = '<div class="col-md-4 triptile" id="' + trip.id + '">' 
         +'<h2>' + trip.name + '</h2>'  
         + '<div>'
@@ -172,15 +191,10 @@ $(document).ready(function () {
         for(var i=0; i<trips.length; i++) {
             
             console.log("adding tile id #" +i);
-            console.log(trips[i]);
+            // console.log(trips[i]);
 
-            var html = {
-                text: ''};
-            
-            createTileHtml(html, trips[i]);
-            // console.log('created new tile:');
-            // console.log(html.text);
- 
+            var html = {text: ''};
+            makeTileHtml(html, trips[i]);
             $('.triptiles').append(html.text);
 
             // ------------- view trip ------------
@@ -189,16 +203,29 @@ $(document).ready(function () {
                 var currentId = $(this).parent().parent().attr('id');
                 var tiles = $('.triptile').not('#'+currentId);
                 tiles.fadeOut(700);
+                // show trip-detail form
                 $('.tripdetail').fadeIn(700);
+                displayLocationList();
             })
-        
         }
         return;
-    }; 
+    };
     
-//  -------------- START after form load ---------------
+    function displayLocationList() {
+        $('.location').not('#addNewLocation').remove();
+        for(var i=0; i<locations.length; i++) {
+            
+            console.log("adding location #" +i);
+            console.log(locations[i].name);
 
-    var trips;
+            var html = '<div class="location p-2">' + locations[i].name + '</div>';
+            $('.locationlist').append(html);
+        }
+        return;
+    }
+    
+
+//  -------------- START after form load ---------------
 
     console.log('loadTripsFromLocalStore...');
     loadTripsFromLocalStore();
@@ -208,5 +235,8 @@ $(document).ready(function () {
     displayTripTiles();
     console.log('done.');
 
+    console.log('initDemoLocations...');
+    initDemoLocations();
+    console.log('done.');
 
 });

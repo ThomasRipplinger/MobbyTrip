@@ -40,46 +40,55 @@
         <!-- NEW TRIP FORM -->
         <div class="newtrip m-4">
             <form>
-                <div class="form-group row">
-                    <!-- <label for="triptitle" class="col-sm-1 col-form-label">Überschrift</label> -->
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control" id="title" placeholder="Überschrift z.B. 'Italien 2018'">
+                <div class="col-sm-4">
+
+                    <div class="form-group row">
+                        <!-- <label for="triptitle" class="col-sm-1 col-form-label">Überschrift</label> -->
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" id="title" placeholder="Überschrift z.B. 'Italien 2018'">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <!-- <label for="triplength" class="col-sm-1 col-form-label">Entfernung</label> -->
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="length" placeholder="Strecke, z.B. 500 km">
+                        </div>
+                        <!-- <label for="tripduration" class="col-sm-1 col-form-label">Dauer</label> -->
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="duration" placeholder="Dauer, z.B. 7 Tage">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <!-- <label for="startlocation" class="col-sm-1 col-form-label">Start (Ort)</label> -->
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" id="startlocation" placeholder="z.B. 'Start, z.B. Sisteron'">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <!-- <label for="endlocation" class="col-sm-1 col-form-label">Ende (Ort)</label> -->
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" id="endlocation" placeholder="z.B. 'Ende, z.B. Beziers'">
+                        </div>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <!-- <label for="triplength" class="col-sm-1 col-form-label">Entfernung</label> -->
-                    <div class="col-sm-2">
-                        <input type="text" class="form-control" id="length" placeholder="Strecke, z.B. 500 km">
+
+                <div class="col-sm-4">
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <textarea class="form-control" rows='5' id="desc" placeholder="Hier ein paar Worte zur Beschreibung..."></textarea>
+                        </div>
                     </div>
-                    <!-- <label for="tripduration" class="col-sm-1 col-form-label">Dauer</label> -->
-                    <div class="col-sm-2">
-                        <input type="text" class="form-control" id="duration" placeholder="Dauer, z.B. 7 Tage">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <!-- <label for="startlocation" class="col-sm-1 col-form-label">Start (Ort)</label> -->
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control" id="startlocation" placeholder="z.B. 'Start, z.B. Sisteron'">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <!-- <label for="endlocation" class="col-sm-1 col-form-label">Ende (Ort)</label> -->
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control" id="endlocation" placeholder="z.B. 'Ende, z.B. Beziers'">
+                    <!-- <div class="form-group row mr-4"> -->
+                    <div class="form-group row">
+                        <div class="col-sm-6">
+                            <button class="btncancel btn btn-secondary col-sm-11">Verwerfen</button>
+                        </div>
+                        <div class="col-sm-6">
+                            <button class="btnsave btn btn-success col-sm-11">Speichern</button>
+                        </div>
                     </div>
                 </div>
-                <!-- <div class="col"> -->
-                <div class="form-group row">
-                    <div class="col-sm-4">
-                        <textarea class="form-control" rows='4' id="desc" placeholder="Hier ein paar Worte zur Beschreibung..."></textarea>
-                    </div>
-                </div>
-                <div class="form-group row mr-4">
-                    <div class="col-sm-1"></div>
-                    <button class="btncancel btn btn-secondary col-sm-1">Verwerfen</button>
-                    <div class="col-sm-1"></div>
-                    <button class="btnsave btn btn-success col-sm-1">Anlegen</button>
-                </div>
+
             </form>
         </div>
 
@@ -93,17 +102,19 @@
         <!-- TRIP DETAILS -->
         <div class="tripdetail m-4">
             <div class="tripdetail-container">
-
                 
                 <div class="locationlist col-sm-2">
+                    <div class="location p-2" id="addNewLocation">» neuen Ort hier einfügen »</div>
+                    <!-- <div class="location p-2">Location 01</div>
                     <div class="location p-2">Location 01</div>
-                    <div class="location p-2">Location 01</div>
-                    <div class="location p-2">Location 01</div>
-                    <div class="location p-2">Location 01</div>
+                    <div class="location p-2">Location 01</div> -->
                 </div>
                 
                 <div class="locationdata col-sm-6">
                     
+                    <div class="name-detail">
+                        Name des Ortes...
+                    </div>
                     <div class="geomap-detail">
                         Geo Location hier...
                     </div>
@@ -121,7 +132,10 @@
                 
                 <div class="col-sm-2">
                     <p>
-                        <a class="btnclose btn btn-secondary" href="#" role="button">Schließen</a>
+                        <a class="btnclose btn btn-secondary" href="#" role="button">Verwerfen</a>
+                    </p>
+                    <p>
+                        <a class="btnclose btn btn-success" href="#" role="button">Speichern</a>
                     </p>
                 </div>
                 
