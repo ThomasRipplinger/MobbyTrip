@@ -23,11 +23,14 @@ display trip details
 - Selektierte Tripkachel bleibt, andere Kacheln verschwinden
 - nach Schließen: Layout der Landing page wieder herstellen
 desc NEBEN dem anderen Form anzeigen
+Statt Start/Ende: ZIEL, damit dann Map anzeigeh
+Fix Load demo Data error
 ## ----- DONE ------
-trip data anzeigen nach Anwahl "trip anschauen" 
+
 #create new location
-- location data in FORM umwandeln
+- Button "add location" rechts von der Map
 - bei "Speichern": add to data structure
+- save data locally
 
 #save and load location list
 
@@ -38,6 +41,7 @@ trip data anzeigen nach Anwahl "trip anschauen"
 #add photo to trip-details form
 #link trip location to trip list
 # save and load data (locally)
+trip data anzeigen nach Anwahl "trip anschauen" 
 neue Kachel hervorheben
 neue Kachel langsam ein-sliden
 bei "enter" nicht Cancel aktivieren...!
