@@ -89,6 +89,12 @@ form {
     background-color: lavenderblush;
 }
 
+#testmap {
+    height: 20rem;
+    width: 100%;
+    background-color: greenyellow;
+}
+
 footer {
     margin-top: 300px; 
     /* ############# */
