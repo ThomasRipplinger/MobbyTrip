@@ -1,21 +1,18 @@
-function initMap() {
-    // The location of Uluru
-    var uluru = { lat: -25.344, lng: 131.036 };
-    // The map, centered at Uluru
-    var map = new google.maps.Map(
-        document.getElementById('testmap'), { zoom: 4, center: uluru });
-    // The marker, positioned at Uluru
-    var marker = new google.maps.Marker({ position: uluru, map: map });
-}
+// function initMap() {
+//     // The location of Uluru
+//     var uluru = { lat: -25.344, lng: 131.036 };
+//     // The map, centered at Uluru
+//     var map = new google.maps.Map(
+//         document.getElementById('testmap'), { zoom: 4, center: uluru });
+//     // The marker, positioned at Uluru
+//     var marker = new google.maps.Marker({ position: uluru, map: map });
+// }
 
 {/* <div id="map" style="width: 320px; height: 480px;"></div>
     <div>
         <input id="address" type="textbox" value="Sydney, NSW">
             <input type="button" value="Encode" onclick="codeAddress()">
   </div> */}
-
-
-
 
 
 $(document).ready(function () {
@@ -40,7 +37,7 @@ $(document).ready(function () {
     var geocoder;
     var map;
     
-    function initialize() {
+    function initializeMap() {
         geocoder = new google.maps.Geocoder();
         var latlng = new google.maps.LatLng(-34.397, 150.644);
         var mapOptions = {
@@ -103,7 +100,7 @@ $(document).ready(function () {
             clearNewTripForm();
 
             // ##################
-            initMap();
+            initializeMap();
         });
     });
 
@@ -293,6 +290,6 @@ $(document).ready(function () {
     initDemoLocations();
     console.log('done.');
 
-    initMap();
+    // initMap();
 });
 

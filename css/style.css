@@ -89,10 +89,9 @@ form {
     background-color: lavenderblush;
 }
 
-#testmap {
-    height: 20rem;
+#testmap, #map {
+    height: 24rem;
     width: 100%;
-    background-color: greenyellow;
 }
 
 footer {
