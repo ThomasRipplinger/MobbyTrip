@@ -41,11 +41,16 @@
         <div class="newtrip m-4">
             <form>
                 <div class="col-sm-4">
-                    
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" id="destination" placeholder="Zielort/Region, z.B. Provence'">
+                        </div>
+                    </div>
+                
                     <div class="form-group row">
                         <!-- <label for="triptitle" class="col-sm-1 col-form-label">Überschrift</label> -->
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" id="title" placeholder="Überschrift z.B. 'Italien 2018'">
+                            <input type="text" class="form-control" id="name" placeholder="Wann, z.B. Mai 2018'">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -58,12 +63,7 @@
                             <input type="text" class="form-control" id="duration" placeholder="Dauer, z.B. 7 Tage">
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <div class="col-sm-12">
-                            <input type="text" class="form-control" id="destination" placeholder="Zielort/Region, z.B. Provence'">
-                        </div>
-                    </div>
-
+                
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <textarea class="form-control" rows='4' id="desc" placeholder="Hier ein paar Worte zur Beschreibung..."></textarea>
@@ -78,7 +78,7 @@
                             <button class="btnsave btn btn-success col-sm-11">Speichern</button>
                         </div>
                     </div>
-
+                
                 </div>
                 
                 
@@ -92,7 +92,7 @@
             </form>
         </div>
 
-        <!-- TRIP TILES -->
+        <!-- *********************************** TRIP TILES **************************************************** -->
         <div class="container-fluid">
             <div class="row triptiles">
                 <!-- trip tiles added here via JS -->

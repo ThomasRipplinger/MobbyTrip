@@ -26,6 +26,11 @@ desc NEBEN dem anderen Form anzeigen
 Statt Start/Ende: ZIEL, damit dann Map anzeigeh
 Fix Load demo Data error
 ## ----- DONE ------
+Workflow:
+- add trip => fill in form, trip is saved locally (all trips are saved locally)
+- show trip => show form, support edit and save
+- delete trip
+Ab dann weiter mit locations etc
 
 #create new location
 - Button "add location" rechts von der Map
