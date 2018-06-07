@@ -90,33 +90,26 @@ $(document).ready(function () {
         // select all trip tiles and construct trips object for storage
         console.log('Trips before saving:');
         logTrips();
+
+        // clear trips array
+        trips.length = 0;
         
-        // console.log($('.triptiles h2').val());
-        
-        
-        console.log('h2 values:');
-        var $triptiles = $('.triptiles').children().find('h2');  
-        if($triptiles !== null) {
-            $triptiles.each(function(){
-                console.log(this.innerText);
-            });
+        // get collection of current trip tiles
+        var $triptiles = $('.triptile')
+
+        // interate over the collection to construct the new trips object array 
+        for(var i=0; i<$triptiles.length; i++) {
+            var $tile = $triptiles.eq(i);  
+            var trip = {};
+            trip['name'] = $tile.find('h2').text();
+            trip['length'] = $tile.find('.trip-length').text();
+            trip['duration'] = $tile.find('.trip-duration').text();
+            trip['description'] = $tile.find('.trip-desc-short').text();
+            trips.push(trip);
         }
 
-
-            //     trips.length = 0;  // clear trip array
-            // $('.triptiles').children().each(function(index, value){
-            // $('.triptiles h2').each(function() {
-            //     var tripname = $(this).val();
-            //     console.log(tripname);
-            // });
-            // });
-            // for(var i=0; i<$triptiles.length; i++) {
-            //     var tripname = $triptiles.find('h2').val();
-            //     // trips[i].name = triptiles.find('h2').val();   // findet nur das ERSTE element !!!!!!!!!!!!!!
-            //     trips.push({name: tripname});
-            // }
-            // console.log('Trips after query:');
-            // logTrips();
+        console.log('Trips after saving:');
+        logTrips();
 
         // !!!!!!!!!!!!!!!!!
         // localStorage.setItem('trips', JSON.stringify(trips));
@@ -133,7 +126,7 @@ $(document).ready(function () {
 
     function makeTileHtml(html, trip) {
         html.text = '<div class="col-md-4 triptile" id="' + trip.id + '">'
-            + '<h2>' + trip.destination + ' - ' + trip.name + '</h2>'
+            + '<h2>' + trip.name + '</h2>'
             + '<div>'
             + '<span class="trip-length">' + trip.length + ' km</span>'
             + '<span class="trip-duration">' + trip.duration + ' Tage</span>'
