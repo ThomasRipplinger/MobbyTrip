@@ -7,7 +7,7 @@ $(document).ready(function () {
     var map;
 
 
-    //  ################### START after form load #######################
+    //  ################### Execute after form load #######################
 
     console.log('loadTripsFromLocalStore...');
     loadTripsFromLocalStore();
@@ -18,7 +18,7 @@ $(document).ready(function () {
     console.log('initDemoLocations...');
     initDemoLocations();
 
-    //  ################### END form load ###############################
+    //  ################### END form load #################################
 
 
     function initializeMap() {
@@ -50,46 +50,14 @@ $(document).ready(function () {
         });
     }
 
-    // LOAD FROM LOCAL STORE ###############################
+    // LOAD FROM LOCAL STORE #############################
     function loadTripsFromLocalStore() {
         trips = JSON.parse(localStorage.getItem('trips'));
-        logTrips();
+        logTrips('Loading trip data...');
     }
     
-    // SAVE TO LOCAL STORE ###############################
+    // SAVE TRIP TO LOCAL STORE ##########################
     function saveTripsToLocalStore() {
-
-        // var demotrips = [
-        //     {
-        //         id: 't001',
-        //         name: 'trip01',
-        //         length: 320,
-        //         duration: 9,
-        //         date: 'August 2017',
-        //         desc: 'Beschreibung der Reise ...bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla ...',
-        //     },
-        //     {
-        //         id: 't002',
-        //         name: 'trip02',
-        //         length: 550,
-        //         duration: 4,
-        //         date: 'März 2017',
-        //         desc: 'Beschreibung der Reise ...bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla ...',
-        //     },
-        //     {
-        //         id: 't003',
-        //         name: 'trip03',
-        //         length: 699,
-        //         duration: 5,
-        //         date: 'Jan. 2018',
-        //         desc: 'Beschreibung der Reise ...bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla ...',
-        //     }
-        // ];
-        // console.log(demotrips);
-
-        // select all trip tiles and construct trips object for storage
-        console.log('Trips before saving:');
-        logTrips();
 
         // clear trips array
         trips.length = 0;
@@ -97,25 +65,25 @@ $(document).ready(function () {
         // get collection of current trip tiles
         var $triptiles = $('.triptile')
 
-        // interate over the collection to construct the new trips object array 
+        // iterate over the collection to construct the new trips object array 
+        console.log('found ' + $triptiles.length + ' tiles');
         for(var i=0; i<$triptiles.length; i++) {
             var $tile = $triptiles.eq(i);  
             var trip = {};
-            trip['name'] = $tile.find('h2').text();
+            trip['id'] = 't001';
+            trip['destination'] = $tile.find('h2').text();
             trip['length'] = $tile.find('.trip-length').text();
             trip['duration'] = $tile.find('.trip-duration').text();
             trip['description'] = $tile.find('.trip-desc-short').text();
             trips.push(trip);
         }
 
-        console.log('Trips after saving:');
-        logTrips();
-
-        // !!!!!!!!!!!!!!!!!
-        // localStorage.setItem('trips', JSON.stringify(trips));
+        logTrips('Saved trip data:');
+        localStorage.setItem('trips', JSON.stringify(trips));
     }
 
-    function logTrips() {
+    function logTrips(logcomment) {
+        console.log(logcomment);
         if (trips !== null) {
             for (var i = 0; i < trips.length; i++) {
                 console.log('Trip #' + i + ':');
@@ -126,7 +94,12 @@ $(document).ready(function () {
 
     function makeTileHtml(html, trip) {
         html.text = '<div class="col-md-4 triptile" id="' + trip.id + '">'
-            + '<h2>' + trip.name + '</h2>'
+            + '<div class="row">'
+            +   '<h2 class="col-sm-10">' + trip.destination + '</h2>'
+            +   '<button type="button" class="deletetrip close col-sm-2" aria-label="Close">'
+            +     '<span aria-hidden="true">&times;</span>'
+            +   '</button>'
+            + '</div>'
             + '<div>'
             + '<span class="trip-length">' + trip.length + ' km</span>'
             + '<span class="trip-duration">' + trip.duration + ' Tage</span>'
@@ -134,6 +107,7 @@ $(document).ready(function () {
             + '<span class="trip-desc-short">' + trip.desc + '</span>'
             + '<p><a class="btn btn-secondary viewtrip" href="#" role="button">Anschauen »</a></p>'
             + '</div>';
+        // console.log(html.text);
     }
 
     function clearNewTripForm() {
@@ -146,6 +120,8 @@ $(document).ready(function () {
     }
     
     function displayTripTiles() {
+
+        // add all tiles from clean slate
         $('.triptile').remove();
         if (trips !== null) {
             for (var i = 0; i < trips.length; i++) {
@@ -154,18 +130,25 @@ $(document).ready(function () {
                 var html = { text: '' };
                 makeTileHtml(html, trips[i]);
                 $('.triptiles').append(html.text);
-
-                // ------------- view trip ------------
-                $('.viewtrip').click(function () {
-                    console.log('show trip details...');
-                    var currentId = $(this).parent().parent().attr('id');
-                    var tiles = $('.triptile').not('#' + currentId);
-                    tiles.fadeOut(700);
-                    // show trip-detail form
-                    $('.tripdetail').fadeIn(700);
-                    displayLocationList();
-                })
             }
+
+            // ------------- add view trip handler ------------
+            $('.viewtrip').click(function () {
+                console.log('show trip details...');
+                var currentId = $(this).parent().parent().attr('id');
+                var tiles = $('.triptile').not('#' + currentId);
+                tiles.fadeOut(700);
+                // show trip-detail form
+                $('.tripdetail').fadeIn(700);
+                displayLocationList();
+            })
+
+            // ------------- add delete trip handler ----------
+            $('.deletetrip').click(function () {
+                console.log('delete trip: ' + $(this).parent().find('h2').text());
+                $(this).parent().parent().remove();
+                setTimeout(saveTripsToLocalStore, 2000);  // only works with timeout 2000ms...
+            })
         }
     }
 
@@ -211,7 +194,7 @@ $(document).ready(function () {
         ];
     }
 
-    // ###################### CREATE NEW TRIP #########################
+    // ###################### NEW TRIP - show form  ###########
     $('.jumbotron .btnnew').click(function () {
         $('.newtrip').slideToggle(500, 'linear', function () {
             clearNewTripForm();
@@ -222,12 +205,12 @@ $(document).ready(function () {
         });
     });
 
+    // ----------------- test, remove ------------------------
     $('.jumbotron .btnsave').click(function () {
-        console.log('SAVING...');
         saveTripsToLocalStore();
-        console.log('done.');
     });
 
+    // ----------------- test, remove ------------------------
     $('.jumbotron .btnload').click(function () {
         console.log('LOADING...');
         loadTripsFromLocalStore();
@@ -245,7 +228,7 @@ $(document).ready(function () {
         clearNewTripForm();
     });
 
-    // ######################### SAVE NEW TRIP #####################
+    // #################### NEW TRIP - SAVE ##################
     $('.newtrip .btnsave').click(function () {
         console.log('SAVING...');
         var trip = {
@@ -263,11 +246,11 @@ $(document).ready(function () {
         $('.newtrip').slideToggle(700, 'linear', function () {
             $('.triptiles').prepend(html.text);
         });
-        saveTripsToLocalStore();
+        setTimeout(saveTripsToLocalStore, 2000);  // only works with timeout 2000ms...
         clearNewTripForm();
     });
 
-    // ------ close trip detail form ------
+    // -------------- close trip detail form w/o saving ------
     $('.tripdetail .btnclose').click(function () {
         $('.tripdetail').fadeOut(700);
         displayTripTiles();
@@ -313,4 +296,35 @@ function displayTripTilesOLD() {
         $('.triptiles').append(newtile);
     }
     return;
+}
+
+function setDemoTrips() {
+
+    trips = [
+        {
+            id: 't001',
+            name: 'trip01',
+            length: 320,
+            duration: 9,
+            date: 'August 2017',
+            desc: 'Beschreibung der Reise ...bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla ...',
+        },
+        {
+            id: 't002',
+            name: 'trip02',
+            length: 550,
+            duration: 4,
+            date: 'März 2017',
+            desc: 'Beschreibung der Reise ...bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla ...',
+        },
+        {
+            id: 't003',
+            name: 'trip03',
+            length: 699,
+            duration: 5,
+            date: 'Jan. 2018',
+            desc: 'Beschreibung der Reise ...bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla ...',
+        }
+    ];
+    console.log(trips);
 }

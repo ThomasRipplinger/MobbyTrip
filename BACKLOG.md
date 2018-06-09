@@ -25,21 +25,22 @@ display trip details
 desc NEBEN dem anderen Form anzeigen
 Statt Start/Ende: ZIEL, damit dann Map anzeigeh
 Fix Load demo Data error
-## ----- DONE ------
-Workflow:
 - add trip => fill in form, trip is saved locally (all trips are saved locally)
-- show trip => show form, support edit and save
 - delete trip
-Ab dann weiter mit locations etc
+## ----- DONE ------
+Code auf mehrere Dateien aufsplitten
+TESTS schreiben für: trip save and load 
+- show trip => show form, support edit and save
 
 #create new location
 - Button "add location" rechts von der Map
 - bei "Speichern": add to data structure
 - save data locally
 
+Test mit testing framework ?
 #save and load location list
 
-# integrate google maps for route overview - lade map mit Basis "Reiseziel", Umkreis 100km
+#integrate google maps for route overview - lade map mit Basis "Reiseziel", Umkreis 100km
 #integrate google maps for locations - lade map mit Basis "Reiseziel", Umkreis 20km
 
 #edit Trip data
