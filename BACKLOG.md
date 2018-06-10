@@ -22,14 +22,18 @@ display trip details
 - show detail form
 - Selektierte Tripkachel bleibt, andere Kacheln verschwinden
 - nach Schließen: Layout der Landing page wieder herstellen
+save project in github 
 desc NEBEN dem anderen Form anzeigen
 Statt Start/Ende: ZIEL, damit dann Map anzeigeh
 Fix Load demo Data error
 - add trip => fill in form, trip is saved locally (all trips are saved locally)
 - delete trip
-## ----- DONE ------
 Code auf mehrere Dateien aufsplitten
+delete trip
 TESTS schreiben für: trip save and load 
+save and load data (locally)
+
+## ----- DONE ------
 - show trip => show form, support edit and save
 
 #create new location
@@ -37,8 +41,10 @@ TESTS schreiben für: trip save and load
 - bei "Speichern": add to data structure
 - save data locally
 
-Test mit testing framework ?
 #save and load location list
+
+- ID einführen (z.B. ID#Counter) und verwenden für 'delete trip'
+- Test mit testing framework ?
 
 #integrate google maps for route overview - lade map mit Basis "Reiseziel", Umkreis 100km
 #integrate google maps for locations - lade map mit Basis "Reiseziel", Umkreis 20km
@@ -46,7 +52,6 @@ Test mit testing framework ?
 #edit Trip data
 #add photo to trip-details form
 #link trip location to trip list
-# save and load data (locally)
 trip data anzeigen nach Anwahl "trip anschauen" 
 neue Kachel hervorheben
 neue Kachel langsam ein-sliden
@@ -56,13 +61,10 @@ make trip ID unique, use datetime
 alle Tiles gleich hoch machen
 Layout verschönern (Farbschema, Schriftart?)
 select typeface
-select color schema
+select color schema (http://www.paletton.com/index.html#uid=75q1M0kiCFn8GVde7NVmtwSqXtg)
 Logo 'womoTrips' zweifarbig (Header?)
-delete trip
 trip details and location page w. demo data
 add camping info (adress, phone, cost, comment, rating)
 add photo carousel
 edit/delete location
-save project in github 
 convert online map to img and download / link img
-

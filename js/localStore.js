@@ -1,12 +1,17 @@
 
-// LOAD TIPS FROM LOCAL STORE ########################
 function loadTripsFromLocalStore() {
-    trips = JSON.parse(localStorage.getItem('trips'));
-    logTrips('Loading trip data...');
+    trips = JSON.parse(localStorage.getItem('tripdata'));
+    // trips = JSON.parse(localStorage.getItem('trips'));
+    logTrips('loaded trip data');
 }
 
-// SAVE TRIP TO LOCAL STORE ##########################
 function saveTripsToLocalStore() {
+    localStorage.setItem('tripdata', JSON.stringify(trips));
+    logTrips('saved trip data');
+}
+
+
+function saveTripsToLocalStore_UIbased() {
 
     // clear trips array
     trips.length = 0;
@@ -15,7 +20,7 @@ function saveTripsToLocalStore() {
     var $triptiles = $('.triptile')
 
     // iterate over the collection to construct the new trips object array 
-    console.log('found ' + $triptiles.length + ' tiles');
+    // console.log('found ' + $triptiles.length + ' tiles');
     for (var i = 0; i < $triptiles.length; i++) {
         var $tile = $triptiles.eq(i);
         var trip = {};
@@ -27,6 +32,6 @@ function saveTripsToLocalStore() {
         trips.push(trip);
     }
 
-    logTrips('Saved trip data:');
+    logTrips('Saved trip data');
     localStorage.setItem('trips', JSON.stringify(trips));
 }

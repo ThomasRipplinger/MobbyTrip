@@ -1,10 +1,11 @@
 
 function displayTripTiles() {
+
     // add all tiles from clean slate
     $('.triptile').remove();
     if (trips !== null) {
         for (var i = 0; i < trips.length; i++) {
-            console.log("adding tile id #" + i);
+            // console.log("adding tile id #" + i);
             // console.log(trips[i]);
             var html = { text: '' };
             makeTileHtml(html, trips[i]);
@@ -12,26 +13,16 @@ function displayTripTiles() {
         }
 
         // ------------- add 'view trip' handler ------------
-        $('.viewtrip').click(function () {
-            console.log('show trip details...');
-            var currentId = $(this).parent().parent().attr('id');
-            var tiles = $('.triptile').not('#' + currentId);
-            tiles.fadeOut(700);
-            // show trip-detail form
-            $('.tripdetail').fadeIn(700);
-            displayLocationList();
-        })
+        $('.viewtrip').click(viewTripDetails);
 
         // ------------- add 'delete trip' handler ----------
-        $('.deletetrip').click(function () {
-            console.log('delete trip: ' + $(this).parent().find('h2').text());
-            $(this).parent().parent().remove();
-            setTimeout(saveTripsToLocalStore, 2000);  // only works with timeout 2000ms...
-        })
+        $('.deletetrip').click(deleteTrip);
+        
     }
 }
 
 function makeTileHtml(html, trip) {
+
     html.text = '<div class="col-md-4 triptile" id="' + trip.id + '">'
         + '<div class="row">'
         +   '<h2 class="col-sm-10">' + trip.destination + '</h2>'
@@ -49,8 +40,50 @@ function makeTileHtml(html, trip) {
     // console.log(html.text);
 }
 
+function viewTripDetails() {
+
+    console.log('show trip details...');
+    var currentId = $(this).parent().parent().attr('id');
+    var tiles = $('.triptile').not('#' + currentId);
+    tiles.fadeOut(700);
+    // show trip-detail form
+    $('.tripdetail').fadeIn(700);
+    displayLocationList();
+}
+
+function deleteTrip() {
+    
+    var destinationToDelete = $(this).parent().find('h2').text();
+
+    if(destinationToDelete === null) {
+        console.log('ERROR: can´t find destinationToDelete');
+        return;
+    }
+    console.log('delete trip: ' + destinationToDelete);
+    
+    // remove tile
+    $(this).parent().parent().remove();
+
+    // remove from trips array and store
+    var deleteflag = false;
+    for(var i=0; i<trips.length; i++) {
+        if(trips[i].destination === destinationToDelete){
+            console.log('found - deleting trip: ' + destinationToDelete);
+            trips.splice(i, 1); // remove 1 element starting from i 
+            deleteflag = true;
+            break;
+        }
+    }
+    if(deleteflag === false) {
+        console.log('ERROR: can´t find destinationToDelete in trips array');
+    }
+    // setTimeout(saveTripsToLocalStore, 2000);  // only works with timeout 2000ms...
+    saveTripsToLocalStore();
+}
+
 // NEW TRIP - show form  #########################
 function showNewTripForm() {
+
     $('.newtrip').slideToggle(500, 'linear', function () {
         clearNewTripForm();
         // ##################
@@ -62,7 +95,8 @@ function showNewTripForm() {
 
 // NEW TRIP - SAVE ###############################
 function saveNewTrip() {
-    console.log('SAVING...');
+
+    console.log('saving trip data...');
     var trip = {
         id: 't001',
         destination: $('.newtrip #destination').val(),
@@ -72,13 +106,20 @@ function saveNewTrip() {
         // date: $('.newtrip #date').val(),
         desc: $('.newtrip #desc').val()
     };
+    
+    // add to trip array and store
+    trips.unshift(trip);
+    saveTripsToLocalStore(); 
 
+    // add tile with new trip data
     var html = { text: '' };
     makeTileHtml(html, trip);
+
+    // hide new trip form & clear for next time
     $('.newtrip').slideToggle(700, 'linear', function () {
         $('.triptiles').prepend(html.text);
     });
-    setTimeout(saveTripsToLocalStore, 2000);  // only works with timeout 2000ms...
+    // setTimeout(saveTripsToLocalStore, 2000);  // only works with timeout 2000ms...
     clearNewTripForm();
 }
 
@@ -104,6 +145,8 @@ function clearNewTripForm() {
 
 function logTrips(logcomment) {
     console.log(logcomment);
+    return(true); // ####################################
+
     if (trips !== null) {
         for (var i = 0; i < trips.length; i++) {
             console.log('Trip #' + i + ':');

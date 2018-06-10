@@ -6,7 +6,7 @@ $(document).ready(function () {
     var geocoder;
     var map;
 
-    //  ################### Execute after form load #######################
+    //  execute after form load --------------------------------------
 
     console.log('loadTripsFromLocalStore...');
     loadTripsFromLocalStore();
@@ -15,7 +15,7 @@ $(document).ready(function () {
     displayTripTiles();
 
 
-    // register jquery events ---------------------------------------------
+    // register jquery events ----------------------------------------
 
     $('.jumbotron .btnnew').click(showNewTripForm);
     
@@ -28,12 +28,10 @@ $(document).ready(function () {
     $('.tripdetail .btnclose').click(closeTripDetailForm);
     
 
-    // ----------------- test, remove ------------------------
+    // ----------------- test, remove --------------------------------
     $('.jumbotron .btnsave').click(function () {
         saveTripsToLocalStore();
     });
-
-    // ----------------- test, remove ------------------------
     $('.jumbotron .btnload').click(function () {
         console.log('LOADING...');
         loadTripsFromLocalStore();
