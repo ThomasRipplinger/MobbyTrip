@@ -44,8 +44,29 @@ function viewTripDetails() {
 
     console.log('show trip details...');
     var currentId = $(this).parent().parent().attr('id');
-    var tiles = $('.triptile').not('#' + currentId);
+    
+    // fade out all tiles except for selected one
+    // var tiles = $('.triptile').not('#' + currentId);
+    // fade out ALL tiles 
+    var tiles = $('.triptile');
     tiles.fadeOut(700);
+
+    // show trip form with data of selected trip
+    var selectedTrip = null;
+    for(var i=0; i<trips.length; i++) {
+        var tripId = trips[i].id;
+        if(parseInt(currentId) === tripId) {
+            selectedTrip = trips[i];
+        }
+    }
+    if(selectedTrip === null) {
+        console.log('Error: selected trip not found or ID not set');
+        showTripFormFilled(selectedTrip);
+    }
+    else {
+        showTripFormNew();
+    }
+
     // show trip-detail form
     $('.tripdetail').fadeIn(700);
     displayLocationList();
@@ -81,8 +102,8 @@ function deleteTrip() {
     saveTripsToLocalStore();
 }
 
-// NEW TRIP - show form  #########################
-function showNewTripForm() {
+// NEW TRIP - show empty form  
+function showTripFormNew() {
 
     $('.newtrip').slideToggle(500, 'linear', function () {
         clearNewTripForm();
@@ -93,12 +114,21 @@ function showNewTripForm() {
     });
 }
 
+// EDIT TRIP - show form with data
+function showTripFormFilled(selectedTrip) {
+
+    $('.newtrip').slideToggle(500, 'linear', function () {
+        fillNewTripForm(selectedTrip);
+        initializeMap();
+    });
+}
+
 // NEW TRIP - SAVE ###############################
 function saveNewTrip() {
 
     console.log('saving trip data...');
     var trip = {
-        id: 't001',
+        id: createNewTripId(),
         destination: $('.newtrip #destination').val(),
         name: $('.newtrip #name').val(),
         length: $('.newtrip #length').val(),
@@ -106,24 +136,29 @@ function saveNewTrip() {
         // date: $('.newtrip #date').val(),
         desc: $('.newtrip #desc').val()
     };
-    
+    // console.log(trip);
+
     // add to trip array and store
     trips.unshift(trip);
     saveTripsToLocalStore(); 
 
-    // add tile with new trip data
+    // create html for new tile with new trip data
     var html = { text: '' };
     makeTileHtml(html, trip);
-
-    // hide new trip form & clear for next time
+    
+    // hide new trip form
     $('.newtrip').slideToggle(700, 'linear', function () {
+        // add new tile on first position
         $('.triptiles').prepend(html.text);
+        // add handlers
+        $('.viewtrip').eq(0).click(viewTripDetails);
+        $('.deletetrip').eq(0).click(deleteTrip);
     });
-    // setTimeout(saveTripsToLocalStore, 2000);  // only works with timeout 2000ms...
+    // clear for next time
     clearNewTripForm();
 }
 
-// Destination entered - center map around the dest. 
+// destination entered - center map around the dest. 
 function destinationEntered() {
     console.log('New Destination: ' + $('.newtrip #destination').val());
     codeAddress();
@@ -143,6 +178,17 @@ function clearNewTripForm() {
     $('.newtrip #desc').val('');
 }
 
+function fillNewTripForm(selectedTrip) {
+    console.log('selected trip:');
+    console.log(selectedTrip);  // ######################### TODO: remove
+    $('.newtrip #destination').val(selectedTrip.destination);
+    $('.newtrip #name').val(selectedTrip.name);
+    $('.newtrip #length').val(selectedTrip.length);
+    $('.newtrip #duration').val(selectedTrip.duration);
+    $('.newtrip #date').val(selectedTrip.date);
+    $('.newtrip #desc').val(selectedTrip.desc);
+}
+
 function logTrips(logcomment) {
     console.log(logcomment);
     return(true); // ####################################
@@ -153,5 +199,18 @@ function logTrips(logcomment) {
             console.log(trips[i]);
         }
     }
+}
+
+function createNewTripId() {
+
+    var largestId = 0;
+    // iterate over trips
+    if(trips !== undefined) {
+        for(var i=0; i<trips.length; i++) {
+            if(trips[i].id > largestId) 
+                largestId = trips[i].id;
+        }
+    }
+    return largestId + 1;
 }
 

@@ -32,11 +32,15 @@ Code auf mehrere Dateien aufsplitten
 delete trip
 TESTS schreiben für: trip save and load 
 save and load data (locally)
+- fix "delete tile" issue (ID problem?)
+- create each tile with own unique ID => support fade out of all tiles...
 
 ## ----- DONE ------
-- show trip => show form, support edit and save
+=> show trip form, support edit and save
+=> show trip detail form, support edit and save
 
 #create new location
+- add 5 demo locations ?
 - Button "add location" rechts von der Map
 - bei "Speichern": add to data structure
 - save data locally

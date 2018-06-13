@@ -1,5 +1,9 @@
 
 function displayLocationList() {
+
+    var locations = [];
+    initDemoLocations(locations);
+
     $('.location').not('#addNewLocation').remove();
     for (var i = 0; i < locations.length; i++) {
 
@@ -19,11 +23,11 @@ function closeTripDetailForm() {
 }
 
 
-function initDemoLocations() {
+function initDemoLocations(locations) {
     locations = [
         {
-            id: 001,
-            name: 'Sisteron',
+            id: 1,
+            name: 'Sisteron stop1',
             duration: 1,
             desc: 'Beschreibung der Location... bla bla bla bla bla bla bla bla ',
             camping_name: 'L´Ardeche',

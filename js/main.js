@@ -17,7 +17,7 @@ $(document).ready(function () {
 
     // register jquery events ----------------------------------------
 
-    $('.jumbotron .btnnew').click(showNewTripForm);
+    $('.jumbotron .btnnew').click(showTripFormNew);
     
     $('.newtrip .btnsave').click(saveNewTrip);
     
