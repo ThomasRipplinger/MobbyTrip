@@ -34,10 +34,14 @@ TESTS schreiben für: trip save and load
 save and load data (locally)
 - fix "delete tile" issue (ID problem?)
 - create each tile with own unique ID => support fade out of all tiles...
+show trip form 
+close both trip and detail form 
 
 ## ----- DONE ------
-=> show trip form, support edit and save
-=> show trip detail form, support edit and save
+BUG: save legt neuen Trip an auch bei "Edit"
+trip form edit and save
+fix map location init problem
+show trip detail form, support edit and save
 
 #create new location
 - add 5 demo locations ?

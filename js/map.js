@@ -9,14 +9,22 @@ function initializeMap() {
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
 }
 
-function codeAddress() {
-    var address = document.getElementById('destination').value;
+function centerMapAroundAddress(address) {
+    
+    geocoder = new google.maps.Geocoder();
+    var latlng = new google.maps.LatLng(-34.397, 150.644);
+    var mapOptions = {
+        zoom: 8,
+        center: latlng
+    }
     console.log('Address: ' + address);
     geocoder.geocode({ 'address': address }, function (results, status) {
         if (status == 'OK') {
             for (var i = 0; i < results.length; i++) {
                 console.log('result #' + i + results[i].formatted_address);
             }
+            
+            var map = new google.maps.Map(document.getElementById('map'), mapOptions);
             map.setCenter(results[0].geometry.location);
             var marker = new google.maps.Marker({
                 map: map,
