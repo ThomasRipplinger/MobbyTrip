@@ -36,23 +36,41 @@ save and load data (locally)
 - create each tile with own unique ID => support fade out of all tiles...
 show trip form 
 close both trip and detail form 
+BUG: save legt neuen Trip an auch bei "Edit"
+ID einführen (z.B. ID#Counter) und verwenden für 'delete trip'
+trip data anzeigen nach Anwahl "trip anschauen" 
+trip form edit and save
 
 ## ----- DONE ------
-BUG: save legt neuen Trip an auch bei "Edit"
-trip form edit and save
+
+### Roadmap zu MVO ###
+- Trip anlegen, löschen, Headerdaten: OK
+- Neue Location via Google Maps anlegen, als Pin anzeigen in der Trip Übersicht: TODO
+- Farbschema geradeziehen, besseres Startbild, Alignment etc.
+- Tripdetails: dito: ** speichern/laden + Form styling: TODO
+- 2 Demotrips anlegen  
+### --------------------
+- Prio2: zentrale Datenspeicherung
+- Prio2: Pins mit Route verbinden
+- Prio2: Route mit anderen teilen
+### ENDE Roadmap ###
+
+tripDetail: horizontale Laufleiste oben mit "Locations" - alle leer, mit "+"
+trip detail form, support edit and save
+bei Anwahl: edit "Location", bei blurr: Init Map im Detail-Bereich
+Sektionen im Detail Bereich zum Aufklappen (wenn Inhalt: aufgeklappt darstellen) https://getbootstrap.com/docs/4.1/components/collapse/#accordion-example
+style tripDetail form
 fix map location init problem
-show trip detail form, support edit and save
+domain: triplogbook.online / Reisebuch.online    (mobbyTrip.de / .com)
 
 #create new location
-- add 5 demo locations ?
 - Button "add location" rechts von der Map
 - bei "Speichern": add to data structure
 - save data locally
 
 #save and load location list
-
-- ID einführen (z.B. ID#Counter) und verwenden für 'delete trip'
 - Test mit testing framework ?
+- Felder nur bei Bedarf anzeigen: ... => Auswahl weiterer Felder
 
 #integrate google maps for route overview - lade map mit Basis "Reiseziel", Umkreis 100km
 #integrate google maps for locations - lade map mit Basis "Reiseziel", Umkreis 20km
@@ -60,12 +78,10 @@ show trip detail form, support edit and save
 #edit Trip data
 #add photo to trip-details form
 #link trip location to trip list
-trip data anzeigen nach Anwahl "trip anschauen" 
 neue Kachel hervorheben
 neue Kachel langsam ein-sliden
 bei "enter" nicht Cancel aktivieren...!
 bei "anlegen ok" kurz einen grünen Haken od. OK erscheinen lassen
-make trip ID unique, use datetime
 alle Tiles gleich hoch machen
 Layout verschönern (Farbschema, Schriftart?)
 select typeface

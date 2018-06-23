@@ -3,6 +3,10 @@ body {
     overflow: scroll;
 }
 
+/* @viewport {
+    height: 100%
+} */
+
 header {
     font-size: 1.5rem;
     color: darkblue;
@@ -57,11 +61,33 @@ form {
     display: none;
 }
 
-.tripdetail-container {
-    display: flex;
+.card {
+    width: 15rem;
+    height: 4rem;
+    margin: 0.3rem;
+    background-color: lightgoldenrodyellow;
 }
 
-.location {
+.btn-location {
+    width: 15rem;
+    height: 3rem;
+    margin: 0.5rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    font-family: "Segoe UI Semibold", Helvetica, sans-serif;
+    color: rgba(33, 37, 41, 0.918);
+    background-color: rgb(253, 253, 154);
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    transition: background-color 200ms;
+}
+
+.btn-location:hover {
+    background-color: rgb(248, 248, 93);    
+}
+
+
+/* .location {
     min-height: 3rem;
     text-align: center;
     font-weight: 500;
@@ -72,7 +98,7 @@ form {
 
 .location:hover {
     background-color: rgb(119, 218, 143);
-}
+} */
 
 .geomap-detail {
     min-height: 15rem;

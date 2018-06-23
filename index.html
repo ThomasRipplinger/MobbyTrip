@@ -3,10 +3,12 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>WoMoTrips</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>TravelLogBook</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous"> -->
     <link rel="stylesheet" type="text/css" media="screen" href="resources/bootstrap-4.1.1-dist/css/bootstrap.css" />
+    <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous"> -->
+    <link rel="stylesheet" type="text/css" href="./resources\fontawsome5.1free/css/all.css" /> 
     <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
 </head>
 
@@ -24,12 +26,12 @@
         <div class="jumbotron container-fluid py-4">
             <!-- <img src='./resources/images/banner.png'> -->
             <h1 class="display-4">Festhalten und Wiederfinden was schön war</h1>
-            <p>Willkommen beim WoMoTrips, dem Logbuch für Ihre Reisen. 
-                Ihr persönliches Archiv für Routen, besuchte Orte, gute Stell- und Campingplätze. 
-                Damit die Planung der nächsten Fahrt einfacher wird als je zuvor.
+            <p>Willkommen bei ReiseLogBuch, dem Archiv für Ihre Reisen. Ihr persönlicher Speicher für Routen, besuchte Orte,
+                gute Stell- und Campingplätze. Damit die Planung der nächsten Fahrt einfacher wird als je zuvor.
             </p>
             <p>
-                <a class="btnnew btn btn-success btn-lg" href="#" role="button">Neuen Trip anlegen »</a>
+                <!-- <a class="btnnew btn btn-success btn-lg" href="#" role="button">Neuen Trip anlegen »</a> -->
+                <a class="btnnew btn btn-success btn-lg" href="#" role="button"><span class="mr-3">Neuen Trip anlegen</span><i class="fas fa-angle-double-right"></i></a>
             </p>
             <!-- <span>
                 <a class="btnsave">SAVE</a>
@@ -47,7 +49,7 @@
                             <input type="text" class="form-control invisible" id="id">
                         </div>
                     </div>
-                
+
                     <div class="form-group row">
                         <!-- <label for="triptitle" class="col-sm-1 col-form-label">Überschrift</label> -->
                         <div class="col-sm-12">
@@ -64,7 +66,7 @@
                             <input type="text" class="form-control" id="duration" placeholder="Dauer, z.B. 7 Tage">
                         </div>
                     </div>
-                
+
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <textarea class="form-control" rows='4' id="desc" placeholder="Hier ein paar Worte zur Beschreibung..."></textarea>
@@ -79,17 +81,17 @@
                             <button class="btnsave btn btn-success col-sm-11">Speichern</button>
                         </div>
                     </div>
-                
+
                 </div>
-                
-                
+
+
                 <!-- ######################################### -->
                 <div class="col-sm-6" id="map">
                     <div class="form-group row">
                         Hier map...
                     </div>
                 </div>
-                
+
             </form>
         </div>
 
@@ -113,7 +115,7 @@
                         <a class="btn btn-secondary viewtrip" href="#" role="button">Anschauen »</a>
                     </p>
                 </div> -->
-        
+
             </div>
         </div>
         <!-- trip tiles added here via JS -->
@@ -121,19 +123,17 @@
             testmap here...
         </div> -->
 
-        <!-- *********************************** TRIP DETAILS FORM ******************************************** -->
-        <div class="tripdetail m-4">
-            <div class="tripdetail-container">
-                
-                <div class="locationlist col-sm-2">
-                    <div class="location p-2" id="addNewLocation">» neuen Ort hier einfügen »</div>
-                    <!-- <div class="location p-2">Location 01</div>
-                    <div class="location p-2">Location 01</div>
-                    <div class="location p-2">Location 01</div> -->
-                </div>
-                
+        <!-- *********************************** TRIP DETAILS LOCATIONS ******************************************** -->
+        <div class="tripdetail container-fluid m-4">
+            <div class="row location-buttons">
+                <!-- locations added here via JS -->
+                <button type="button" class="btn-location">Ort abcd</button>
+                <button type="button" class="btn-location"><span class="mr-3">neuen Ort anlegen</span><i class="fas fa-angle-double-right"></i></button>
+            </div>
+        
+            <!-- *********************************** TRIP LOCATIONS FORM ******************************************** -->
+            <div class="row locations invisible">
                 <div class="locationdata col-sm-6">
-                    
                     <div class="name-detail">
                         Name des Ortes...
                     </div>
@@ -149,9 +149,8 @@
                     <div class="photogallery-detail">
                         Fotos hier...
                     </div>
-                    
                 </div>
-                
+        
                 <div class="col-sm-2">
                     <p>
                         <a class="btnclose btn btn-secondary" href="#" role="button">Verwerfen</a>
@@ -160,12 +159,11 @@
                         <a class="btnclose btn btn-success" href="#" role="button">Speichern</a>
                     </p>
                 </div>
-                
             </div>
-        </div>  
+        </div>
 
     </main>
-    
+
     <footer>
         <hr>
         <span>(C) TR 2018</span>
@@ -173,20 +171,20 @@
 
     <!-- AIzaSyBmL7Lwc0zAtlphBU9trmScjLJFLhqtziQ -->
 
-<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
-<script type="text/javascript" src="js/main.js"></script>
-<script type="text/javascript" src="js/map.js"></script>
-<script type="text/javascript" src="js/trips.js"></script>
-<script type="text/javascript" src="js/tripDetail.js"></script>
-<script type="text/javascript" src="js/localStore.js"></script>
-<script type="text/javascript" src="js/tests.js"></script>
-<script type="text/javascript" src="js/localStoreTest.js"></script>
-<!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAoRF_fIaVlDMBFipr5jjRHyFT49VKLXvU&callback=mapsAPIinitDone"></script> -->
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAoRF_fIaVlDMBFipr5jjRHyFT49VKLXvU"></script>
-<!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAoRF_fIaVlDMBFipr5jjRHyFT49VKLXvU"></script> -->
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script> -->
-<!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script> -->
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/map.js"></script>
+    <script type="text/javascript" src="js/trips.js"></script>
+    <script type="text/javascript" src="js/tripDetail.js"></script>
+    <script type="text/javascript" src="js/localStore.js"></script>
+    <script type="text/javascript" src="js/tests.js"></script>
+    <script type="text/javascript" src="js/localStoreTest.js"></script>
+    <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAoRF_fIaVlDMBFipr5jjRHyFT49VKLXvU&callback=mapsAPIinitDone"></script> -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAoRF_fIaVlDMBFipr5jjRHyFT49VKLXvU"></script>
+    <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAoRF_fIaVlDMBFipr5jjRHyFT49VKLXvU"></script> -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script> -->
+    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script> -->
 
 </body>
 

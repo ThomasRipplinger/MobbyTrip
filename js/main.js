@@ -19,11 +19,11 @@ $(document).ready(function () {
 
     $('.jumbotron .btnnew').click(showTripFormNew);
     
-    $('.newtrip .btnsave').click(saveNewTrip);
+    $('.newtrip .btnsave').click(saveTripFormData);
     
     $('.newtrip #destination').blur(destinationEntered);
     
-    $('.newtrip .btncancel').click(cancelNewTripForm);
+    $('.newtrip .btncancel').click(cancelTripForm);
 
     $('.tripdetail .btnclose').click(closeTripDetailForm);
     

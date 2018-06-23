@@ -72,7 +72,8 @@ function viewTripDetails() {
 
     // show trip-detail form
     $('.tripdetail').fadeIn(700);
-    displayLocationList();
+    // displayLocationList();
+    initTripDetailForm();
 }
 
 function deleteTrip() {
@@ -108,10 +109,12 @@ function deleteTrip() {
 // NEW TRIP - show empty form  
 function showTripFormNew() {
 
-    clearNewTripForm();
+    clearTripForm();
     $('.newtrip').slideToggle(500, 'linear', function () {
         initializeMap();
+        initTripDetailForm();
     });
+
 }
 
 // EDIT TRIP - show form with data
@@ -131,11 +134,12 @@ function showTripFormFilled(selectedTripIndex) {
 
     $('.newtrip').slideToggle(500, 'linear', function () {
         initializeMap();
+        initTripDetailForm();
     });
 }
 
 // NEW TRIP - SAVE ###############################
-function saveNewTrip() {
+function saveTripFormData() {
 
     var newTrip;
     var tripId;
@@ -185,6 +189,7 @@ function saveNewTrip() {
     console.log(trip);   // TODO: remove ########################
     saveTripsToLocalStore(); 
     closeTripDetailForm();
+    displayTripTiles();
 
     // if(newTrip) {
     //     // hide new trip form & add tile 
@@ -201,7 +206,7 @@ function saveNewTrip() {
     // }
 
     // clear for next time
-    clearNewTripForm();
+    clearTripForm();
 }
 
 // destination entered - center map around the dest. 
@@ -211,13 +216,14 @@ function destinationEntered() {
     centerMapAroundAddress(destAddress);
 }
 
-function cancelNewTripForm() {
+function cancelTripForm() {
     closeTripDetailForm();
     $('.newtrip').slideToggle(500, 'linear');
-    clearNewTripForm();
+    displayTripTiles();
+    clearTripForm();
 }
 
-function clearNewTripForm() {
+function clearTripForm() {
     $('.newtrip #id').val('');
     $('.newtrip #destination').val('');
     $('.newtrip #name').val('');
@@ -227,7 +233,7 @@ function clearNewTripForm() {
     $('.newtrip #desc').val('');
 }
 
-function logTrips(logcomment) {
+function logAllTrips(logcomment) {
     console.log(logcomment);
     return(true); // ####################################
 

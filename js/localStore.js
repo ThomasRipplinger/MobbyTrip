@@ -2,12 +2,12 @@
 function loadTripsFromLocalStore() {
     trips = JSON.parse(localStorage.getItem('tripdata'));
     // trips = JSON.parse(localStorage.getItem('trips'));
-    logTrips('loaded trip data');
+    logAllTrips('loaded trip data');
 }
 
 function saveTripsToLocalStore() {
     localStorage.setItem('tripdata', JSON.stringify(trips));
-    logTrips('saved trip data');
+    logAllTrips('saved trip data');
 }
 
 
@@ -32,6 +32,6 @@ function saveTripsToLocalStore_UIbased() {
         trips.push(trip);
     }
 
-    logTrips('Saved trip data');
+    logAllTrips('Saved trip data');
     localStorage.setItem('trips', JSON.stringify(trips));
 }
