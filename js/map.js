@@ -9,7 +9,8 @@ function initializeMap() {
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
 }
 
-function centerMapAroundAddress(address) {
+// for trip MAIN form 
+function centerMapAroundAddress(address, mapElement) {
     
     geocoder = new google.maps.Geocoder();
     var latlng = new google.maps.LatLng(-34.397, 150.644);
@@ -24,7 +25,7 @@ function centerMapAroundAddress(address) {
                 console.log('result #' + i + results[i].formatted_address);
             }
             
-            var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+            var map = new google.maps.Map(document.getElementById(mapElement), mapOptions);
             map.setCenter(results[0].geometry.location);
             var marker = new google.maps.Marker({
                 map: map,

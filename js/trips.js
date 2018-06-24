@@ -130,7 +130,7 @@ function showTripFormFilled(selectedTripIndex) {
     $('.newtrip #date').val(trips[selectedTripIndex].date);
     $('.newtrip #desc').val(trips[selectedTripIndex].desc);
 
-    centerMapAroundAddress(trips[selectedTripIndex].destination);
+    centerMapAroundAddress(trips[selectedTripIndex].destination, "map");
 
     $('.newtrip').slideToggle(500, 'linear', function () {
         initializeMap();
@@ -213,7 +213,7 @@ function saveTripFormData() {
 function destinationEntered() {
     var destAddress = $('.newtrip #destination').val();
     console.log('New Destination: ' + destAddress);
-    centerMapAroundAddress(destAddress);
+    centerMapAroundAddress(destAddress, "map");
 }
 
 function cancelTripForm() {

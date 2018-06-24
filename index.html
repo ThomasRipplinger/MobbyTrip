@@ -75,7 +75,7 @@
                     <!-- <div class="form-group row mr-4"> -->
                     <div class="form-group row">
                         <div class="col-sm-6">
-                            <button class="btncancel btn btn-secondary col-sm-11">Verwerfen</button>
+                            <button class="btncancel btn btn-secondary col-sm-11">Schließen</button>
                         </div>
                         <div class="col-sm-6">
                             <button class="btnsave btn btn-success col-sm-11">Speichern</button>
@@ -125,19 +125,27 @@
 
         <!-- *********************************** TRIP DETAILS LOCATIONS ******************************************** -->
         <div class="tripdetail container-fluid m-4">
+            
             <div class="row location-buttons">
-                <!-- locations added here via JS -->
-                <button type="button" class="btn-location">Ort abcd</button>
-                <button type="button" class="btn-location"><span class="mr-3">neuen Ort anlegen</span><i class="fas fa-angle-double-right"></i></button>
+                <!-- location buttons added here via JS -->
+                <!-- <button type="button" class="btn-location"><span class="mr-3">Index.html neuer Ort</span><i class="fas fa-angle-double-right"></i></button>
+                <input type="text" class="form-control" id="newlocation" placeholder="neuer Ort oder Zwischenstopp..."> -->
             </div>
+
+            <!-- <div class="row newlocation m-1">
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" id="newlocation" placeholder="neuer Ort oder Zwischenstopp...">
+                </div>
+            </div> -->
         
+
             <!-- *********************************** TRIP LOCATIONS FORM ******************************************** -->
-            <div class="row locations invisible">
+            <div class="row locationdetail">
                 <div class="locationdata col-sm-6">
                     <div class="name-detail">
                         Name des Ortes...
                     </div>
-                    <div class="geomap-detail" id="map">
+                    <div class="geomap-detail" id="locationMap">
                         Geo Location hier...
                     </div>
                     <div class="camping-detail">
@@ -151,14 +159,23 @@
                     </div>
                 </div>
         
-                <div class="col-sm-2">
+                <div class="form-group row">
+                    <div class="col-sm-2">
+                        <button class="btncancel btn btn-secondary col-sm-11">Schließen</button>
+                    </div>
+                    <div class="col-sm-2">
+                        <button class="btnsave btn btn-success col-sm-11">Speichern</button>
+                    </div>
+                </div>
+
+                <!-- <div class="col-sm-2">
                     <p>
                         <a class="btnclose btn btn-secondary" href="#" role="button">Verwerfen</a>
                     </p>
                     <p>
                         <a class="btnclose btn btn-success" href="#" role="button">Speichern</a>
                     </p>
-                </div>
+                </div> -->
             </div>
         </div>
 
