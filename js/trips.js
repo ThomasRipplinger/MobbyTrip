@@ -2,7 +2,7 @@
 function displayTripTiles() {
 
     // add all tiles from clean slate
-    $('.triptile').remove();
+    $('.triptile').remove();   
     if (trips !== null) {
         for (var i = 0; i < trips.length; i++) {
             // console.log("adding tile id #" + i);
@@ -108,8 +108,17 @@ function deleteTrip() {
 
 // NEW TRIP - show empty form  
 function showTripFormNew() {
-
     clearTripForm();
+    showTripForm();
+}
+
+// show form  
+function showTripForm() {
+
+    // remove "new trip" button
+    $('#createNewTrip').css("display", "none");
+
+    // show form
     $('.newtrip').slideToggle(500, 'linear', function () {
         initializeMap();
         initTripDetailForm();
@@ -131,10 +140,13 @@ function showTripFormFilled(selectedTripIndex) {
     $('.newtrip #desc').val(trips[selectedTripIndex].desc);
 
     centerMapAroundAddress(trips[selectedTripIndex].destination, "map");
+    showTripForm();
+}
 
-    $('.newtrip').slideToggle(500, 'linear', function () {
-        initializeMap();
-        initTripDetailForm();
+function closeTripForm() {
+    $('.newtrip').slideToggle(500, 'linear', function() {
+        // show "new trip" button again
+        $('#createNewTrip').css("display", "inline");
     });
 }
 
@@ -202,7 +214,7 @@ function saveTripFormData() {
     //     });
     // }
     // else {   // just close trip form
-        $('.newtrip').slideToggle(700, 'linear', function() {});
+        closeTripForm();
     // }
 
     // clear for next time
@@ -218,7 +230,7 @@ function destinationEntered() {
 
 function cancelTripForm() {
     closeTripDetailForm();
-    $('.newtrip').slideToggle(500, 'linear');
+    closeTripForm();
     displayTripTiles();
     clearTripForm();
 }

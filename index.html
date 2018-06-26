@@ -14,24 +14,19 @@
 
 <body>
 
-    <header>
-        <div>
-            <span></span>
-        </div>
-    </header>
-
     <main role="main">
 
         <!-- ************************ Landing page JUMBOTRON ******************************** -->
         <div class="jumbotron container-fluid py-4">
             <!-- <img src='./resources/images/banner.png'> -->
             <h1 class="display-4">Festhalten und Wiederfinden was schön war</h1>
-            <p>Willkommen bei ReiseLogBuch, dem Archiv für Ihre Reisen. Ihr persönlicher Speicher für Routen, besuchte Orte,
-                gute Stell- und Campingplätze. Damit die Planung der nächsten Fahrt einfacher wird als je zuvor.
+            <p>Willkommen bei ReiseLogBuch, dem Archiv und Planer für Ihre Reisen. Ein persönliches Logbuch für Routen, besuchte Orte,
+                Campingplätze und alles andere was sich zu speichern lohnt. Damit die Planung der nächsten Fahrt einfacher wird als je zuvor.
             </p>
             <p>
                 <!-- <a class="btnnew btn btn-success btn-lg" href="#" role="button">Neuen Trip anlegen »</a> -->
-                <a class="btnnew btn btn-success btn-lg" href="#" role="button"><span class="mr-3">Neuen Trip anlegen</span><i class="fas fa-angle-double-right"></i></a>
+                <a class="btnnew btn btn-success btn-lg" href="#" role="button" id="createNewTrip">
+                    <span class="mr-3">Neuen Trip anlegen</span><i class="fas fa-angle-double-right"></i></a>
             </p>
             <!-- <span>
                 <a class="btnsave">SAVE</a>
@@ -39,14 +34,14 @@
             </span> -->
         </div>
 
-        <!-- *********************************** NEW TRIP FORM ************************************************* -->
+        <!-- *********************************** NEW TRIP FORM (startup: invisible) **************************** -->
         <div class="newtrip m-4">
+            <input  type="text" id="id">
             <form>
-                <div class="col-sm-4">
+                <div class="pl-1 col-sm-4">
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <input type="text" class="form-control" id="destination" placeholder="Zielort/Region, z.B. Provence">
-                            <input type="text" class="form-control invisible" id="id">
                         </div>
                     </div>
 
@@ -84,9 +79,7 @@
 
                 </div>
 
-
-                <!-- ######################################### -->
-                <div class="col-sm-6" id="map">
+                <div class="col-sm-8" id="map">
                     <div class="form-group row">
                         Hier map...
                     </div>
@@ -97,7 +90,7 @@
 
         <!-- *********************************** TRIP TILES **************************************************** -->
         <div class="container-fluid">
-            <div class="row triptiles">
+            <div class="row triptiles mx-2">
 
                 <!-- <div class="col-md-4 triptile" id="t001">
                     <div class="row">

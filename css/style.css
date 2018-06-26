@@ -1,17 +1,7 @@
 body {
     background-color: beige;
-    overflow: scroll;
-}
-
-/* @viewport {
-    height: 100%
-} */
-
-header {
-    font-size: 1.5rem;
-    color: darkblue;
-    background-color: beige;
-    padding: 0.2rem 0 0.2rem 1rem;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 .jumbotron {
@@ -21,6 +11,7 @@ header {
     background-size: cover; 
     width: 100%;
     opacity: 0.9;
+    margin-bottom: 1rem;
 }
 
 .jumbotron p {
@@ -33,6 +24,13 @@ header {
     background-size: cover;
     border-right: 5px solid beige;
     border-bottom: 5px solid beige;
+    opacity: 0.8;
+}
+
+.triptile:hover {
+    opacity: 1; 
+    border-right: 5px solid rgb(252, 252, 197);
+    border-bottom: 5px solid rgb(252, 252, 197);
 }
 
 .trip-length, .trip-duration {
@@ -43,6 +41,10 @@ header {
 
 form {
     display: flex;
+}
+
+#id {
+    display: none;
 }
 
 .triptile#t001 {
