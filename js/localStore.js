@@ -11,7 +11,7 @@ function saveTripsToLocalStore() {
 }
 
 
-function saveTripsToLocalStore_UIbased() {
+function saveTripsToLocalStore_UIbased() {  // OBSOLETE remove
 
     // clear trips array
     trips.length = 0;

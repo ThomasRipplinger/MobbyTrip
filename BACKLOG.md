@@ -41,25 +41,28 @@ ID einführen (z.B. ID#Counter) und verwenden für 'delete trip'
 trip data anzeigen nach Anwahl "trip anschauen" 
 trip form edit and save
 
-## ----- DONE ------
-
 ### Roadmap zu MVO ###
 - Trip anlegen, löschen, Headerdaten: OK
-- Neue Location via Google Maps anlegen, als Pin anzeigen in der Trip Übersicht: TODO
-- Farbschema geradeziehen, besseres Startbild, Alignment etc.
-- Tripdetails: dito: ** speichern/laden + Form styling: TODO
+- Alignment etc.
+## ----- DONE ------
+- Form "Trip Details" aufbauen
+- nur anzeigen nach Anwahl Ort
+- Neuen Ort anlegen
+- Neuen Ort via Google Maps anlegen, als Pin anzeigen in der Trip Übersicht: TODO
+- nach "Trip anlegen": Ort hinzufügen anbieten
+- Tripdetails: speichern/laden 
+- Farbschema geradeziehen, besseres Startbild, 
 - 2 Demotrips anlegen  
+- Funktion auch offline sicherstellen
+!== null  vs  !== undefined
 ### --------------------
 - Prio2: zentrale Datenspeicherung
 - Prio2: Pins mit Route verbinden
 - Prio2: Route mit anderen teilen
 ### ENDE Roadmap ###
 
-tripDetail: horizontale Laufleiste oben mit "Locations" - alle leer, mit "+"
-trip detail form, support edit and save
 bei Anwahl: edit "Location", bei blurr: Init Map im Detail-Bereich
 Sektionen im Detail Bereich zum Aufklappen (wenn Inhalt: aufgeklappt darstellen) https://getbootstrap.com/docs/4.1/components/collapse/#accordion-example
-style tripDetail form
 fix map location init problem
 domain: triplogbook.online / Reisebuch.online    (mobbyTrip.de / .com)
 

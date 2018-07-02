@@ -153,7 +153,6 @@ function closeTripForm() {
 // NEW TRIP - SAVE ###############################
 function saveTripFormData() {
 
-    var newTrip;
     var tripId;
     console.log('saving trip data...');
 
@@ -178,7 +177,8 @@ function saveTripFormData() {
     else {
         newTrip = false;
         // find current trip index in array
-        for(var i=0; i<trips.length; i++) {
+        var i=0;
+        for(i=0; i<trips.length; i++) {
             if(parseInt(trips[i].id) === parseInt(tripId)) {
                 trips[i] = {
                     id: parseInt(tripId),
@@ -247,7 +247,7 @@ function clearTripForm() {
 
 function logAllTrips(logcomment) {
     console.log(logcomment);
-    return(true); // ####################################
+    // return(true); // ####################################
 
     if (trips !== null) {
         for (var i = 0; i < trips.length; i++) {

@@ -43,7 +43,11 @@ form {
     display: flex;
 }
 
-#id {
+.form-control {
+    font-size: 1.2rem;
+}
+
+#id, #locationId {
     display: none;
 }
 
@@ -111,9 +115,17 @@ form {
     background-color: lavenderblush;
 }
 
-#testmap, #map {
+#testmap, #map, #locMap {
     height: 24rem;
     width: 100%;
+}
+
+.borderRed {
+    border: 1px solid red;
+}
+
+.borderGreen {
+    border: 2px solid mediumspringgreen;
 }
 
 footer {

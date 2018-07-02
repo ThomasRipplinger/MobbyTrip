@@ -60,6 +60,70 @@ function closeTripDetailForm() {
     $('.tripdetail').fadeOut(700);    
 }
 
+function saveTripDetailFormData(tripId) {
+
+    console.log('saving trip detail data for ' + tripId);
+
+    var locationId = $('.locationdata #locationId').val();
+    var newLocation;
+    // check if new location
+    if(locationId ==='') {
+        // add new 
+        console.log('new location...');
+        newLocation = true;
+        var location = {
+            id: createNewLocationId(),
+            name: $('.locationdata #name').val(),
+            desc: $('.locationdata #desc').val()
+        };
+        trips[tripId].locations.unshift(location);  // add to beginning of array
+    }
+    else {
+        // update existing
+        newLocation = false;
+        // find current location index in array
+        var i=0;
+        for(i=0; i<locations.length; i++) {
+            if(parseInt(locations[i].id) === parseInt(locationId)) {
+                trips[tripId].locations[i] = {
+                    id: parseInt(locationId),
+                    name: $('.locationdata #name').val(),
+                    desc: $('.locationdata #desc').val()
+                };
+                break;
+            }
+        }
+        if(i === trips[tripId].locations.length + 1) {   // TODO: test #####################
+            console.log('ERROR: location ID not found, not saving!');
+            return;   
+        }
+    }
+
+    saveTripsToLocalStore(); 
+    // clear for next time
+    clearTripDetailForm();
+}
+
+function clearTripDetailForm() {
+    $('.locationdata #id').val('');
+    $('.locationdata #name').val('');
+    $('.locationdata #desc').val('');
+}
+
+
+function createNewLocationId(tripId) {
+
+    var largestId = 0;
+    // iterate over trips
+    if(trips[tripId].locations !== undefined) {
+        for(var i=0; i<trips[tripId].locations.length; i++) {
+            if(parseInt(trips[tripId].locations[i].id) > largestId) 
+                largestId = parseInt(trips[tripId].locations[i].id);
+        }
+    }
+    return largestId + 1;
+}
+
 function initDemoLocations(locations) {
     // locations.push({
     //         id: 1,
