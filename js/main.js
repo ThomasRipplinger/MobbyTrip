@@ -17,15 +17,17 @@ $(document).ready(function () {
 
     // register jquery events ----------------------------------------
 
-    $('.jumbotron .btnnew').click(showTripFormNew);
+    $('.jumbotron .btnnew').click(ClickAddTrip);
     
-    $('.newtrip .btnsave').click(saveTripFormData);
+    $('.newtrip .btnsave').click(ClickSaveTripForm);
+   
+    $('.newtrip .btncancel').click(ClickCancelTripForm);
     
     $('.newtrip #destination').blur(destinationEntered);
     
-    $('.newtrip .btncancel').click(cancelTripForm);
+    $('.triplocations .btnsave').click(ClickSaveLocationsForm);
 
-    $('.tripdetail .btnclose').click(closeTripDetailForm);
+    $('.triplocations .btncancel').click(ClickCancelLocationsForm);
     
 
     // ----------------- test, remove --------------------------------

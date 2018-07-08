@@ -63,7 +63,7 @@ form {
     background-image: url('../resources/images/route01.png');
 }
 
-.newtrip, .tripdetail, .locationdetail {
+.newtrip, .triplocations, .locationdetail {
     display: none;
 }
 

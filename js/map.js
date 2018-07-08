@@ -1,7 +1,7 @@
 
 function initializeMap() {
 
-    return;  // #######################################
+    // return;  // #######################################
 
     geocoder = new google.maps.Geocoder();
     var latlng = new google.maps.LatLng(-34.397, 150.644);
@@ -15,7 +15,7 @@ function initializeMap() {
 // for trip MAIN form 
 function centerMapAroundAddress(address, mapElement) {
 
-    return;  // #######################################
+    // return;  // #######################################
     
     geocoder = new google.maps.Geocoder();
     var latlng = new google.maps.LatLng(-34.397, 150.644);

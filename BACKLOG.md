@@ -95,3 +95,62 @@ add camping info (adress, phone, cost, comment, rating)
 add photo carousel
 edit/delete location
 convert online map to img and download / link img
+
+
+##EVENTS
+
+# form load
+load data
+****if no data: add 2 demo tiles
+show tiles
+
+# add trip
+hide 'new trip button'
+clear trip form
+show trip form
+
+# show trip
+hide 'new trip button'
+fill in trip form with data
+show trip form
+show location tiles
+
+# show trip locations
+remove tiles
+show trip locations form
+
+# save trip form
+save trip data
+hide trip form
+hide trip locations form
+hide location tiles
+show tiles
+clear trip form
+show 'new trip button'
+
+# cancel trip form
+hide trip form
+hide trip locations form
+hide location tiles
+show tiles
+clear trip form
+show 'new trip button'
+
+# add location
+*** cancel current location if visible
+*** clear location form
+*** open location form
+
+# show location
+*** cancel current location if visible
+*** fill location form with data
+*** open location form
+
+# save location form
+save trip/location data
+hide location form
+clear location form
+
+# cancel location form
+hide location form
+clear location form

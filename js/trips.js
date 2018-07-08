@@ -1,46 +1,9 @@
-
-function displayTripTiles() {
-
-    // add all tiles from clean slate
-    $('.triptile').remove();   
-    if (trips !== null) {
-        for (var i = 0; i < trips.length; i++) {
-            // console.log("adding tile id #" + i);
-            // console.log(trips[i]);
-            var html = { text: '' };
-            makeTileHtml(html, trips[i]);
-            $('.triptiles').append(html.text);
-        }
-
-        // ------------- add 'view trip' handler ------------
-        $('.viewtrip').click(viewTripDetails);
-
-        // ------------- add 'delete trip' handler ----------
-        $('.deletetrip').click(deleteTrip);
-        
-    }
+function ClickAddTrip() {
+    clearTripForm();
+    showTripForm();
 }
 
-function makeTileHtml(html, trip) {
-
-    html.text = '<div class="col-md-4 triptile" id="' + trip.id + '">'
-        + '<div class="row">'
-        +   '<h2 class="col-sm-10">' + trip.destination + '</h2>'
-        +   '<button type="button" class="deletetrip close col-sm-2" aria-label="Close">'
-        +     '<span aria-hidden="true">&times;</span>'
-        +   '</button>'
-        + '</div>'
-        + '<div>'
-        + '<span class="trip-length">' + trip.length + ' km</span>'
-        + '<span class="trip-duration">' + trip.duration + ' Tage</span>'
-        + '</div>'
-        + '<span class="trip-desc-short">' + trip.desc + '</span>'
-        + '<p><a class="btn btn-secondary viewtrip" href="#" role="button">Anschauen »</a></p>'
-        + '</div>';
-    // console.log(html.text);
-}
-
-function viewTripDetails() {
+function ClickViewTrip() {
 
     console.log('show trip details...');
     var currentId = $(this).parent().parent().attr('id');
@@ -64,94 +27,19 @@ function viewTripDetails() {
     }
     if(selectedTripIndex === null) {
         console.log('Error: selected trip not found or ID not set');
-        showTripFormNew();
+        ClickAddTrip();
     }
     else {
         showTripFormFilled(selectedTripIndex);
     }
 
-    // show trip-detail form
+    // show location tiles
     $('.tripdetail').fadeIn(700);
-    // displayLocationList();
-    initTripDetailForm();
-}
-
-function deleteTrip() {
-    
-    var destinationToDelete = $(this).parent().find('h2').text();
-
-    if(destinationToDelete === null) {
-        console.log('ERROR: can´t find destinationToDelete');
-        return;
-    }
-    console.log('delete trip: ' + destinationToDelete);
-    
-    // remove tile
-    $(this).parent().parent().remove();
-
-    // remove from trips array and store
-    var deleteflag = false;
-    for(var i=0; i<trips.length; i++) {
-        if(trips[i].destination === destinationToDelete){
-            console.log('found - deleting trip: ' + destinationToDelete);
-            trips.splice(i, 1); // remove 1 element starting from i 
-            deleteflag = true;
-            break;
-        }
-    }
-    if(deleteflag === false) {
-        console.log('ERROR: can´t find destinationToDelete in trips array');
-    }
-    // setTimeout(saveTripsToLocalStore, 2000);  // only works with timeout 2000ms...
-    saveTripsToLocalStore();
-}
-
-// NEW TRIP - show empty form  
-function showTripFormNew() {
-    clearTripForm();
-    showTripForm();
-}
-
-// show form  
-function showTripForm() {
-
-    // remove "new trip" button
-    $('#createNewTrip').css("display", "none");
-
-    // show form
-    $('.newtrip').slideToggle(500, 'linear', function () {
-        initializeMap();
-        initTripDetailForm();
-    });
+    showLocationTiles();
 
 }
 
-// EDIT TRIP - show form with data
-function showTripFormFilled(selectedTripIndex) {
-    
-    console.log('selected trip index:');
-    console.log(selectedTripIndex);  // ######################### TODO: remove
-    $('.newtrip #id').val(trips[selectedTripIndex].id);
-    $('.newtrip #destination').val(trips[selectedTripIndex].destination);
-    $('.newtrip #name').val(trips[selectedTripIndex].name);
-    $('.newtrip #length').val(trips[selectedTripIndex].length);
-    $('.newtrip #duration').val(trips[selectedTripIndex].duration);
-    $('.newtrip #date').val(trips[selectedTripIndex].date);
-    $('.newtrip #desc').val(trips[selectedTripIndex].desc);
-
-    centerMapAroundAddress(trips[selectedTripIndex].destination, "map");
-    showTripForm();
-}
-
-function closeTripForm() {
-    $('.newtrip').slideToggle(500, 'linear', function() {
-        // show "new trip" button again
-        $('#createNewTrip').css("display", "inline");
-    });
-}
-
-// NEW TRIP - SAVE ###############################
-function saveTripFormData() {
+function ClickSaveTripForm() {
 
     var tripId;
     console.log('saving trip data...');
@@ -200,8 +88,11 @@ function saveTripFormData() {
 
     console.log(trip);   // TODO: remove ########################
     saveTripsToLocalStore(); 
-    closeTripDetailForm();
+    hideLocationTiles();
+    hideLocationsForm();
+    closeTripForm();
     displayTripTiles();
+    clearTripForm();  // clear for next time
 
     // if(newTrip) {
     //     // hide new trip form & add tile 
@@ -214,25 +105,128 @@ function saveTripFormData() {
     //     });
     // }
     // else {   // just close trip form
-        closeTripForm();
+        // closeTripForm();
     // }
 
-    // clear for next time
+}
+
+function ClickCancelTripForm() {
+    hideLocationsForm();
+    closeTripForm();
+    displayTripTiles();
     clearTripForm();
 }
 
+function displayTripTiles() {
+
+    // add all tiles from clean slate
+    $('.triptile').remove();   
+    if (trips !== null) {
+        for (var i = 0; i < trips.length; i++) {
+            // console.log("adding tile id #" + i);
+            // console.log(trips[i]);
+            var html = { text: '' };
+            makeTileHtml(html, trips[i]);
+            $('.triptiles').append(html.text);
+        }
+
+        // ------------- add 'view trip' handler ------------
+        $('.viewtrip').click(ClickViewTrip);
+
+        // ------------- add 'delete trip' handler ----------
+        $('.deletetrip').click(deleteTrip);
+        
+    }
+}
+
+function makeTileHtml(html, trip) {
+
+    html.text = '<div class="col-md-4 triptile" id="' + trip.id + '">'
+        + '<div class="row">'
+        +   '<h2 class="col-sm-10">' + trip.destination + '</h2>'
+        +   '<button type="button" class="deletetrip close col-sm-2" aria-label="Close">'
+        +     '<span aria-hidden="true">&times;</span>'
+        +   '</button>'
+        + '</div>'
+        + '<div>'
+        + '<span class="trip-length">' + trip.length + ' km</span>'
+        + '<span class="trip-duration">' + trip.duration + ' Tage</span>'
+        + '</div>'
+        + '<span class="trip-desc-short">' + trip.desc + '</span>'
+        + '<p><a class="btn btn-secondary viewtrip" href="#" role="button">Anschauen »</a></p>'
+        + '</div>';
+    // console.log(html.text);
+}
+
+function deleteTrip() {
+    
+    var destinationToDelete = $(this).parent().find('h2').text();
+
+    if(destinationToDelete === null) {
+        console.log('ERROR: can´t find destinationToDelete');
+        return;
+    }
+    console.log('delete trip: ' + destinationToDelete);
+    
+    // remove tile
+    $(this).parent().parent().remove();
+
+    // remove from trips array and store
+    var deleteflag = false;
+    for(var i=0; i<trips.length; i++) {
+        if(trips[i].destination === destinationToDelete){
+            console.log('found - deleting trip: ' + destinationToDelete);
+            trips.splice(i, 1); // remove 1 element starting from i 
+            deleteflag = true;
+            break;
+        }
+    }
+    if(deleteflag === false) {
+        console.log('ERROR: can´t find destinationToDelete in trips array');
+    }
+    // setTimeout(saveTripsToLocalStore, 2000);  // only works with timeout 2000ms...
+    saveTripsToLocalStore();
+}
+
+// NEW TRIP - show empty form  
+function showTripForm() {
+    $('.newtrip').slideToggle(500, 'linear', function () {
+        initializeMap();
+        toggleNewTripButton();
+    });
+
+}
+
+// EDIT TRIP - show form with data
+function showTripFormFilled(selectedTripIndex) {
+    
+    console.log('selected trip index:');
+    console.log(selectedTripIndex);  // ######################### TODO: remove
+    $('.newtrip #id').val(trips[selectedTripIndex].id);
+    $('.newtrip #destination').val(trips[selectedTripIndex].destination);
+    $('.newtrip #name').val(trips[selectedTripIndex].name);
+    $('.newtrip #length').val(trips[selectedTripIndex].length);
+    $('.newtrip #duration').val(trips[selectedTripIndex].duration);
+    $('.newtrip #date').val(trips[selectedTripIndex].date);
+    $('.newtrip #desc').val(trips[selectedTripIndex].desc);
+
+    centerMapAroundAddress(trips[selectedTripIndex].destination, "map");
+    showTripForm();
+}
+
+function closeTripForm() {
+    $('.newtrip').slideToggle(500, 'linear', function() {
+        hideLocationTiles();
+        toggleNewTripButton();
+    });
+}
+
+// NEW TRIP - SAVE ###############################
 // destination entered - center map around the dest. 
 function destinationEntered() {
     var destAddress = $('.newtrip #destination').val();
     console.log('New Destination: ' + destAddress);
     centerMapAroundAddress(destAddress, "map");
-}
-
-function cancelTripForm() {
-    closeTripDetailForm();
-    closeTripForm();
-    displayTripTiles();
-    clearTripForm();
 }
 
 function clearTripForm() {
@@ -270,3 +264,18 @@ function createNewTripId() {
     return largestId + 1;
 }
 
+
+function toggleNewTripButton() {
+    $('#createNewTrip').slideToggle(500);
+}
+
+
+function OBSOLETE_setNewTripButtonVisibility(show) {
+    if (show) {
+        $('#createNewTrip').fadeIn(700);
+    }
+    else {
+        $('#createNewTrip').fadeOut(700);
+
+    }
+}
