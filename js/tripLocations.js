@@ -51,7 +51,8 @@ function ClickNewLocation() {
     var html = '<input type="text" class="form-control" id="input-newlocation" placeholder="neuer Ort oder Zwischenstopp...">';
     $('#btn-newlocation').empty();  // remove field in case already existing
     $(this).append(html);           // overlay current location button with input field
-    $('#input-newlocation').blur(OnLocationEntered);  // add handler for input processing
+    $('#input-newlocation').blur(OnLocationPopupEntered);  // add handler for input processing
+    $('#input-newlocation').keydown(OnLocationPopupKeydown);  // add handler for input processing
     $('#input-newlocation').focus();    
 }
 
@@ -65,52 +66,88 @@ function ClickViewLocation() {
     showLocationsForm();
 }
 
-function OnLocationEntered() {
+function OnLocationPopupKeydown(event) {
+    // console.log(event.keyCode);
+    if(event.keyCode===13) {     // Enter
+        OnLocationPopupEntered();
+    }
+    else if(event.keyCode===27) { // ESC
+        $('#input-newlocation').remove();  // hide input field
+        addNewLocationTile();
+    }
+}
+
+function OnLocationKeydown(event) {
+    if(event.keyCode===13) {     // Enter
+        OnLocationEntered();
+    }
+}
+
+function OnLocationPopupEntered() {
     var location = $('#input-newlocation').val();
     if(location==='') {
         console.log('no location entered');
         $('#input-newlocation').remove();  // hide input field
-        showLocationsForm();
+        addNewLocationTile();  // re-draw 'new location' tile
         return;
     }
     console.log('Location: ' + location);
     $('#input-newlocation').remove();  // hide input field
+    // add locations tile before the 'new location' tile
+    locations.push({name: location});
+    showLocationTiles();   // update the location tiles
     showLocationsForm();
-    centerMapAroundAddress(location, "locationMap");
+    centerLocationMapAroundAddress(location, "locationMap");
+}
+
+function OnLocationEntered() {
+    var location = $('#locationName').val();
+    if((location==='') || (location==undefined)) {
+        console.log('no location entered');
+        return;
+    }
+    console.log('Location: ' + location);
+    centerTripMapAroundAddress(location, "locationMap");
+}
+
+function addLocationTile(locationName) {
+    var html = '<button type="button" class="btn-location existingLocation">' 
+    + '<span>' + locationName + '<span>'
+    +  '<span class="glyphicon glyphicon-plus"></span>'
+    + '</button>';
+    $('.location-buttons').append(html);
+}
+
+function addNewLocationTile() {
+    $('#btn-newlocation').remove();  // remove
+    var html = '<button type="button" class="btn-location" id="btn-newlocation">' 
+            + '<span class="mr-3">' + 'Ort hinzufügen' + '</span>'
+            + '<i class="fas fa-angle-double-right"></i></button>';
+    $('.location-buttons').append(html);  // add
+    $('#btn-newlocation').click(ClickNewLocation);
 }
 
 function showLocationTiles() {
 
-    var locations = [];
-    initDemoLocations(locations); 
     // $('.location-buttons').not('#addNewLocation').remove();
     $('.location-buttons').empty();  // delete all existing locations
 
     // add existing locations for this trip:
     for (var i = 0; i < locations.length; i++) {
-        var html = '<button type="button" class="btn-location existingLocation">' 
-        + '<span>' + locations[i].name + '<span>'
-        +  '<span class="glyphicon glyphicon-plus"></span>'
-        + '</button>';
-        $('.location-buttons').append(html);
+        addLocationTile(locations[i].name);
     }
-    // button 'add new' at the end:
-    html = '<button type="button" class="btn-location" id="btn-newlocation">' 
-            + '<span class="mr-3">' + 'Ort hinzufügen' + '</span>'
-            + '<i class="fas fa-angle-double-right"></i></button>';
-    $('.location-buttons').append(html);
-
-    // add 'view location' handler
+    // add handlers
     $('.existingLocation').click(ClickViewLocation);
 
-    // add 'new location' handler
-    $('#btn-newlocation').click(ClickNewLocation);
+    // button 'add new' at the end:
+    addNewLocationTile();
 
     // show location tiles
-    $('.triplocations').slideToggle(500, 'linear', function () {
-        // console.log('toggling location tiles');
-    });
-
+    if(!($('.triplocations').is(':visible'))) {
+        $('.triplocations').slideToggle(500, 'linear', function () {
+            // console.log('toggling location tiles');
+        });
+    }
 }
 
 function hideLocationTiles() {
@@ -118,19 +155,16 @@ function hideLocationTiles() {
 }
 
 function showLocationsForm() {
-
-    // TODO: toggle only if not visible
-
-// Checks css for display:[none|block], ignores visibility:[true|false]
-// $(element).is(":visible");
-
-    $('.locationdetail').slideToggle(500, 'linear', function () {
-        console.log('showing location details');
-    });
+    // toggle only if not visible
+    if(!($('.locationdetail').is(':visible'))) {
+        $('.locationdetail').slideToggle(500, 'linear', function () {
+            // console.log('showing location details');
+        });
+    }
 }
 
 function hideLocationsForm() {
-    $('.tripdetail').fadeOut(700);    
+    $('.locationdetail').fadeOut(700);    
 }
 
 function clearLocationsForm() {
@@ -153,7 +187,7 @@ function createNewLocationId(tripId) {
     return largestId + 1;
 }
 
-function initDemoLocations(locations) {
+function initDemoLocations() {
     // locations.push({
     //         id: 1,
     //         name: 'Sisteron stop1',
@@ -167,7 +201,10 @@ function initDemoLocations(locations) {
     //         camping_desc: 'Kommentar zum Camping hier...'
     //     });
 
+    // init if no locations exist yet
+    if(locations[0] === undefined) {
         locations.push({name: 'Ort abc1'});
         locations.push({name: 'Ort abc2'});
         locations.push({name: 'Ort abc3'});
+    }
 }

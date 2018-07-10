@@ -5,7 +5,7 @@ function ClickAddTrip() {
 
 function ClickViewTrip() {
 
-    console.log('show trip details...');
+    // console.log('show trip details...');
     var currentId = $(this).parent().parent().attr('id');
     
     // fade out all tiles except for selected one
@@ -35,6 +35,7 @@ function ClickViewTrip() {
 
     // show location tiles
     $('.tripdetail').fadeIn(700);
+    initDemoLocations();   // TODO: only if not existing yet
     showLocationTiles();
 
 }
@@ -86,11 +87,9 @@ function ClickSaveTripForm() {
         }
     }
 
-    console.log(trip);   // TODO: remove ########################
+    // console.log(trip);   // TODO: remove ########################
     saveTripsToLocalStore(); 
-    hideLocationTiles();
-    hideLocationsForm();
-    closeTripForm();
+    closeTripForm();  // will also hide location tiles and form
     displayTripTiles();
     clearTripForm();  // clear for next time
 
@@ -111,7 +110,6 @@ function ClickSaveTripForm() {
 }
 
 function ClickCancelTripForm() {
-    hideLocationsForm();
     closeTripForm();
     displayTripTiles();
     clearTripForm();
@@ -210,13 +208,14 @@ function showTripFormFilled(selectedTripIndex) {
     $('.newtrip #date').val(trips[selectedTripIndex].date);
     $('.newtrip #desc').val(trips[selectedTripIndex].desc);
 
-    centerMapAroundAddress(trips[selectedTripIndex].destination, "map");
+    centerTripMapAroundAddress(trips[selectedTripIndex].destination, "map");
     showTripForm();
 }
 
 function closeTripForm() {
     $('.newtrip').slideToggle(500, 'linear', function() {
         hideLocationTiles();
+        hideLocationsForm();
         toggleNewTripButton();
     });
 }
@@ -226,7 +225,7 @@ function closeTripForm() {
 function destinationEntered() {
     var destAddress = $('.newtrip #destination').val();
     console.log('New Destination: ' + destAddress);
-    centerMapAroundAddress(destAddress, "map");
+    centerTripMapAroundAddress(destAddress, "map");
 }
 
 function clearTripForm() {

@@ -121,11 +121,11 @@ form {
 }
 
 .borderRed {
-    border: 1px solid red;
+    /* border: 1px solid red; */
 }
 
 .borderGreen {
-    border: 2px solid mediumspringgreen;
+    /* border: 2px solid mediumspringgreen; */
 }
 
 footer {

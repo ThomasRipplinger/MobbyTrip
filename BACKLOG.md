@@ -40,36 +40,34 @@ BUG: save legt neuen Trip an auch bei "Edit"
 ID einführen (z.B. ID#Counter) und verwenden für 'delete trip'
 trip data anzeigen nach Anwahl "trip anschauen" 
 trip form edit and save
-
-### Roadmap zu MVO ###
-- Trip anlegen, löschen, Headerdaten: OK
-- Alignment etc.
 ## ----- DONE ------
+- add new location based on maps selection
+- Neuen Ort via Google Maps anlegen, als Pin anzeigen in der Trip Übersicht
+
+- TEST: async map request processing // test w/o internet
+- delete location
 - Form "Trip Details" aufbauen
-- nur anzeigen nach Anwahl Ort
-- Neuen Ort anlegen
-- Neuen Ort via Google Maps anlegen, als Pin anzeigen in der Trip Übersicht: TODO
 - nach "Trip anlegen": Ort hinzufügen anbieten
 - Tripdetails: speichern/laden 
 - Farbschema geradeziehen, besseres Startbild, 
 - 2 Demotrips anlegen  
 - Funktion auch offline sicherstellen
 !== null  vs  !== undefined
+
+
 ### --------------------
 - Prio2: zentrale Datenspeicherung
 - Prio2: Pins mit Route verbinden
 - Prio2: Route mit anderen teilen
 ### ENDE Roadmap ###
 
-bei Anwahl: edit "Location", bei blurr: Init Map im Detail-Bereich
-Sektionen im Detail Bereich zum Aufklappen (wenn Inhalt: aufgeklappt darstellen) https://getbootstrap.com/docs/4.1/components/collapse/#accordion-example
-fix map location init problem
 domain: triplogbook.online / Reisebuch.online    (mobbyTrip.de / .com)
 
 #create new location
 - Button "add location" rechts von der Map
 - bei "Speichern": add to data structure
 - save data locally
+- delete location
 
 #save and load location list
 - Test mit testing framework ?
@@ -81,19 +79,14 @@ domain: triplogbook.online / Reisebuch.online    (mobbyTrip.de / .com)
 #edit Trip data
 #add photo to trip-details form
 #link trip location to trip list
-neue Kachel hervorheben
-neue Kachel langsam ein-sliden
 bei "enter" nicht Cancel aktivieren...!
 bei "anlegen ok" kurz einen grünen Haken od. OK erscheinen lassen
 alle Tiles gleich hoch machen
-Layout verschönern (Farbschema, Schriftart?)
-select typeface
 select color schema (http://www.paletton.com/index.html#uid=75q1M0kiCFn8GVde7NVmtwSqXtg)
 Logo 'womoTrips' zweifarbig (Header?)
 trip details and location page w. demo data
 add camping info (adress, phone, cost, comment, rating)
 add photo carousel
-edit/delete location
 convert online map to img and download / link img
 
 
