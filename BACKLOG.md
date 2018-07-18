@@ -41,6 +41,14 @@ ID einführen (z.B. ID#Counter) und verwenden für 'delete trip'
 trip data anzeigen nach Anwahl "trip anschauen" 
 trip form edit and save
 ## ----- DONE ------
+
+#save location
+- bei "Speichern": add to data structure
+- save data locally
+- delete location
+
+#create new location
+- Button "add location" rechts von der Map
 - add new location based on maps selection
 - Neuen Ort via Google Maps anlegen, als Pin anzeigen in der Trip Übersicht
 
@@ -63,11 +71,6 @@ trip form edit and save
 
 domain: triplogbook.online / Reisebuch.online    (mobbyTrip.de / .com)
 
-#create new location
-- Button "add location" rechts von der Map
-- bei "Speichern": add to data structure
-- save data locally
-- delete location
 
 #save and load location list
 - Test mit testing framework ?

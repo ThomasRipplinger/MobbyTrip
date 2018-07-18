@@ -1,7 +1,8 @@
 var trips = [];
-var locations = [];
 var geocoder;
 var map;
+// var locationModified = false;
+var googleLibLoaded = false;
 
 $(document).ready(function () {
 

@@ -1,6 +1,9 @@
 
 function initializeMap() {
-    // return;  // #######################################
+    if (!googleLibLoaded) {
+        console.log('failed to load map resources - maybe due to missing internet connection');
+        return;
+    }
     geocoder = new google.maps.Geocoder();
     var latlng = new google.maps.LatLng(-34.397, 150.644);
     var mapOptions = {
@@ -11,7 +14,10 @@ function initializeMap() {
 }
 
 function centerTripMapAroundAddress(address, mapElement) {
-    // return;  // #######################################
+    if (!googleLibLoaded) {
+        console.log('failed to load map resources - maybe due to missing internet connection');
+        return;
+    }
     var geocoder = new google.maps.Geocoder();
     var latlng = new google.maps.LatLng(-34.397, 150.644);
     var mapOptions = {
@@ -21,7 +27,7 @@ function centerTripMapAroundAddress(address, mapElement) {
     console.log('Address: ' + address);
     geocoder.geocode({ 'address': address }, function (results, status) {
         if (status == 'OK') {
-            if(results == undefined) return;
+            if (results == undefined) return;
             // for (var i = 0; i < results.length; i++) {
             //     console.log('result #' + i + results[i].formatted_address);
             // }
@@ -39,7 +45,10 @@ function centerTripMapAroundAddress(address, mapElement) {
 }
 
 function centerLocationMapAroundAddress(address, mapElement) {
-    // return;  // #######################################
+    if (!googleLibLoaded) {
+        console.log('failed to load map resources - maybe due to missing internet connection');
+        return;
+    }
     var geocoder = new google.maps.Geocoder();
     var latlng = new google.maps.LatLng(-34.397, 150.644);
     var mapOptions = {
@@ -99,4 +108,5 @@ function getAdressFromGeocode(latLng, mapElementId, locationNameElementId, locat
 
 function mapsAPIinitDone() {
     console.log('Init Google maps API done');
+    googleLibLoaded = true;
 }

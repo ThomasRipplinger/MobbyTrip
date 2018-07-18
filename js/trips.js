@@ -6,88 +6,70 @@ function ClickAddTrip() {
 function ClickViewTrip() {
 
     // console.log('show trip details...');
-    var currentId = $(this).parent().parent().attr('id');
+    var tripId = $(this).parent().parent().attr('id');
     
     // fade out all tiles except for selected one
-    // var tiles = $('.triptile').not('#' + currentId);
+    // var tiles = $('.triptile').not('#' + tripId);
     // fade out ALL tiles 
     var tiles = $('.triptile');
     tiles.fadeOut(700);
 
     // show trip form with data of selected trip
-    // var selectedTrip = null;
-    var selectedTripIndex = null;
-    for(var i=0; i<trips.length; i++) {
-        var tripId = trips[i].id;
-        if(parseInt(currentId) === parseInt(tripId)) {
-            // selectedTrip = trips[i];
-            selectedTripIndex = i;
-            break;
-        }
-    }
-    if(selectedTripIndex === null) {
-        console.log('Error: selected trip not found or ID not set');
-        ClickAddTrip();
-    }
-    else {
-        showTripFormFilled(selectedTripIndex);
+    var tripIndex = getTripIndexForId(tripId);
+    if(tripIndex) {
+        fillTripFormWithData(tripIndex);
     }
 
     // show location tiles
     $('.tripdetail').fadeIn(700);
-    initDemoLocations();   // TODO: only if not existing yet
-    showLocationTiles();
+    initDemoLocations(tripIndex);   
+    showLocationTiles(tripIndex);  
 
 }
 
 function ClickSaveTripForm() {
-
     var tripId;
+    var locations = [];
     console.log('saving trip data...');
 
     tripId = $('.newtrip #id').val();
     console.log('Trip Id: ' + tripId);
 
     // check if new trip
-    if(tripId ==='') {
-        console.log('new trip...');
+    if (tripId === '') {
         newTrip = true;
-        var trip = {
-            id: createNewTripId(),
-            destination: $('.newtrip #destination').val(),
-            name: $('.newtrip #name').val(),
-            length: $('.newtrip #length').val(),
-            duration: $('.newtrip #duration').val(),
-            // date: $('.newtrip #date').val(),
-            desc: $('.newtrip #desc').val()
-        };
-        trips.unshift(trip);  // add to beginning of array
+        console.log('new trip...');
+        tripId = createNewTripId();
     }
     else {
         newTrip = false;
+        tripId = parseInt(tripId);
+    }
+
+    var trip = {
+        id: tripId,
+        destination: $('.newtrip #destination').val(),
+        name: $('.newtrip #name').val(),
+        length: $('.newtrip #length').val(),
+        duration: $('.newtrip #duration').val(),
+        // date: $('.newtrip #date').val(),
+        desc: $('.newtrip #desc').val(),
+        locations: locations
+    };
+
+    if (newTrip) {
+        trips.unshift(trip);  // add new trip to beginning of array
+    }
+    else {
         // find current trip index in array
-        var i=0;
-        for(i=0; i<trips.length; i++) {
-            if(parseInt(trips[i].id) === parseInt(tripId)) {
-                trips[i] = {
-                    id: parseInt(tripId),
-                    destination: $('.newtrip #destination').val(),
-                    name: $('.newtrip #name').val(),
-                    length: $('.newtrip #length').val(),
-                    duration: $('.newtrip #duration').val(),
-                    // date: $('.newtrip #date').val(),
-                    desc: $('.newtrip #desc').val()
-                };
-                break;
-            }
-        }
-        if(i === trips.length + 1) {   // TODO: test #####################
-            console.log('ERROR: trip ID not found, not saving!');
-            return;   
+        var tripIndex = getTripIndexForId(tripId);
+        // update data
+        if (tripIndex) {
+            trips[tripIndex] = trip;
         }
     }
 
-    // console.log(trip);   // TODO: remove ########################
+    // console.log(trip);   
     saveTripsToLocalStore(); 
     closeTripForm();  // will also hide location tiles and form
     displayTripTiles();
@@ -106,7 +88,6 @@ function ClickSaveTripForm() {
     // else {   // just close trip form
         // closeTripForm();
     // }
-
 }
 
 function ClickCancelTripForm() {
@@ -186,30 +167,27 @@ function deleteTrip() {
     saveTripsToLocalStore();
 }
 
-// NEW TRIP - show empty form  
+function fillTripFormWithData(tripIndex) {
+    // console.log('selected trip index:');
+    // console.log(tripIndex);  
+    $('.newtrip #id').val(trips[tripIndex].id);
+    $('.newtrip #destination').val(trips[tripIndex].destination);
+    $('.newtrip #name').val(trips[tripIndex].name);
+    $('.newtrip #length').val(trips[tripIndex].length);
+    $('.newtrip #duration').val(trips[tripIndex].duration);
+    $('.newtrip #date').val(trips[tripIndex].date);
+    $('.newtrip #desc').val(trips[tripIndex].desc);
+
+    centerTripMapAroundAddress(trips[tripIndex].destination, "map");
+    showTripForm();
+}
+
 function showTripForm() {
     $('.newtrip').slideToggle(500, 'linear', function () {
         initializeMap();
         toggleNewTripButton();
     });
 
-}
-
-// EDIT TRIP - show form with data
-function showTripFormFilled(selectedTripIndex) {
-    
-    console.log('selected trip index:');
-    console.log(selectedTripIndex);  // ######################### TODO: remove
-    $('.newtrip #id').val(trips[selectedTripIndex].id);
-    $('.newtrip #destination').val(trips[selectedTripIndex].destination);
-    $('.newtrip #name').val(trips[selectedTripIndex].name);
-    $('.newtrip #length').val(trips[selectedTripIndex].length);
-    $('.newtrip #duration').val(trips[selectedTripIndex].duration);
-    $('.newtrip #date').val(trips[selectedTripIndex].date);
-    $('.newtrip #desc').val(trips[selectedTripIndex].desc);
-
-    centerTripMapAroundAddress(trips[selectedTripIndex].destination, "map");
-    showTripForm();
 }
 
 function closeTripForm() {
@@ -220,7 +198,6 @@ function closeTripForm() {
     });
 }
 
-// NEW TRIP - SAVE ###############################
 // destination entered - center map around the dest. 
 function destinationEntered() {
     var destAddress = $('.newtrip #destination').val();
@@ -240,8 +217,6 @@ function clearTripForm() {
 
 function logAllTrips(logcomment) {
     console.log(logcomment);
-    // return(true); // ####################################
-
     if (trips !== null) {
         for (var i = 0; i < trips.length; i++) {
             console.log('Trip #' + i + ':');
@@ -251,7 +226,6 @@ function logAllTrips(logcomment) {
 }
 
 function createNewTripId() {
-
     var largestId = 0;
     // iterate over trips
     if(trips !== undefined) {
@@ -268,6 +242,19 @@ function toggleNewTripButton() {
     $('#createNewTrip').slideToggle(500);
 }
 
+function getTripIndexForId(tripId) {
+    // find current trip index in array
+    var i = 0;
+    for (i = 0; i < trips.length; i++) {
+        if (parseInt(trips[i].id) === parseInt(tripId)) {
+            return(i);
+        }
+    }
+    if (i === trips.length) {
+        console.log('ERROR: trip ID not found');
+        return(undefined);
+    }
+}
 
 function OBSOLETE_setNewTripButtonVisibility(show) {
     if (show) {
