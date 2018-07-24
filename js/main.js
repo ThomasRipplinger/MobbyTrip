@@ -27,7 +27,7 @@ $(document).ready(function () {
     $('.triplocations .btncancel').click(ClickCancelLocationsForm);
 
     $('.locationdetail #locationName').keydown(OnLocationKeydown);
-    $('.locationdetail #locationName').blur(OnLocationEntered);
+    $('.locationdetail #locationName').blur(OnFormLocationEntered);
 
 });
 

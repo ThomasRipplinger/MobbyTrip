@@ -1,47 +1,27 @@
 function ClickSaveLocationsForm() {
+    SaveLocationsForm();
+    hideLocationsForm();
+    clearLocationsForm();  // for next time
+}
 
-    var tripId = $('.newtrip #id').val();
+function saveLocationsForm() {
+    // check if location form is open 
+    var locationId = $('.locationdetail #locationId').val();
+    if (locationId === '') {
+        return
+    };
+    var tripId = $('.newtrip #tripId').val();
     var tripIndex = getTripIndexForId(tripId);
+    var locationIndex = getLocationIndexForId(tripIndex, locationId);
     console.log('saving trip detail data for trip index:' + tripIndex);
 
-    var locationId = $('locationdetail').val();
-    var newLocation;
-    // check if new location
-    if(locationId ==='') {
-        // add new 
-        console.log('new location...');
-        newLocation = true;
-        var location = {
-            id: createNewLocationId(),
-            name: $('locationdetail').val(),
-            desc: $('.locationdetail #desc').val()
-        };
-        trips[tripIndex].locations.shift(location);  // add to end of array
-    }
-    else {
-        // update    console.log('existing location...');
-        newLocation = false;
-        // find current location index in array
-        var i=0;
-        for(i=0; i<trips[tripIndex].locations.length; i++) {
-            if(parseInt(trips[tripIndex].locations[i].id) === parseInt(locationId)) {
-                trips[tripIndex].locations[i] = {
-                    id: parseInt(locationId),
-                    name: $('.locationdetail #locationName').val(),
-                    desc: $('.locationdetail #dlocationDesc').val()
-                };
-                break;
-            }
-        }
-        if(i === trips[tripIndex].locations.length) {   
-            console.log('ERROR: location ID not found, not saving!');
-            return;   
-        }
-    }
-
-    saveTripsToLocalStore(); 
-    hideLocationsForm();
-    clearLocationsForm();  // clear for next time
+    // update data
+    trips[tripIndex].locations[locationIndex] = {
+        id: parseInt(locationId),
+        name: $('.locationdetail #locationName').val(),
+        desc: $('.locationdetail #locationDesc').val()
+    };
+    saveTripsToLocalStore();
 }
 
 function ClickCancelLocationsForm() {
@@ -52,7 +32,7 @@ function ClickCancelLocationsForm() {
 function ClickNewLocation() {
     // hide locations form 
     hideLocationsForm();
-    selectedLocation = '';
+    clearLocationsForm();
     // add overlay then wait for user input
     var html = '<input type="text" class="form-control" id="input-newlocation" placeholder="neuer Ort oder Zwischenstopp...">';
     $('#btn-newlocation').empty();  // remove field in case already existing
@@ -64,27 +44,39 @@ function ClickNewLocation() {
 
 function ClickViewLocation() {
     // check if same location selected: do nothing
-    var newLocationId = $(this).find('.btn-location #id').text();
+    var newLocationId = $(this).attr('id');
     var prevLocationId = $('#prevlocation').text();
     if (prevLocationId === newLocationId) {
         return;  // same, do nothing 
     }
     else {
-        // different location selected: save current location
+        // if locationsform displayed: save
+        if(prevLocationId!=='') {
+            saveLocationsForm();
+        }
         $('#prevlocation').text(newLocationId);
 
-        ClickSaveLocationsForm();
-
-        // different location selected: fill in data 
-        var currentTripId = $('.newtrip #id').val();
-        var tripIndex = getTripIndexForId(tripId);
-        var locationIndex = getLocationIndexForId(newLocationId);
+        // fill data in location form 
+        var currentTripId = $('.newtrip #tripId').val();
+        var tripIndex = getTripIndexForId(currentTripId);
+        var locationIndex = getLocationIndexForId(tripIndex, newLocationId);
+        $('.locationdetail #locationId').val(trips[tripIndex].locations[locationIndex].id);
         $('.locationdetail #locationName').val(trips[tripIndex].locations[locationIndex].name);
         $('.locationdetail #locationDesc').val(trips[tripIndex].locations[locationIndex].desc);
     }
+    showLocationForm();
 }
-showLocationsForm();
 
+function getLocationIndexForId(tripIndex, locationId) {
+    // find current location index in array
+    for (var i = 0; i < trips[tripIndex].locations.length; i++) {
+        if (parseInt(trips[tripIndex].locations[i].id) === parseInt(locationId)) {
+            return (i);
+        }
+    }
+    console.log('ERROR: location ID not found');
+    return (undefined);
+}
 
 function OnLocationPopupKeydown(event) {
     // console.log(event.keyCode);
@@ -99,38 +91,49 @@ function OnLocationPopupKeydown(event) {
 
 function OnLocationKeydown(event) {
     if(event.keyCode===13) {     // Enter
-        OnLocationEntered();
+        OnFormLocationEntered();
     }
 }
 
 function OnLocationPopupEntered() {
-
-    var tripId = $('.newtrip #id').val();
-    var tripIndex = getTripIndexForId(tripId);
-
+    // user has entered a new location in popup overlay
     var location = $('#input-newlocation').val();
+    $('#input-newlocation').remove();  // hide input field
+    // check if valid entry
     if(location==='') {
         console.log('no location entered');
-        $('#input-newlocation').remove();  // hide input field
         addNewLocationTile();  // re-draw 'new location' tile
         return;
     }
+    // add to data + add locations tile before the 'new location' tile
     console.log('Location: ' + location);
-    $('#input-newlocation').remove();  // hide input field
-    // add locations tile before the 'new location' tile
-    trips[tripIndex].locations.push({name: location, id: createNewLocationId(tripIndex)});
+    var tripId = $('.newtrip #tripId').val();
+    var tripIndex = getTripIndexForId(tripId);
+    var locationId = createNewLocationId(tripIndex);
+    trips[tripIndex].locations.push({name: location, id: locationId});
     showLocationTiles(tripIndex);   // update the location tiles
-    showLocationsForm();
+    $('.locationdetail #locationId').val(locationId);  // update location id in form
+    $('.locationdetail #locationName').val(location);  // update location name in form
+    // init and show location form
+    initDemoLocations(tripIndex);
+    showLocationForm();
+    // update map
     centerLocationMapAroundAddress(location, "locationMap");
 }
 
-function OnLocationEntered() {
+function OnFormLocationEntered() {
+    // user has entered a new location in location form => update data and map
     var location = $('#locationName').val();
     if((location==='') || (location==undefined)) {
         console.log('no location entered');
         return;
     }
     console.log('location: ' + location);
+    var tripId = $('.newtrip #tripId').val();
+    var locationId = $('.locationdetail #locationId').val();
+    var tripIndex = getTripIndexForId(tripId);
+    var locationIndex = getLocationIndexForId(locationId);
+    trips[tripIndex].locations[locationIndex].name = location;
     centerTripMapAroundAddress(location, "locationMap");
 }
 
@@ -178,7 +181,7 @@ function hideLocationTiles() {
     $('.triplocations').fadeOut(700);    
 }
 
-function showLocationsForm() {
+function showLocationForm() {
     // toggle only if not visible
     if(!($('.locationdetail').is(':visible'))) {
         $('.locationdetail').slideToggle(500, 'linear', function () {
@@ -192,7 +195,7 @@ function hideLocationsForm() {
 }
 
 function clearLocationsForm() {
-    $('.locationdetail #id').val('');
+    $('.locationdetail #locationId').val('');
     $('.locationdetail #locationName').val('');
     $('.locationdetail #locationAddress').val('');
     $('.locationdetail #locationDesc').val('');
@@ -203,7 +206,7 @@ function clearLocationsForm() {
 function createNewLocationId(tripIndex) {
     var largestId = 0;
     // iterate over locations of current trip
-    if (trips[tripIndex].locations !== undefined) {
+    if (trips[tripIndex].locations) {
         for (var i = 0; i < trips[tripIndex].locations.length; i++) {
             if (parseInt(trips[tripIndex].locations[i].id) > largestId)
                 largestId = parseInt(trips[tripIndex].locations[i].id);

@@ -32,7 +32,7 @@ function ClickSaveTripForm() {
     var locations = [];
     console.log('saving trip data...');
 
-    tripId = $('.newtrip #id').val();
+    tripId = $('.newtrip #tripId').val();
     console.log('Trip Id: ' + tripId);
 
     // check if new trip
@@ -170,7 +170,7 @@ function deleteTrip() {
 function fillTripFormWithData(tripIndex) {
     // console.log('selected trip index:');
     // console.log(tripIndex);  
-    $('.newtrip #id').val(trips[tripIndex].id);
+    $('.newtrip #tripId').val(trips[tripIndex].id);
     $('.newtrip #destination').val(trips[tripIndex].destination);
     $('.newtrip #name').val(trips[tripIndex].name);
     $('.newtrip #length').val(trips[tripIndex].length);
@@ -206,7 +206,7 @@ function destinationEntered() {
 }
 
 function clearTripForm() {
-    $('.newtrip #id').val('');
+    $('.newtrip #tripId').val('');
     $('.newtrip #destination').val('');
     $('.newtrip #name').val('');
     $('.newtrip #length').val('');
@@ -244,16 +244,13 @@ function toggleNewTripButton() {
 
 function getTripIndexForId(tripId) {
     // find current trip index in array
-    var i = 0;
-    for (i = 0; i < trips.length; i++) {
+    for (var i = 0; i < trips.length; i++) {
         if (parseInt(trips[i].id) === parseInt(tripId)) {
             return(i);
         }
     }
-    if (i === trips.length) {
-        console.log('ERROR: trip ID not found');
-        return(undefined);
-    }
+    console.log('ERROR: trip ID not found');
+    return(undefined);
 }
 
 function OBSOLETE_setNewTripButtonVisibility(show) {
