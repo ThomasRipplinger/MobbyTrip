@@ -58,6 +58,7 @@ function ClickSaveTripForm() {
     };
 
     if (newTrip) {
+        if(!trips) trips = [];
         trips.unshift(trip);  // add new trip to beginning of array
     }
     else {
@@ -228,7 +229,8 @@ function logAllTrips(logcomment) {
 function createNewTripId() {
     var largestId = 0;
     // iterate over trips
-    if(trips !== undefined) {
+    // if(trips !== undefined) {
+    if(trips) {
         for(var i=0; i<trips.length; i++) {
             if(parseInt(trips[i].id) > largestId) 
                 largestId = parseInt(trips[i].id);
