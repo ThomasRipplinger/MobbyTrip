@@ -230,8 +230,7 @@ function logAllTrips(logcomment) {
 function createNewTripId() {
     var largestId = 0;
     // iterate over trips
-    // if(trips !== undefined) {
-    if(trips) {
+    if(trips !== undefined) {
         for(var i=0; i<trips.length; i++) {
             if(parseInt(trips[i].id) > largestId) 
                 largestId = parseInt(trips[i].id);
