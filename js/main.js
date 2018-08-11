@@ -1,13 +1,12 @@
-var trips = [];
-var geocoder;
-var map;
-// var locationModified = false;
-var googleLibLoaded = false;
+trips = [];
+geocoder = null;
+map = null;
+var googleLibLoaded = false; 
+
 
 $(document).ready(function () {
-
     //  execute after form load --------------------------------------
-
+    
     // console.log('loadTripsFromLocalStore...');
     loadTripsFromLocalStore();
 
