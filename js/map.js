@@ -27,7 +27,7 @@ function centerTripMapAroundAddress(address, mapElement) {
     console.log('Address: ' + address);
     geocoder.geocode({ 'address': address }, function (results, status) {
         if (status == 'OK') {
-            if (results == undefined) return;
+            if (results === undefined) return;
             // for (var i = 0; i < results.length; i++) {
             //     console.log('result #' + i + results[i].formatted_address);
             // }
@@ -58,7 +58,7 @@ function centerLocationMapAroundAddress(address, mapElement) {
     console.log('Address: ' + address);
     geocoder.geocode({ 'address': address }, function (results, status) {
         if (status == 'OK') {
-            if(results == undefined) return;
+            if(results === undefined) return;
             var map = new google.maps.Map(document.getElementById(mapElement), mapOptions);
             map.addListener('click', OnLocationsMapClicked);
             map.setCenter(results[0].geometry.location);

@@ -5,7 +5,7 @@ function ClickAddTrip() {
 
 function ClickViewTrip() {
 
-    // console.log('show trip details...');
+    console.log('show trip details...');
     var tripId = $(this).parent().parent().attr('id');
     
     // fade out all tiles except for selected one
@@ -16,7 +16,8 @@ function ClickViewTrip() {
 
     // show trip form with data of selected trip
     var tripIndex = getTripIndexForId(tripId);
-    if(tripIndex) {
+    if(tripIndex !== undefined) {
+        console.log('fill data for trip index: ' + tripIndex);
         fillTripFormWithData(tripIndex);
     }
 
