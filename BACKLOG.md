@@ -32,7 +32,7 @@ Code auf mehrere Dateien aufsplitten
 delete trip
 TESTS schreiben für: trip save and load 
 save and load data (locally)
-- fix "delete tile" issue (ID problem?)
+- fix "delete tile" issue (ID problem)
 - create each tile with own unique ID => support fade out of all tiles...
 show trip form 
 close both trip and detail form 
@@ -40,113 +40,107 @@ BUG: save legt neuen Trip an auch bei "Edit"
 ID einführen (z.B. ID#Counter) und verwenden für 'delete trip'
 trip data anzeigen nach Anwahl "trip anschauen" 
 trip form edit and save
+Refactor all interfaces, remove index from interfaces
+
 ## ----- DONE ------
-
-#save location
-- bei "Speichern": add to data structure
-- save data locally
+- add procedural logging (using logging lib?)
+- remove 'save trip' button - only keep 'OK' (there is no cancel - would complicate the entrire UX, rather save each ministep)
+- save each ministep: after create location, on close location form, on select other location form
 - delete location
 
-#create new location
-- Button "add location" rechts von der Map
-- add new location based on maps selection
-- Neuen Ort via Google Maps anlegen, als Pin anzeigen in der Trip Übersicht
+Merge branch to mainline if test OK
+    https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging
+    git branch myBranch
+    git checkout myBranch
+    ...
 
-- TEST: async map request processing // test w/o internet
-- delete location
-- Form "Trip Details" aufbauen
-- nach "Trip anlegen": Ort hinzufügen anbieten
-- Tripdetails: speichern/laden 
+- create new location: Ort als Pin anzeigen in der Trip Übersicht
+- OnLocationMarkerPositionChanged: get adress of new marker position
+- OnTripMarkerPositionChanged: ...?
+- if no data: add 2 demo tiles
+- getLocationIndexById: remove tripIndex (make locationId unique)
+- async map request processing // test w/o internet (Funktion auch offline sicherstellen)
 - Farbschema geradeziehen, besseres Startbild, 
-- 2 Demotrips anlegen  
-- Funktion auch offline sicherstellen
-!== null  vs  !== undefined
-
-
-### --------------------
-- Prio2: zentrale Datenspeicherung
-- Prio2: Pins mit Route verbinden
-- Prio2: Route mit anderen teilen
-### ENDE Roadmap ###
-
-domain: triplogbook.online / Reisebuch.online    (mobbyTrip.de / .com)
-
-
-#save and load location list
+  color schema (http://www.paletton.com/index.html#uid=75q1M0kiCFn8GVde7NVmtwSqXtg)
 - Test mit testing framework ?
 - Felder nur bei Bedarf anzeigen: ... => Auswahl weiterer Felder
 
-#integrate google maps for route overview - lade map mit Basis "Reiseziel", Umkreis 100km
-#integrate google maps for locations - lade map mit Basis "Reiseziel", Umkreis 20km
-
-#edit Trip data
-#add photo to trip-details form
-#link trip location to trip list
-bei "enter" nicht Cancel aktivieren...!
+add photo to trip-details form
+add trip: bei "enter" nicht Cancel aktivieren...!
 bei "anlegen ok" kurz einen grünen Haken od. OK erscheinen lassen
-alle Tiles gleich hoch machen
-select color schema (http://www.paletton.com/index.html#uid=75q1M0kiCFn8GVde7NVmtwSqXtg)
-Logo 'womoTrips' zweifarbig (Header?)
-trip details and location page w. demo data
-add camping info (adress, phone, cost, comment, rating)
-add photo carousel
-convert online map to img and download / link img
+convert online map to img and download / link img ?
 
 
+### ------PRIO 2 ------------------------------
+- Prio2: zentrale Datenspeicherung
+- Prio2: Pins mit Route verbinden
+- Prio2: Route mit anderen teilen
+domain: triplogbook.online / Reisebuch.online    (mobbyTrip.de / .com)
+### ENDE Roadmap ###
+
+
+--------------------------------------------------------------------------------------
 ##EVENTS
 
-# form load
+# On form load
 load data
-****if no data: add 2 demo tiles
 show tiles
 
+
 # add trip
-hide 'new trip button'
 clear trip form
-show trip form
-
-# show trip
-hide 'new trip button'
-fill in trip form with data
-show trip form
-show location tiles
-
-# show trip locations
-remove tiles
-show trip locations form
+show trip form (and hide 'new trip' button)
 
 # save trip form
 save trip data
-hide trip form
-hide trip locations form
-hide location tiles
-show tiles
+hide trip locations form and tiles
+hide trip form (and show 'new trip' button)
 clear trip form
-show 'new trip button'
+re-init trip tiles (hide/show)
 
 # cancel trip form
 hide trip form
-hide trip locations form
-hide location tiles
-show tiles
 clear trip form
-show 'new trip button'
+hide trip locations form and tiles
+hide location tiles
+re-init trip tiles (hide/show)
 
-# add location
-*** cancel current location if visible
-*** clear location form
-*** open location form
+# show trip
+hide trip tiles
+fill in trip form with data
+show trip form (and: hide 'new trip button', initialize Map, show location tiles)
 
-# show location
-*** cancel current location if visible
-*** fill location form with data
-*** open location form
+# add new location
+save current location (if visible) 
+clear location form
+add overlay and wait for input, then
+   show trip locations form
+
+# select trip location
+if new selection: save current location 
+fill location form with data
+show trip locations form
 
 # save location form
-save trip/location data
+save trip+location data  (name, id, desc)
 hide location form
 clear location form
 
-# cancel location form
+# close location form
 hide location form
 clear location form
+
+---------------------------------------------------------
+## saving strategy
+for trip (header) data: 
+  all trips are part of one overall array
+  saving is done per single trip, with 'save trip' button
+  by adding to overall trip data array (which has been loaded at startup)
+  initialized with saving the first trip
+for locations:
+  locations are an array per trip
+  saving along with each trip
+  saving each ministep: after create location, on close location form, on select other location form
+  initialized with saving a new trip
+
+  

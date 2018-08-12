@@ -37,8 +37,8 @@
             </span> -->
         </div>
 
-        <!-- *********************************** NEW TRIP FORM (startup: invisible) **************************** -->
-        <div class="newtrip m-4">
+        <!-- *********************************** TRIP FORM (startup: invisible) **************************** -->
+        <div class="tripForm m-4">
             <input type="text" id="tripId">
             <form>
                 <div class="pl-1 col-sm-4">
@@ -81,9 +81,9 @@
 
                 </div>
 
-                <div class="col-sm-8" id="map">
+                <div class="col-sm-8" id="tripMap">
                     <div class="form-group row">
-                    Karte kann nicht geladen werden - kein  Internet
+                    unable to load map - check internet connection
                     </div>
                 </div>
 
@@ -92,8 +92,7 @@
 
         <!-- *********************************** TRIP TILES **************************************************** -->
         <div class="container-fluid">
-            <div class="row triptiles mx-2">
-
+            <div class="row tripTiles mx-2">
                 <!-- <div class="col-md-4 triptile" id="t001">
                     <div class="row">
                         <h2 class="col-sm-10">TEST</h2>
@@ -110,16 +109,15 @@
                         <a class="btn btn-secondary viewtrip" href="#" role="button">Anschauen »</a>
                     </p>
                 </div> -->
-
             </div>
         </div>
         <!-- trip tiles added here via JS -->
 
 
-        <!-- *********************************** TRIP DETAILS LOCATIONS ******************************************** -->
-        <div class="triplocations container-fluid mx-4">
+        <!-- *********************************** LOCATION TILES ******************************************** -->
+        <div class="locationsContainer container-fluid mx-4">
             <input type="text" class="form-control" id="prevlocation">
-            <div class="row location-buttons">
+            <div class="locationTiles row">
                 <!-- location buttons added here via JS -->
                 <!-- <button type="button" class="btn-location"><span class="mr-3">Index.html neuer Ort</span><i class="fas fa-angle-double-right"></i></button>
                         <input type="text" class="form-control" id="newlocation" placeholder="neuer Ort oder Zwischenstopp..."> -->
@@ -132,11 +130,11 @@
 
             <!-- *********************************** LOCATION FORM (startup: invisible) **************************** -->
             <!-- first row: map + location details (camping, hotel...) -->
-            <div class="locationdetail m-4 borderRed">
+            <div class="locationForm m-4 borderRed">
                 <form>
                 <input type="text" id="locationId">
                 <div class="col-sm-6 borderGreen" id="locationMap"> <!-- first row, left side: map -->
-                    Karte kann nicht geladen werden - kein  Internet
+                    unable to load map - check internet connection
                 </div>
                     <div class="pl-1 col-sm-6 borderRed">     <!-- first row, right side: location details -->
                         <div class="form-group row">
@@ -189,7 +187,7 @@
             
 
             </div>
-            <!-- <div class="row locationdetail">
+            <!-- <div class="row locationForm">
                 <div class="locationdata col-sm-6">
             
                     <div class="dropdown">
@@ -239,6 +237,7 @@
     <!-- AIzaSyBmL7Lwc0zAtlphBU9trmScjLJFLhqtziQ -->
 
     <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="js/log4javascript.js"></script> 
     <script type="text/javascript" src="js/main.js"></script>
     <script type="text/javascript" src="js/map.js"></script>
     <script type="text/javascript" src="js/trips.js"></script>
@@ -247,6 +246,7 @@
     <script type="text/javascript" src="js/tests.js"></script>
     <script type="text/javascript" src="js/localStoreTest.js"></script>
     <script type="text/javascript" src="js/tripTest.js"></script>
+
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAoRF_fIaVlDMBFipr5jjRHyFT49VKLXvU&callback=mapsAPIinitDone"></script>
     <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAoRF_fIaVlDMBFipr5jjRHyFT49VKLXvU"></script> -->
     <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAoRF_fIaVlDMBFipr5jjRHyFT49VKLXvU"></script> -->

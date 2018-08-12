@@ -2,31 +2,39 @@ trips = [];
 geocoder = null;
 map = null;
 var googleLibLoaded = false; 
+var log = log4javascript.getDefaultLogger();
 
+// http://log4javascript.org/docs/quickstart.html
+// log.trace(message[, message2, ... ][, exception])
+// log.debug(message[, message2, ... ][, exception])
+// log.debug(message[, message2, ... ][, exception])
+// log.warn(message[, message2, ... ][, exception])
+// log.error(message[, message2, ... ][, exception])
+// log.fatal(message[, message2, ... ][, exception])
 
 $(document).ready(function () {
     //  execute after form load --------------------------------------
     
-    // console.log('loadTripsFromLocalStore...');
+    // log.debug('loadTripsFromLocalStore...');
     loadTripsFromLocalStore();
 
-    // console.log('displayTripTiles...');
+    // log.debug('displayTripTiles...');
     displayTripTiles();
 
 
     // register jquery events ----------------------------------------
 
-    $('.jumbotron .btnnew').click(ClickAddTrip);
+    $('.jumbotron .btnnew').click(OnAddTrip);
     
-    $('.newtrip .btnsave').click(ClickSaveTripForm);
-    $('.newtrip .btncancel').click(ClickCancelTripForm);
-    $('.newtrip #destination').blur(destinationEntered);
+    $('.tripForm .btnsave').click(OnSaveTripForm);
+    $('.tripForm .btncancel').click(OnCancelTripForm);
+    $('.tripForm #destination').blur(OnDestinationEntered);
     
-    $('.triplocations .btnsave').click(ClickSaveLocationsForm);
-    $('.triplocations .btncancel').click(ClickCancelLocationsForm);
+    $('.locationsContainer .btnsave').click(OnSaveLocationsForm);
+    $('.locationsContainer .btncancel').click(OnCancelLocationsForm);
 
-    $('.locationdetail #locationName').keydown(OnLocationKeydown);
-    $('.locationdetail #locationName').blur(OnFormLocationEntered);
+    $('.locationForm #locationName').keydown(OnLocationKeydown);
+    $('.locationForm #locationName').blur(OnFormLocationEntered);
 
 });
 

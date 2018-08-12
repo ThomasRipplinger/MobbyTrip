@@ -1,14 +1,14 @@
 // OBSOLETE functions -------------------------------------
 
 function animateForm() {
-    var displayStatus = $('.newtrip').css('display');
+    var displayStatus = $('.tripForm').css('display');
     if (displayStatus === 'none') {
-        $('.newtrip').animate({ 'height': '270px' }, 500, 'linear');
-        $('.newtrip').show();
+        $('.tripForm').animate({ 'height': '270px' }, 500, 'linear');
+        $('.tripForm').show();
     }
     else {
-        $('.newtrip').animate({ 'height': '0px' }, 500, 'linear', function () {
-            $('.newtrip').hide();
+        $('.tripForm').animate({ 'height': '0px' }, 500, 'linear', function () {
+            $('.tripForm').hide();
         });
     }
 }
@@ -16,8 +16,8 @@ function animateForm() {
 function displayTripTilesOLD() {
     for (var i = 0; i < trips.length; i++) {
 
-        console.log("adding tile id #" + i);
-        console.log(trips[i]);
+        log.debug("adding tile id #" + i);
+        log.debug(trips[i]);
         var newtile = '<div class="col-md-4 triptile ' + trips[i].id + '">'
             + '<h2>' + trips[i].name + '</h2>'
             + '<div>'
@@ -27,11 +27,11 @@ function displayTripTilesOLD() {
             + '<span class="trip-desc-short">' + trips[i].desc + '</span>'
             + '<p><a class="btn btn-secondary" href="#" role="button">Anschauen »</a></p>'
             + '</div>';
-        // console.log('created new tile:');
-        // console.log(newtile);
-        // console.log(trips);
+        // log.debug('created new tile:');
+        // log.debug(newtile);
+        // log.debug(trips);
 
-        $('.triptiles').append(newtile);
+        $('.tripTiles').append(newtile);
     }
     return;
 }
@@ -64,5 +64,5 @@ function setDemoTrips() {
             desc: 'Beschreibung der Reise ...bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla ...',
         }
     ];
-    console.log(trips);
+    log.debug(trips);
 }

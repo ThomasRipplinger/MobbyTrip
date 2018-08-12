@@ -1,18 +1,18 @@
 function tripTest() {
 
-    console.log('*** running tripTest ***');
+    log.debug('*** running tripTest ***');
 
     if (getTripIndexForId(1) > 0) 
-        console.log('PASSED test getTripIndexForId for Id=1');
+        log.debug('PASSED test getTripIndexForId for Id=1');
     else
-        console.log('FAILED test getTripIndexForId for Id=1');
+        log.debug('FAILED test getTripIndexForId for Id=1');
 
     if (getTripIndexForId(99999) > 0) 
-        console.log('FAILED test getTripIndexForId for Id=99999');
+        log.debug('FAILED test getTripIndexForId for Id=99999');
 
     if (getTripIndexForId(99999) === undefined) 
-        console.log('PASSED test getTripIndexForId for Id=99999');
+        log.debug('PASSED test getTripIndexForId for Id=99999');
 
-    console.log('*** done');
+    log.debug('*** done');
     return(true);
 }
