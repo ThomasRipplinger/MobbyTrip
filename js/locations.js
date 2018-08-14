@@ -145,6 +145,7 @@ function showLocationTilesForTrip(tripId) {
     log.info('show location tiles for trip: ' + tripId);
 
     var tripIndex = getTripIndexById(tripId);
+    if(tripIndex===undefined) return;
 
     // $('.locationTiles').not('#addNewLocation').remove();
     $('.locationTiles').empty();  // delete all existing locations

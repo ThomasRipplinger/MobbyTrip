@@ -86,7 +86,6 @@ domain: triplogbook.online / Reisebuch.online    (mobbyTrip.de / .com)
 load data
 show tiles
 
-
 # add trip
 clear trip form
 show trip form (and hide 'new trip' button)
