@@ -41,9 +41,9 @@ ID einführen (z.B. ID#Counter) und verwenden für 'delete trip'
 trip data anzeigen nach Anwahl "trip anschauen" 
 trip form edit and save
 Refactor all interfaces, remove index from interfaces
+- add procedural logging (using logging lib)
 
 ## ----- DONE ------
-- add procedural logging (using logging lib?)
 - remove 'save trip' button - only keep 'OK' (there is no cancel - would complicate the entrire UX, rather save each ministep)
 - save each ministep: after create location, on close location form, on select other location form
 - delete location
