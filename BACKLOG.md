@@ -44,9 +44,9 @@ Refactor all interfaces, remove index from interfaces
 - add procedural logging (using logging lib)
 
 ## ----- DONE ------
+- delete location
 - remove 'save trip' button - only keep 'OK' (there is no cancel - would complicate the entrire UX, rather save each ministep)
 - save each ministep: after create location, on close location form, on select other location form
-- delete location
 
 Merge branch to mainline if test OK
     https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging
@@ -109,6 +109,7 @@ hide trip tiles
 fill in trip form with data
 show trip form (and: hide 'new trip button', initialize Map, show location tiles)
 
+# test ok **************************************************
 # add new location
 save current location (if visible) 
 clear location form

@@ -2,7 +2,16 @@ trips = [];
 geocoder = null;
 map = null;
 var googleLibLoaded = false; 
-var log = log4javascript.getDefaultLogger();
+// var log = log4javascript.getDefaultLogger();
+var log = log4javascript.getLogger();
+var popUpAppender = new log4javascript.PopUpAppender(); // open at start, start minimized
+popUpAppender.setUseOldPopUp();
+popUpAppender.setNewestMessageAtTop(true);
+popUpAppender.setScrollToLatestMessage(true);
+popUpAppender.setWidth(800);
+popUpAppender.setInitiallyMinimized(false);
+log.addAppender(popUpAppender);
+// log.setLevel(log4javascript.Level.INFO);
 
 // http://log4javascript.org/docs/quickstart.html
 // log.trace(message[, message2, ... ][, exception])

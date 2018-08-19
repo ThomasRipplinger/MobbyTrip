@@ -14,20 +14,20 @@ function OnTripMarkerPositionChanged() {
     // TODO
 }
 
-function initializeMap(mapElement) {
-    log.info('init map');
-    if (!googleLibLoaded) {
-        log.debug('failed to load map resources - maybe due to missing internet connection');
-        return;
-    }
-    geocoder = new google.maps.Geocoder();
-    var latlng = new google.maps.LatLng(-34.397, 150.644);
-    var mapOptions = {
-        zoom: 8,
-        center: latlng
-    }
-    map = new google.maps.Map(document.getElementById(mapElement), mapOptions);
-}
+// function initializeMap(mapElement) {
+//     log.info('init map');
+//     if (!googleLibLoaded) {
+//         log.debug('failed to load map resources - maybe due to missing internet connection');
+//         return;
+//     }
+//     geocoder = new google.maps.Geocoder();
+//     var latlng = new google.maps.LatLng(-34.397, 150.644);
+//     var mapOptions = {
+//         zoom: 8,
+//         center: latlng
+//     }
+//     map = new google.maps.Map(document.getElementById(mapElement), mapOptions);
+// }
 
 // function centerTripMapAroundAddress(address, mapElement) {
 //     if (!googleLibLoaded) {
@@ -57,50 +57,86 @@ function initializeMap(mapElement) {
 //     });
 // }
 
-function centerMapAroundAddress(address, mapElement) {
-    log.info('center map');
+function centerMapAroundAddressForTrip(address) {
+    log.info('center map around address for trip');
     if (!googleLibLoaded) {
         log.debug('failed to load map resources - check missing internet connection');
         return;
     }
+    log.debug('Address to center: ' + address);
     var geocoder = new google.maps.Geocoder();
-    var latlng = new google.maps.LatLng(-34.397, 150.644);
-    if(mapElement==='locationMap'){
-        var mapOptions = {
-            zoom: 11,
-            center: latlng
-        }
-    } 
-    else {  // trip Map
+    geocoder.geocode({ 'address': address }, geocodeCallbackTrip);
+}
+
+function centerMapAroundAddressForLocation(address) {
+    log.info('center map around address for location');
+    if (!googleLibLoaded) {
+        log.debug('failed to load map resources - check missing internet connection');
+        return;
+    }
+    log.debug('Address to center: ' + address);
+    var geocoder = new google.maps.Geocoder();
+    geocoder.geocode({ 'address': address }, geocodeCallbackLocations);
+}
+
+function geocodeCallbackTrip(results, status) {
+    if (status == 'OK') {
+        if(results === undefined) {
+            log.error('ERROR: geocode result undefined');
+            return;
+        } 
+        var geocode = results[0].geometry.location;    
+        log.debug('Address geocode: ' + geocode);
+        // var latlng = new google.maps.LatLng(-34.397, 150.644);
         var mapOptions = {
             zoom: 8,
-            center: latlng
-        }
+            center: geocode
+            }
+        var map = new google.maps.Map(document.getElementById('tripMap'), mapOptions);
+        map.setCenter(geocode);
+
+        // manage markers
+        var marker = new google.maps.Marker({
+            map: map,
+            draggable: true,
+            position: results[0].geometry.location
+        });
+        marker.addListener('draged', OnTripMarkerPositionChanged);
+    } 
+    else {
+        log.error('ERROR: geocode not successful for the following reason: ' + status);
     }
-    log.debug('Address: ' + address);
-    geocoder.geocode({ 'address': address }, function (results, status) {
-        if (status == 'OK') {
-            if(results === undefined) return;
-            var map = new google.maps.Map(document.getElementById(mapElement), mapOptions);
-            if(mapElement==='locationMap') {
-                map.addListener('click', OnLocationsMapClicked);
+}
+
+function geocodeCallbackLocations(results, status) {
+    if (status == 'OK') {
+        if(results === undefined) {
+            log.error('ERROR: geocode result undefined');
+            return;
+        } 
+            
+        var geocode = results[0].geometry.location;    
+        log.debug('Address geocode: ' + geocode);
+        // var latlng = new google.maps.LatLng(-34.397, 150.644);
+        var mapOptions = {
+            zoom: 11,
+            center: geocode
             }
-            map.setCenter(results[0].geometry.location);
-            var marker = new google.maps.Marker({
-                map: map,
-                draggable: true,
-                position: results[0].geometry.location
-            });
-            if(mapElement==='locationMap') {
-                marker.addListener('draged', OnLocationMarkerPositionChanged);
-            }
-            else {
-                marker.addListener('draged', OnTripMarkerPositionChanged);
-            }
-        } else {
-            log.debug('Geocode was not successful for the following reason: ' + status);
-        }
-    });
+        var map = new google.maps.Map(document.getElementById('locationMap'), mapOptions);
+        // map.setCenter(geocode);
+
+        // manage markers
+        var marker = new google.maps.Marker({
+            map: map,
+            draggable: true,
+            position: results[0].geometry.location
+        });
+        map.addListener('click', OnLocationsMapClicked);
+        marker.addListener('draged', OnLocationMarkerPositionChanged);
+    } 
+    else {
+        log.error('ERROR: geocode not successful for the following reason: ' + status);
+    }
 }
 
 function getAdressByGeocode(latLng, locationNameElementId, locationAddressElementId) {
@@ -111,9 +147,12 @@ function getAdressByGeocode(latLng, locationNameElementId, locationAddressElemen
         if (status === 'OK') {
             if (results[0]) {
                 // set adress to name-element:
-                // log.debug('adress: ' + results[0].formatted_address);
-                $('#' + locationAddressElementId).val(results[0].formatted_address);
-                $('#' + locationNameElementId).val(results[0].address_components[2].long_name);
+                var address = results[0].formatted_address;
+                var long_name = results[0].address_components[2].long_name
+                log.debug('address: ' + address);
+                log.debug('name: ' + long_name);
+                $('#' + locationAddressElementId).val(address);
+                $('#' + locationNameElementId).val(long_name);
             } else {
                 log.debug('No results found');
             }

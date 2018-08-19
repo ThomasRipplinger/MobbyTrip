@@ -13,11 +13,13 @@ function OnViewTrip() {
 
     log.info('view trip...');
     var tripId = $(this).parent().parent().attr('id');
+
     
     hideTripTiles();
+    showTripForm(tripId);           // ************************************** TODO
     fillTripFormWithData(tripId);
     initDemoLocations(tripId);   // will add locations if no locations exists yet
-    showTripForm(tripId);           // will also show location tiles for trip
+    // showTripForm(tripId);           // will also show location tiles for trip
 }
 
 function OnSaveTripForm() {
@@ -71,7 +73,7 @@ function OnDestinationEntered() {
     log.info('new destination entered...');
     var destAddress = $('.tripForm #destination').val();
     log.debug('New Destination: ' + destAddress);
-    centerMapAroundAddress(destAddress, "tripMap");
+    centerMapAroundAddressForTrip(destAddress);
 }
 
 function hideTripTiles() {
@@ -181,7 +183,7 @@ function fillTripFormWithData(tripId, isNewTrip) {
     $('.tripForm #desc').val(trips[tripIndex].desc);
 
     if(trips[tripIndex].destination !== null) {
-        centerMapAroundAddress(trips[tripIndex].destination, "tripMap");
+        centerMapAroundAddressForTrip(trips[tripIndex].destination);
     }
 }
 
@@ -189,7 +191,7 @@ function showTripForm(tripId) {
     log.info('show trip form for id: ' + tripId);
     $('.tripForm').slideToggle(500, 'linear', function () {
         toggleNewTripButton();
-        initializeMap('tripMap');
+        // initializeMap('tripMap');
         showLocationTilesForTrip(tripId);
     });
 }
@@ -218,6 +220,14 @@ function clearTripForm() {
 function toggleNewTripButton() {
     log.info('toggle trip button');
     $('#createNewTrip').slideToggle(500);
+}
+
+function scrollMapIntoView() {
+    // var mapElement = document.getElementById('tripMap');
+    // mapElement.scrollIntoView({ block: 'start',  behavior: 'smooth' });
+
+    // $('#tripMap').scrollTop(200);
+
 }
 
 function logAllTrips(logcomment) {

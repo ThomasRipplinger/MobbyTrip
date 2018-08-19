@@ -12,7 +12,7 @@ function OnCancelLocationsForm() {
 }
 
 function OnNewLocation() {
-    log.info('new location...');
+    log.info('on new location...');
     // first save whatever location form is currently open
     if ($('.locationForm').is(":visible")) {
         saveLocationsForm();  
@@ -20,10 +20,10 @@ function OnNewLocation() {
     hideLocationsForm();
     clearLocationsForm();
     // add overlay then wait for user input
-    var html = '<input type="text" class="form-control" id="input-newlocation" placeholder="neuer Ort oder Zwischenstopp...">';
+    var html = '<input type="text" class="form-control" id="input-newlocation" placeholder="neuer Ort / Zwischenstopp">';
     $('#btn-newlocation').empty();  // remove field in case already existing
     $(this).append(html);           // overlay current location button with input field
-    $('#input-newlocation').blur(OnLocationPopupEntered);  // add handler for input processing
+    // $('#input-newlocation').blur(OnLocationPopupEntered);  // add handler for input processing
     $('#input-newlocation').keydown(OnLocationPopupKeydown);  // add handler for input processing
     $('#input-newlocation').focus();    
 }
@@ -33,8 +33,13 @@ function OnViewLocation() {
     // check if same location selected: do nothing
     var newLocationId = $(this).attr('id');
     var prevLocationId = $('#prevlocation').text();
-    if (prevLocationId == newLocationId) {
-        return;  // same, do nothing 
+    if (prevLocationId == newLocationId) {  // same
+        // if locationsform displayed: save
+        if ($('.locationForm').is(":visible")) {
+            saveLocationsForm();  
+        }
+        showLocationForm();                 // toggle form
+        return; 
     }
     else {
         // if locationsform displayed: save
@@ -48,10 +53,11 @@ function OnViewLocation() {
         fillLocationFormWithData(newLocationId);
     }
     showLocationForm();
+    // scrollMapIntoView();
 }
 
 function OnLocationPopupKeydown(event) {
-    // log.debug(event.keyCode);
+    log.debug(event.keyCode);
     if(event.keyCode===13) {     // Enter
         OnLocationPopupEntered();
     }
@@ -67,8 +73,9 @@ function OnLocationKeydown(event) {
     }
 }
 
-function OnLocationPopupEntered() {
+function OnLocationPopupEntered(event) {
     log.info('location entered');
+    log.debug(event);
     // user has entered a new location in popup overlay
     var locationName = $('#input-newlocation').val();
     $('#input-newlocation').remove();  // hide input field
@@ -108,33 +115,37 @@ function OnFormLocationEntered() {
     // update location name in tile:
     updateLocationTile(locationId, locationName);
     // update map
-    centerLocationMapAroundAddress(location, "locationMap");
+    centerMapAroundAddressForLocation(locationName);
 }
 
 function addLocationTile(locationId, locationName) {
     log.info('add location tile');
-    var html = '<button type="button" class="btn-location existingLocation" id="' + locationId + '">' 
+    var html = '<button type="button" '
+    + 'class="btn-location locationTile existingLocation" '
+    + 'id="' + locationId + '">' 
     + '<span>' + locationName + '<span>'
     // +  '<span class="glyphicon glyphicon-plus"></span>'
     + '</button>';
     $('.locationTiles').append(html);
+    log.debug(html);
 }
 
 function updateLocationTile(locationId, locationName) {
     log.info('update location tile');
-    var $locTile = ('.locationTiles#' + locationId)   // find location tile by Id
+    var $locTile = $('#' + locationId);   // find location tile by Id
     if($locTile.length) {
-        $locTile.find('<span>').text(locationName);   // update the name of the location tile 
+        log.debug('location name and id: ' + locationName + ', ' + locationId);
+        $locTile.find('span').text(locationName);   // update the name of the location tile 
     }
     else {
-        log.debug('could not find location tile for name update');
+        log.error('ERROR: could not find location tile for name update');
     }
 }
 
 function addEmptyLocationTile() {
     log.info('add empty location tile');
     $('#btn-newlocation').remove();  // remove
-    var html = '<button type="button" class="btn-location" id="btn-newlocation">' 
+    var html = '<button type="button" class="btn-location locationTile" id="btn-newlocation">' 
             + '<span class="mr-3">' + 'Ort hinzufügen' + '</span>'
             + '<i class="fas fa-angle-double-right"></i></button>';
     $('.locationTiles').append(html);  // add
@@ -149,18 +160,20 @@ function showLocationTilesForTrip(tripId) {
 
     // $('.locationTiles').not('#addNewLocation').remove();
     $('.locationTiles').empty();  // delete all existing locations
+    // $('.btn-location').remove();  // delete all existing locations
 
     // add existing locations for this trip:
     if(trips[tripIndex].locations) {
         for (var i = 0; i < trips[tripIndex].locations.length; i++) {
             addLocationTile(trips[tripIndex].locations[i].id, trips[tripIndex].locations[i].name);
+            log.debug('adding location: ' + trips[tripIndex].locations[i].name);
         }
     }
     // add handlers
     $('.existingLocation').click(OnViewLocation);
 
     // button 'add new' at the end:
-    addEmptyLocationTile();
+    addEmptyLocationTile(); 
 
     // show location tiles
     if(!($('.locationsContainer').is(':visible'))) {
@@ -176,15 +189,19 @@ function hideLocationTiles() {
 }
 
 function fillLocationFormWithData(locationId) {
-    log.info('fill location tiles with data');
+    log.info('fill location form with data');
     var tripId = $('.tripForm #tripId').val();
     var tripIndex = getTripIndexById(tripId);
     var locationIndex = getLocationIndexById(tripIndex, locationId);
     $('.locationForm #locationId').val(trips[tripIndex].locations[locationIndex].id);
     $('.locationForm #locationName').val(trips[tripIndex].locations[locationIndex].name);
+    $('.locationForm #locationAddress').val(trips[tripIndex].locations[locationIndex].address);
     $('.locationForm #locationDesc').val(trips[tripIndex].locations[locationIndex].desc);
+    $('.locationForm #locationNights').val(trips[tripIndex].locations[locationIndex].nights);
+    $('.locationForm #locationCost').val(trips[tripIndex].locations[locationIndex].cost);
+    $('.locationForm #locationSource').val(trips[tripIndex].locations[locationIndex].source);
 
-    centerMapAroundAddress(trips[tripIndex].locations[locationIndex].name, "locationMap");
+    centerMapAroundAddressForLocation(trips[tripIndex].locations[locationIndex].name);
 }
 
 function showLocationForm() {
@@ -206,7 +223,11 @@ function clearLocationsForm() {
     log.info('clear location form');
     $('.locationForm #locationId').val('');
     $('.locationForm #locationName').val('');
+    $('.locationForm #locationAddress').val('');
     $('.locationForm #locationDesc').val('');
+    $('.locationForm #locationNights').val('');
+    $('.locationForm #locationCost').val('');
+    $('.locationForm #locationSource').val('');
 }
 
 function saveLocationsForm() {
@@ -221,7 +242,7 @@ function saveLocationsForm() {
     // check if new location (Id field empty)
     var locationId = $('.locationForm #locationId').val();
     if (locationId === '') {
-        log.info('new location...');
+        log.info('saving new location...');
         newLocation = true;
         locationId = createNewLocationId(tripId);
     }
@@ -235,7 +256,11 @@ function saveLocationsForm() {
     var location = {
         id: locationId,
         name: $('.locationForm #locationName').val(),
-        desc: $('.locationForm #locationDesc').val()
+        desc: $('.locationForm #locationDesc').val(),
+        address: $('.locationForm #locationAddress').val(),
+        nights: $('.locationForm #locationNights').val(),
+        cost: $('.locationForm #locationCost').val(),
+        source: $('.locationForm #locationSource').val()
     };
 
     if(newLocation) {
