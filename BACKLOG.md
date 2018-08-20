@@ -42,19 +42,17 @@ trip data anzeigen nach Anwahl "trip anschauen"
 trip form edit and save
 Refactor all interfaces, remove index from interfaces
 - add procedural logging (using logging lib)
+- fix init problem
 
 ## ----- DONE ------
 - delete location
+- create new location: Ort als Pin anzeigen in der Trip Übersicht
+- link all trip locations with route
+## -----------------
+
+
 - remove 'save trip' button - only keep 'OK' (there is no cancel - would complicate the entrire UX, rather save each ministep)
 - save each ministep: after create location, on close location form, on select other location form
-
-Merge branch to mainline if test OK
-    https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging
-    git branch myBranch
-    git checkout myBranch
-    ...
-
-- create new location: Ort als Pin anzeigen in der Trip Übersicht
 - OnLocationMarkerPositionChanged: get adress of new marker position
 - OnTripMarkerPositionChanged: ...?
 - if no data: add 2 demo tiles
@@ -76,7 +74,6 @@ convert online map to img and download / link img ?
 - Prio2: Pins mit Route verbinden
 - Prio2: Route mit anderen teilen
 domain: triplogbook.online / Reisebuch.online    (mobbyTrip.de / .com)
-### ENDE Roadmap ###
 
 
 --------------------------------------------------------------------------------------
@@ -109,7 +106,6 @@ hide trip tiles
 fill in trip form with data
 show trip form (and: hide 'new trip button', initialize Map, show location tiles)
 
-# test ok **************************************************
 # add new location
 save current location (if visible) 
 clear location form
@@ -143,4 +139,8 @@ for locations:
   saving each ministep: after create location, on close location form, on select other location form
   initialized with saving a new trip
 
-  
+##Git
+    https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging
+    git branch myBranch
+    git checkout myBranch
+    ...

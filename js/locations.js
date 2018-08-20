@@ -120,14 +120,22 @@ function OnFormLocationEntered() {
 
 function addLocationTile(locationId, locationName) {
     log.info('add location tile');
+
     var html = '<button type="button" '
     + 'class="btn-location locationTile existingLocation" '
     + 'id="' + locationId + '">' 
     + '<span>' + locationName + '<span>'
-    // +  '<span class="glyphicon glyphicon-plus"></span>'
-    + '</button>';
+    + '</button>'
+    // close icon (bootstrap times icon X)
+    +   '<button type="button" class="deleteLocation close" aria-label="Close">'
+    +   '<span aria-hidden="true">&times;</span>'
+    +   '</button>';
+    // log.debug(html);
     $('.locationTiles').append(html);
-    log.debug(html);
+
+    // add 'delete location' handler 
+    $('.deleteLocation').off("click");           // remove all existing
+    $('.deleteLocation').click(deleteLocation);  // ensure we only have one per button
 }
 
 function updateLocationTile(locationId, locationName) {
@@ -229,6 +237,38 @@ function clearLocationsForm() {
     $('.locationForm #locationCost').val('');
     $('.locationForm #locationSource').val('');
 }
+
+function deleteLocation() {
+    log.info('delete location');
+    
+    var locationToDelete = $(this).parent().find('h2').text();   // MODIFY *******************************
+
+    if(locationToDelete === null) {
+        log.error('ERROR: can´t find locationToDelete');
+        return;
+    }
+    log.debug('delete location: ' + locationToDelete);
+    
+    // // remove tile
+    // $(this).parent().parent().remove();
+
+    // // remove from trips array and store
+    // var deleteflag = false;
+    // for(var i=0; i<trips.length; i++) {
+    //     if(trips[i].destination === destinationToDelete){
+    //         log.info('found - deleting trip: ' + destinationToDelete);
+    //         trips.splice(i, 1); // remove 1 element starting from i 
+    //         deleteflag = true;
+    //         break;
+    //     }
+    // }
+    // if(deleteflag === false) {
+    //     log.error('ERROR: can´t find destinationToDelete in trips array');
+    // }
+    // // setTimeout(saveTripsToLocalStore, 2000);  // only works with timeout 2000ms...
+    // saveTripsToLocalStore();
+}
+
 
 function saveLocationsForm() {
     log.info('save location form');

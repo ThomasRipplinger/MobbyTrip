@@ -244,16 +244,18 @@ function createNewTripId() {
     var largestId = 0;
     var newId;
     // iterate over trips
-    if(trips !== undefined) {
+    if((trips !== undefined) && (trips !== null)) {
         for(var i=0; i<trips.length; i++) {
             if(parseInt(trips[i].id) > largestId) 
                 largestId = parseInt(trips[i].id);
         }
     }
+    else {
+        trips = [];  // init in case of empty array
+    }
     newId = largestId + 1;
 
     // init new array member
-    if(!trips) trips = [];  // init in case of empty array
     var trip = {
         id: newId,
         destination: '',
