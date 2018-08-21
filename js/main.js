@@ -37,6 +37,7 @@ $(document).ready(function () {
     
     $('.tripForm .btnsave').click(OnSaveTripForm);
     $('.tripForm .btncancel').click(OnCancelTripForm);
+    $('.tripForm .btnroute').click(drawRoute);
     $('.tripForm #destination').blur(OnDestinationEntered);
     
     $('.locationsContainer .btnsave').click(OnSaveLocationsForm);

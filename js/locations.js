@@ -127,9 +127,9 @@ function addLocationTile(locationId, locationName) {
     + '<span>' + locationName + '<span>'
     + '</button>'
     // close icon (bootstrap times icon X)
-    +   '<button type="button" class="deleteLocation close" aria-label="Close">'
-    +   '<span aria-hidden="true">&times;</span>'
-    +   '</button>';
+    // +   '<button type="button" class="deleteLocation close" aria-label="Close">'
+    // +   '<span aria-hidden="true">&times;</span>'
+    // +   '</button>';
     // log.debug(html);
     $('.locationTiles').append(html);
 
