@@ -19,6 +19,10 @@ body {
     font-weight: 300;
 }
 
+#btnSettings {
+    color: white;
+}
+
 .triptile {
     background-image: url('../resources/images/route01.png');    /* ########### TODO: remove ############### */
     background-size: cover;

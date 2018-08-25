@@ -28,7 +28,92 @@ function OnNewLocation() {
     $('#input-newlocation').focus();    
 }
 
-function OnViewLocation() {
+function OnDeleteLocation() {
+    log.info('delete location...');
+
+    hideLocationsForm();
+
+    var tripId = $('#tripId').val();
+    if(tripId == undefined) {
+        log.error('ERROR: cant find trip Id');
+        return;
+    }
+    var tripIndex = getTripIndexById(tripId);
+    if(tripIndex == undefined) return;
+
+    var locationId = $('#locationId').val();
+    if(locationId == undefined) {
+        log.error('ERROR: cant find location Id');
+        return;
+    }
+    var locationIndex = getLocationIndexById(tripIndex, locationId);
+    if(locationIndex == undefined) return;
+
+    log.debug('delete location: ' + locationId + ' index: ' + locationIndex);
+
+    trips[tripIndex].locations.splice(locationIndex, 1); // remove 1 element starting from index 
+
+    saveTripsToLocalStore();
+    clearLocationsForm();
+    showLocationTilesForTrip(tripId);
+}
+
+function OnMoveLocation() {
+    log.info('move location...');
+
+    const directionId = $(this).attr('id');
+    log.debug('direction: ' + directionId);  // btnUp or btnDown
+
+    var tripId = $('#tripId').val();
+    if(tripId == undefined) {
+        log.error('ERROR: cant find trip Id');
+        return;
+    }
+    var tripIndex = getTripIndexById(tripId);
+    if(tripIndex == undefined) return;
+
+    var locationId = $('#locationId').val();
+    if(locationId == undefined) {
+        log.error('ERROR: cant find location Id');
+        return;
+    }
+    var locationIndex = getLocationIndexById(tripIndex, locationId);
+    if(locationIndex == undefined) return;
+
+    // verify if at least 2 locations
+    const locationCount = trips[tripIndex].locations.length;
+    if(locationCount < 2) return;
+
+    // move upwards
+    if(directionId == 'btnUp') {
+        // verify if already on first location
+        if(locationIndex == 0) return;
+        // swap current with prev. location
+        swapLocations(tripIndex, locationIndex, locationIndex-1);
+    }
+    // move downwards
+    if(directionId == 'btnDown') {
+        // verify if already on last location
+        if(locationIndex == locationCount-1) return;
+        // swap current with next location
+        swapLocations(tripIndex, locationIndex, locationIndex+1);
+    }
+
+    showLocationTilesForTrip(tripId);
+}
+
+function swapLocations(tripIndex, firstIndex, secondIndex) {
+    const firstLocation = trips[tripIndex].locations[firstIndex];
+    const secondLocation = trips[tripIndex].locations[secondIndex];
+    trips[tripIndex].locations[secondIndex] = firstLocation;
+    trips[tripIndex].locations[firstIndex] = secondLocation;
+}
+
+function OnMovedownLocation() {
+    log.info('move up location...');
+}
+
+    function OnViewLocation() {
     log.info('view location...');
     // check if same location selected: do nothing
     var newLocationId = $(this).attr('id');
@@ -134,8 +219,8 @@ function addLocationTile(locationId, locationName) {
     $('.locationTiles').append(html);
 
     // add 'delete location' handler 
-    $('.deleteLocation').off("click");           // remove all existing
-    $('.deleteLocation').click(deleteLocation);  // ensure we only have one per button
+    // $('.deleteLocation').off("click");           // remove all existing
+    // $('.deleteLocation').click(deleteLocation);  // ensure we only have one per button
 }
 
 function updateLocationTile(locationId, locationName) {
@@ -237,38 +322,6 @@ function clearLocationsForm() {
     $('.locationForm #locationCost').val('');
     $('.locationForm #locationSource').val('');
 }
-
-function deleteLocation() {
-    log.info('delete location');
-    
-    var locationToDelete = $(this).parent().find('h2').text();   // MODIFY *******************************
-
-    if(locationToDelete === null) {
-        log.error('ERROR: can´t find locationToDelete');
-        return;
-    }
-    log.debug('delete location: ' + locationToDelete);
-    
-    // // remove tile
-    // $(this).parent().parent().remove();
-
-    // // remove from trips array and store
-    // var deleteflag = false;
-    // for(var i=0; i<trips.length; i++) {
-    //     if(trips[i].destination === destinationToDelete){
-    //         log.info('found - deleting trip: ' + destinationToDelete);
-    //         trips.splice(i, 1); // remove 1 element starting from i 
-    //         deleteflag = true;
-    //         break;
-    //     }
-    // }
-    // if(deleteflag === false) {
-    //     log.error('ERROR: can´t find destinationToDelete in trips array');
-    // }
-    // // setTimeout(saveTripsToLocalStore, 2000);  // only works with timeout 2000ms...
-    // saveTripsToLocalStore();
-}
-
 
 function saveLocationsForm() {
     log.info('save location form');

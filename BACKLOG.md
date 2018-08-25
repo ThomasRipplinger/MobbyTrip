@@ -41,28 +41,30 @@ ID einführen (z.B. ID#Counter) und verwenden für 'delete trip'
 trip data anzeigen nach Anwahl "trip anschauen" 
 trip form edit and save
 Refactor all interfaces, remove index from interfaces
-- add procedural logging (using logging lib)
-- fix init problem
+add procedural logging (using logging lib)
+fix init problem
+link all trip locations with route
+delete location
+move location (order)
+logging window bei Bedarf - popUpAppender.show()
 
 ## ----- DONE ------
-- delete location
-- create new location: Ort als Pin anzeigen in der Trip Übersicht
-- link all trip locations with route
+scrolling-Verhalten verbessern
+create new location: Ort als Pin anzeigen in der Trip Übersicht
 ## -----------------
 
 
-- remove 'save trip' button - only keep 'OK' (there is no cancel - would complicate the entrire UX, rather save each ministep)
-- save each ministep: after create location, on close location form, on select other location form
-- OnLocationMarkerPositionChanged: get adress of new marker position
-- OnTripMarkerPositionChanged: ...?
-- if no data: add 2 demo tiles
-- getLocationIndexById: remove tripIndex (make locationId unique)
-- async map request processing // test w/o internet (Funktion auch offline sicherstellen)
-- Farbschema geradeziehen, besseres Startbild, 
-  color schema (http://www.paletton.com/index.html#uid=75q1M0kiCFn8GVde7NVmtwSqXtg)
-- Test mit testing framework ?
-- Felder nur bei Bedarf anzeigen: ... => Auswahl weiterer Felder
-
+remove 'save trip' button - only keep 'OK' (there is no cancel - would complicate the entrire UX, rather save each ministep)
+save each ministep: after create location, on close location form, on select other location form
+OnLocationMarkerPositionChanged: get adress of new marker position
+OnTripMarkerPositionChanged: ...?
+if no data: add 2 demo tiles
+getLocationIndexById: remove tripIndex (make locationId unique)
+async map request processing // test w/o internet (Funktion auch offline sicherstellen)
+Farbschema geradeziehen, besseres Startbild, 
+color schema (http://www.paletton.com/index.html#uid=75q1M0kiCFn8GVde7NVmtwSqXtg)
+Test mit testing framework ?
+Felder nur bei Bedarf anzeigen: ... => Auswahl weiterer Felder
 add photo to trip-details form
 add trip: bei "enter" nicht Cancel aktivieren...!
 bei "anlegen ok" kurz einen grünen Haken od. OK erscheinen lassen

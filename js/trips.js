@@ -1,3 +1,7 @@
+function OnSettings() {
+    popUpAppender.show();
+}
+
 function OnAddTrip() {
     log.info('adding trip...');
     clearTripForm();
@@ -219,7 +223,7 @@ function clearTripForm() {
 
 function toggleNewTripButton() {
     log.info('toggle trip button');
-    $('#createNewTrip').slideToggle(500);
+    $('btnCreateNewTrip').slideToggle(500);
 }
 
 function scrollMapIntoView() {
@@ -284,10 +288,10 @@ function getTripIndexById(tripId) {
 
 function OBSOLETE_setNewTripButtonVisibility(show) {
     if (show) {
-        $('#createNewTrip').fadeIn(700);
+        $('btnCreateNewTrip').fadeIn(700);
     }
     else {
-        $('#createNewTrip').fadeOut(700);
+        $('btnCreateNewTrip').fadeOut(700);
 
     }
 }

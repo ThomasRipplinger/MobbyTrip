@@ -25,16 +25,15 @@
                 wird als je zuvor.
             </p>
             <p>
-                <!-- <a class="btnnew btn btn-success btn-lg" href="#" role="button">Neuen Trip anlegen »</a> -->
-                <a class="btnnew btn btn-success btn-lg" href="#" role="button" id="createNewTrip">
+                <a class="btn btn-success btn-lg" href="#" role="button" id="btnCreateNewTrip">
                     <span class="mr-3">Neuen Trip anlegen</span>
                     <i class="fas fa-angle-double-right"></i>
                 </a>
+                <a class="btn btn-link btn-lg d-flex justify-content-end" href="#" role="button" id="btnSettings">
+                    <!-- <span class="mr-3">Log</span> -->
+                    <i class="fas fa-cog"></i>                
+                </a>
             </p>
-            <!-- <span>
-                <a class="btnsave">SAVE</a>
-                <a class="btnload">LOAD</a>
-            </span> -->
         </div>
 
         <!-- *********************************** TRIP FORM (startup: invisible) **************************** -->
@@ -74,13 +73,13 @@
                     <div class="form-group row">
                         <!-- <div class="col-sm-6"> -->
                         <div class="col-sm-4">
-                            <button class="btncancel btn btn-secondary col-sm-11">Schließen</button>
+                            <button class="btn btn-secondary col-sm-11" id="btnCancel">Schließen</button>
                         </div>
                         <div class="col-sm-4">
-                            <button class="btnroute btn btn-info col-sm-11">Route</button>
+                            <button class="btn btn-info col-sm-11" id="btnRoute">Route</button>
                         </div>
                         <div class="col-sm-4">
-                            <button class="btnsave btn btn-success col-sm-11">Speichern</button>
+                            <button class="btn btn-success col-sm-11" id="btnSave">Speichern</button>
                         </div>
                     </div>
 
@@ -173,67 +172,31 @@
                         </div>
 
                         <div class="form-group row">
-                            <div class="col-sm-6">
-                                <button class="btncancel btn btn-secondary col-sm-11">Schließen</button>
+                            <div class="col-sm-2">  
+                                <button class="btn btn-danger col-sm-11" id="btnDelete">
+                                    <i class="far fa-trash-alt"></i>
+                                </button>
                             </div>
-                            <div class="col-sm-6">
-                                <button class="btnsave btn btn-success col-sm-11">Speichern</button>
+                            <div class="col-sm-1">  
+                                <button class="btn btn-info col-sm-11" id="btnUp">
+                                    <i class="fas fa-chevron-up"></i>
+                                </button>
+                            </div>
+                            <div class="col-sm-1">  
+                                <button class="btn btn-info col-sm-11" id="btnDown">
+                                    <i class="fas fa-chevron-down"></i>
+                                </button>
+                            </div>
+                            <div class="col-sm-4">
+                                <button class="btn btn-secondary col-sm-11" id="btnCancel">Schließen</button>
+                            </div>
+                            <div class="col-sm-4">
+                                <button class="btn btn-success col-sm-11" id="btnSave">Speichern</button>
                             </div>
                         </div>
                     </div>
                 </form>
-
-                <div class="col-sm-12">    <!-- next row, full with: free text for description -->
-                    <div class="form-group row">
-                        <textarea class="form-control" rows='5' id="locationSource" placeholder="Infoquelle, Links"></textarea>
-                    </div>
-                </div>
-                <!-- <div class="col-sm-12">    
-                    <img>Foto hier....
-                </div> -->
-            
-
             </div>
-            <!-- <div class="row locationForm">
-                <div class="locationdata col-sm-6">
-            
-                    <div class="dropdown">
-                        <a class="btn btn-secondary dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false">
-                            Dropdown link
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                    </div>
-            
-                    <div class="geomap-detail" id="locationMap">
-                        Geo Location hier...
-                    </div>
-                    <div class="camping-detail">
-                        Camping Info hier...
-                    </div>
-                    <div class="sights-detail">
-                        Sights info hier...
-                    </div>
-                    <div class="photogallery-detail">
-                        Fotos hier...
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-sm-2">
-                        <button class="btncancel btn btn-secondary col-sm-11">Schließen</button>
-                    </div>
-                    <div class="col-sm-2">
-                        <button class="btnsave btn btn-success col-sm-11">Speichern</button>
-                    </div>
-                </div>
-            </div>
-         -->
-        </div>
-
     </main>
 
     <footer>
@@ -242,7 +205,6 @@
     </footer>
 
     <!-- AIzaSyBmL7Lwc0zAtlphBU9trmScjLJFLhqtziQ -->
-
     <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript" src="js/log4javascript.js"></script> 
     <script type="text/javascript" src="js/main.js"></script>
@@ -259,7 +221,7 @@
     <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAoRF_fIaVlDMBFipr5jjRHyFT49VKLXvU"></script> -->
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script> -->
-    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script> -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 
 </body>
 

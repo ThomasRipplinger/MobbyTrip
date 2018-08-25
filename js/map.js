@@ -138,6 +138,7 @@ function drawRoute() {
     else {
         log.error('ERROR: tripId not found');
     }
+    if(directionRequest == null) return;
 
     directionsDisplay.setMap(MAP);   // bind to map object
     directionsService.route(directionRequest.content, function(result, status) {
@@ -153,29 +154,46 @@ function drawRoute() {
 }
 
 function makeRequest(tripId, directionRequest) {
-    log.info('create direction request');
+    log.info('create direction request for trip');
+    // console.log(trips[tripId]);
 
-    var myOrigin = "Karlsruhe";
-    var myDestination = "Freiburg";
-    var myWaypoint1 = "Rastatt";
-    var myWaypoint2 = "Baden-Baden";
-
+    var tripIndex = getTripIndexById(tripId);
+    if(tripIndex == undefined) {
+        directionRequest.content = null;
+        log.error('ERROR invalid trip id');
+        return;
+    }
+    if(trips[tripIndex].locations == undefined) {
+        directionRequest.content = null;
+        log.error('ERROR invalid location array');
+        return;
+    }
+    var locationCount = trips[tripIndex].locations.length;
+    if(locationCount < 2) { // with 2 locations there's origin and destination, otherwise not
+        directionRequest.content = null;
+        log.info('less than 2 locations - will not return direction request');
+        return;
+    }
+    // at least 2 locations exist
     directionRequest.content =  {
-        origin: myOrigin,
-        destination: myDestination,
-        waypoints: [
-        {
-            location: myWaypoint1,
-            stopover: false
-        },{
-            location: myWaypoint2,
-            stopover: false
-        }],
+        origin: trips[tripIndex].locations[0].name,
+        destination: trips[tripIndex].locations[locationCount-1].name,
+        waypoints: [],
         provideRouteAlternatives: false,
         optimizeWaypoints: false,
         travelMode: 'DRIVING',
         unitSystem: google.maps.UnitSystem.METRIC
     };    
-
-    log.debug('direction request:' + directionRequest.content);
+    // for more than 2 locations: add waypoints
+    for(var i=2; i<trips[tripIndex].locations.length; i++) {
+        var waypointObject = {
+            location: trips[tripIndex].locations[i].name,
+            stopover: false
+        }
+        directionRequest.content.waypoints.push(waypointObject);
+    }
+    
+    log.debug('direction request:' );
+    log.debug(directionRequest.content);
+    console.log(directionRequest.content);
 }
