@@ -66,12 +66,10 @@
 
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            <textarea class="form-control" rows='4' id="desc" placeholder="Beschreibung"></textarea>
+                            <textarea class="form-control" rows='3' id="desc" placeholder="Beschreibung"></textarea>
                         </div>
                     </div>
-                    <!-- <div class="form-group row mr-4"> -->
                     <div class="form-group row">
-                        <!-- <div class="col-sm-6"> -->
                         <div class="col-sm-4">
                             <button class="btn btn-secondary col-sm-11" id="btnCancel">Schließen</button>
                         </div>
@@ -80,6 +78,11 @@
                         </div>
                         <div class="col-sm-4">
                             <button class="btn btn-success col-sm-11" id="btnSave">Speichern</button>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <textarea class="form-control" rows='1' id="directionsStatus"></textarea>
                         </div>
                     </div>
 
@@ -145,8 +148,26 @@
                 </div>
                     <div class="pl-1 col-sm-6 borderRed">     <!-- first row, right side: location details -->
                         <div class="form-group row">
-                            <div class="col-sm-12">
+                            <div class="col-sm-5">
                                 <input type="text" class="form-control" id="locationName" placeholder="Ort">
+                            </div>
+                            <div class="col-sm-1">  
+                                <button class="btn btn-danger col-sm-11" id="btnDelete">
+                                    <i class="far fa-trash-alt"></i>
+                                </button>
+                            </div>
+                            <div class="col-sm-1">  
+                                <button class="btn btn-info col-sm-11" id="btnUp">
+                                    <i class="fas fa-chevron-up"></i>
+                                </button>
+                            </div>
+                            <div class="col-sm-1">  
+                                <button class="btn btn-info col-sm-11" id="btnDown">
+                                    <i class="fas fa-chevron-down"></i>
+                                </button>
+                            </div>
+                            <div class="col-sm-4">
+                                <button class="btn btn-success col-sm-11" id="btnOk">OK</button>
                             </div>
                         </div>
 
@@ -171,29 +192,6 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <div class="col-sm-2">  
-                                <button class="btn btn-danger col-sm-11" id="btnDelete">
-                                    <i class="far fa-trash-alt"></i>
-                                </button>
-                            </div>
-                            <div class="col-sm-1">  
-                                <button class="btn btn-info col-sm-11" id="btnUp">
-                                    <i class="fas fa-chevron-up"></i>
-                                </button>
-                            </div>
-                            <div class="col-sm-1">  
-                                <button class="btn btn-info col-sm-11" id="btnDown">
-                                    <i class="fas fa-chevron-down"></i>
-                                </button>
-                            </div>
-                            <div class="col-sm-4">
-                                <button class="btn btn-secondary col-sm-11" id="btnCancel">Schließen</button>
-                            </div>
-                            <div class="col-sm-4">
-                                <button class="btn btn-success col-sm-11" id="btnSave">Speichern</button>
-                            </div>
-                        </div>
                     </div>
                 </form>
             </div>

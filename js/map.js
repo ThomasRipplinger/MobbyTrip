@@ -15,7 +15,7 @@ function OnTripMarkerPositionChanged() {
 }
 
 function centerMapAroundAddressForTrip(address) {
-    log.info('center map around address for trip');
+    log.info('map: center around address for trip');
     if (!googleLibLoaded) {
         log.debug('failed to load map resources - check missing internet connection');
         return;
@@ -55,7 +55,7 @@ function geocodeCallbackTrip(results, status) {
 
 
 function centerMapAroundAddressForLocation(address) {
-    log.info('center map around address for location');
+    log.info('map: center around address for location');
     if (!googleLibLoaded) {
         log.debug('failed to load map resources - check missing internet connection');
         return;
@@ -97,7 +97,7 @@ function centerMapAroundAddressForLocation(address) {
 }
 
 function getAdressByGeocode(latLng, locationNameElementId, locationAddressElementId) {
-    log.info('get adress for geocode');
+    log.info('map: get address for geocode');
     var geocoder = new google.maps.Geocoder;
 
     geocoder.geocode({ 'location': latLng }, function (results, status) {
@@ -124,13 +124,19 @@ function mapsAPIinitDone() {
     googleLibLoaded = true;
 }
 
-function drawRoute() {
-    log.info('drawing route');
+function OnDrawRoute(event) {
+    log.info('map: drawing route');
+    event.preventDefault(); // supress page reload
+
     var directionsService = new google.maps.DirectionsService();
-    var directionsDisplay = new google.maps.DirectionsRenderer();
     var directionRequest = {};
     var tripId;
-
+    
+    if(directionsDisplay === undefined) {
+        log.info('map: defining new directionsDisplay');
+        directionsDisplay = new google.maps.DirectionsRenderer();   // this is a global var. Required for reset before redraw.
+    }
+    
     tripId = $('.tripForm #tripId').val();
     if(tripId !== undefined) {
         makeRequest(tripId, directionRequest);
@@ -140,29 +146,53 @@ function drawRoute() {
     }
     if(directionRequest == null) return;
 
-    directionsDisplay.setMap(MAP);   // bind to map object
+    directionsDisplay.setMap(null);  // remove existing directions
+    directionsDisplay.setMap(MAP);          // bind to map object
     directionsService.route(directionRequest.content, function(result, status) {
         if (status == 'OK') {
             directionsDisplay.setDirections(result);   // draw route
+            evaluateDistance(result.routes);                  // retrieve distances between locations
             // directionsDisplay.setPanel(document.getElementById('tripDirections'));  // bind directions panel
             // $('#tripDirections').slideToggle(500, 'linear');
         }
         else {
             log.error('ERROR calculating route, status:' + status);
         }
+        // print status
+        $('#directionsStatus').val(status);
     });
 }
 
-function makeRequest(tripId, directionRequest) {
-    log.info('create direction request for trip');
-    // console.log(trips[tripId]);
+function evaluateDistance(resultRoutes) {
+    log.info('evaluation directions result');
+    // console.log(resultRoutes);
 
+    if(resultRoutes == undefined) return;
+    if(resultRoutes[0].legs == undefined) return;
+
+    var distance;
+    var duration;
+    var start;
+    var end;
+    for(var i=0; i < resultRoutes[0].legs.length; i++) {
+        distance = resultRoutes[0].legs[i].distance.text;
+        duration = resultRoutes[0].legs[i].duration.text;
+        start = resultRoutes[0].legs[i].start_address;
+        end = resultRoutes[0].legs[i].end_address;
+        log.debug('section: '+ i + ' distance: '+ distance + ' duration: ' + duration + '(from ' + start + ' to ' + end);
+    }
+}
+
+function makeRequest(tripId, directionRequest) {
+    log.info('map: create direction request for trip');
+    
     var tripIndex = getTripIndexById(tripId);
     if(tripIndex == undefined) {
         directionRequest.content = null;
         log.error('ERROR invalid trip id');
         return;
     }
+    // console.log(trips[tripIndex]);
     if(trips[tripIndex].locations == undefined) {
         directionRequest.content = null;
         log.error('ERROR invalid location array');
@@ -185,15 +215,16 @@ function makeRequest(tripId, directionRequest) {
         unitSystem: google.maps.UnitSystem.METRIC
     };    
     // for more than 2 locations: add waypoints
-    for(var i=2; i<trips[tripIndex].locations.length; i++) {
+    for(var i=1; i<trips[tripIndex].locations.length-1; i++) {
         var waypointObject = {
             location: trips[tripIndex].locations[i].name,
-            stopover: false
+            stopover: true
         }
         directionRequest.content.waypoints.push(waypointObject);
     }
     
-    log.debug('direction request:' );
-    log.debug(directionRequest.content);
-    console.log(directionRequest.content);
+    // log.debug('direction request:' );
+    // log.debug(directionRequest.content);
+    // console.log(directionRequest.content);
 }
+

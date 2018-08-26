@@ -2,7 +2,7 @@ trips = [];
 geocoder = null;
 map = null;
 var googleLibLoaded = false; 
-// var log = log4javascript.getDefaultLogger();
+var directionsDisplay;
 var log = log4javascript.getLogger();
 var popUpAppender = new log4javascript.PopUpAppender();
 popUpAppender.setUseOldPopUp();
@@ -38,11 +38,10 @@ $(document).ready(function () {
     
     $('.tripForm #btnSave').click(OnSaveTripForm);
     $('.tripForm #btnCancel').click(OnCancelTripForm);
-    $('.tripForm #btnRoute').click(drawRoute);
+    $('.tripForm #btnRoute').click(OnDrawRoute);
     $('.tripForm #destination').blur(OnDestinationEntered);
     
-    $('.locationsContainer #btnSave').click(OnSaveLocationsForm);
-    $('.locationsContainer #btnCancel').click(OnCancelLocationsForm);
+    $('.locationsContainer #btnOk').click(OnOkLocationsForm);
     $('.locationsContainer #btnDelete').click(OnDeleteLocation);
     $('.locationsContainer #btnUp').click(OnMoveLocation);
     $('.locationsContainer #btnDown').click(OnMoveLocation);

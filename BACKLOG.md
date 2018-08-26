@@ -45,17 +45,25 @@ add procedural logging (using logging lib)
 fix init problem
 link all trip locations with route
 delete location
+save each ministep: after create location, on close location form, on select other location form
 move location (order)
 logging window bei Bedarf - popUpAppender.show()
+scrolling-Verhalten verbessern
+fix sporadic route-calc and waypoint problem => output direction service status in text field
+fix route refresh display problem
 
 ## ----- DONE ------
-scrolling-Verhalten verbessern
-create new location: Ort als Pin anzeigen in der Trip Übersicht
+show route distances in info-window
 ## -----------------
+TEST
+
+BUGS:
 
 
+FEATURES:
+create new location: Ort als Pin anzeigen in der Trip Übersicht
+highlight selected location after move
 remove 'save trip' button - only keep 'OK' (there is no cancel - would complicate the entrire UX, rather save each ministep)
-save each ministep: after create location, on close location form, on select other location form
 OnLocationMarkerPositionChanged: get adress of new marker position
 OnTripMarkerPositionChanged: ...?
 if no data: add 2 demo tiles

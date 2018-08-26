@@ -1,14 +1,9 @@
-function OnSaveLocationsForm() {
+function OnOkLocationsForm() {
     log.info('saving location form');
     saveLocationsForm();
     hideLocationsForm();
     clearLocationsForm();  // for next time
-}
-
-function OnCancelLocationsForm() {
-    log.info('cancel location form');
-    hideLocationsForm();
-    clearLocationsForm();  // clear for next time
+    scrollIntoView('.jumbotron');
 }
 
 function OnNewLocation() {
@@ -23,9 +18,9 @@ function OnNewLocation() {
     var html = '<input type="text" class="form-control" id="input-newlocation" placeholder="neuer Ort / Zwischenstopp">';
     $('#btn-newlocation').empty();  // remove field in case already existing
     $(this).append(html);           // overlay current location button with input field
-    // $('#input-newlocation').blur(OnLocationPopupEntered);  // add handler for input processing
     $('#input-newlocation').keydown(OnLocationPopupKeydown);  // add handler for input processing
-    $('#input-newlocation').focus();    
+    $('#input-newlocation').focus();  
+    scrollIntoView('#tripMap');
 }
 
 function OnDeleteLocation() {
@@ -58,7 +53,8 @@ function OnDeleteLocation() {
     showLocationTilesForTrip(tripId);
 }
 
-function OnMoveLocation() {
+function OnMoveLocation(event) {
+    event.preventDefault(); // supress page reload
     log.info('move location...');
 
     const directionId = $(this).attr('id');
@@ -102,19 +98,11 @@ function OnMoveLocation() {
     showLocationTilesForTrip(tripId);
 }
 
-function swapLocations(tripIndex, firstIndex, secondIndex) {
-    const firstLocation = trips[tripIndex].locations[firstIndex];
-    const secondLocation = trips[tripIndex].locations[secondIndex];
-    trips[tripIndex].locations[secondIndex] = firstLocation;
-    trips[tripIndex].locations[firstIndex] = secondLocation;
-}
-
-function OnMovedownLocation() {
-    log.info('move up location...');
-}
-
-    function OnViewLocation() {
+function OnViewLocation() {
     log.info('view location...');
+    // toggle state
+    $(this).button('toggle');
+
     // check if same location selected: do nothing
     var newLocationId = $(this).attr('id');
     var prevLocationId = $('#prevlocation').text();
@@ -124,6 +112,7 @@ function OnMovedownLocation() {
             saveLocationsForm();  
         }
         showLocationForm();                 // toggle form
+        scrollIntoView('#tripMap');
         return; 
     }
     else {
@@ -138,7 +127,7 @@ function OnMovedownLocation() {
         fillLocationFormWithData(newLocationId);
     }
     showLocationForm();
-    // scrollMapIntoView();
+    scrollIntoView('#tripMap');
 }
 
 function OnLocationPopupKeydown(event) {
@@ -253,7 +242,6 @@ function showLocationTilesForTrip(tripId) {
 
     // $('.locationTiles').not('#addNewLocation').remove();
     $('.locationTiles').empty();  // delete all existing locations
-    // $('.btn-location').remove();  // delete all existing locations
 
     // add existing locations for this trip:
     if(trips[tripIndex].locations) {
@@ -309,7 +297,7 @@ function showLocationForm() {
 
 function hideLocationsForm() {
     log.info('hide location form');
-    $('.locationForm').fadeOut(700);    
+    $('.locationForm').fadeOut(1000 );    
 }
 
 function clearLocationsForm() {
@@ -386,6 +374,13 @@ function createNewLocationId(tripId) {
     return largestId + 1;
 }
 
+function swapLocations(tripIndex, firstIndex, secondIndex) {
+    const firstLocation = trips[tripIndex].locations[firstIndex];
+    const secondLocation = trips[tripIndex].locations[secondIndex];
+    trips[tripIndex].locations[secondIndex] = firstLocation;
+    trips[tripIndex].locations[firstIndex] = secondLocation;
+}
+
 function addLocationData(tripId, locationId, locationName) {
     var tripIndex = getTripIndexById(tripId);
     // init locations array if empty
@@ -409,19 +404,7 @@ function getLocationIndexById(tripIndex, locationId) {
 function initDemoLocations(tripId) {
     log.info('init demo locations');
     var tripIndex = getTripIndexById(tripId);
-    // locations.push({
-    //         id: 1,
-    //         name: 'Sisteron stop1',
-    //         duration: 1,
-    //         desc: 'Beschreibung der Location... bla bla bla bla bla bla bla bla ',
-    //         camping_name: 'L´Ardeche',
-    //         camping_adress: 'adresse hier...',
-    //         camping_website: 'www.lardeche.fr',
-    //         camping_price: '35',
-    //         camping_rating: 3,
-    //         camping_desc: 'Kommentar zum Camping hier...'
-    //     });
-
+    if(tripIndex == undefined) return;
 
     // init if no locations exist yet
     if (trips[tripIndex].locations === undefined) {
@@ -430,22 +413,22 @@ function initDemoLocations(tripId) {
         var locId = createNewLocationId(tripId);
         trips[tripIndex].locations[0] = {
             id: locId,
-            name: 'neuer Ort1',
-            desc: 'blabla 11111'
+            name: 'Ort1',
+            desc: 'blabla'
         };
 
         locId = createNewLocationId(tripId);
         trips[tripIndex].locations.push({
             id: locId,
-            name: 'neuer Ort2',
-            desc: 'blabla 222222'
+            name: 'Ort2',
+            desc: 'blabla'
         });
 
         locId = createNewLocationId(tripId);
         trips[tripIndex].locations.push({
             id: locId,
-            name: 'neuer Ort3',
-            desc: 'blabla 333333'
+            name: 'Ort3',
+            desc: 'blabla'
         });
         log.debug(trips[tripIndex].locations);
     }

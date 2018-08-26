@@ -17,13 +17,13 @@ function OnViewTrip() {
 
     log.info('view trip...');
     var tripId = $(this).parent().parent().attr('id');
-
     
     hideTripTiles();
-    showTripForm(tripId);           // ************************************** TODO
+    showTripForm(tripId);           
     fillTripFormWithData(tripId);
-    initDemoLocations(tripId);   // will add locations if no locations exists yet
-    // showTripForm(tripId);           // will also show location tiles for trip
+    initDemoLocations(tripId);          // will add locations if no locations exists yet
+
+    scrollIntoView('#tripMap');
 }
 
 function OnSaveTripForm() {
@@ -219,6 +219,7 @@ function clearTripForm() {
     $('.tripForm #duration').val('');
     $('.tripForm #date').val('');
     $('.tripForm #desc').val('');
+    $('.tripForm #directionsStatus').val('');
 }
 
 function toggleNewTripButton() {
@@ -226,12 +227,8 @@ function toggleNewTripButton() {
     $('btnCreateNewTrip').slideToggle(500);
 }
 
-function scrollMapIntoView() {
-    // var mapElement = document.getElementById('tripMap');
-    // mapElement.scrollIntoView({ block: 'start',  behavior: 'smooth' });
-
-    // $('#tripMap').scrollTop(200);
-
+function scrollIntoView(elementSelector) {
+    $('html, body').animate({ scrollTop: $(elementSelector).offset().top } , 1000 );    
 }
 
 function logAllTrips(logcomment) {
