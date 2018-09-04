@@ -147,39 +147,63 @@ function OnDrawRoute(event) {
     if(directionRequest == null) return;
 
     directionsDisplay.setMap(null);  // remove existing directions
-    directionsDisplay.setMap(MAP);          // bind to map object
+    directionsDisplay.setMap(MAP);   // bind to map object
     directionsService.route(directionRequest.content, function(result, status) {
+        $('#directionsStatus').val(status);  // status output to form
         if (status == 'OK') {
             directionsDisplay.setDirections(result);   // draw route
-            evaluateDistance(result.routes);                  // retrieve distances between locations
+            evaluateDistance(tripId, result.routes);                  // retrieve distances between locations
             // directionsDisplay.setPanel(document.getElementById('tripDirections'));  // bind directions panel
             // $('#tripDirections').slideToggle(500, 'linear');
         }
         else {
             log.error('ERROR calculating route, status:' + status);
+            return;
         }
-        // print status
-        $('#directionsStatus').val(status);
     });
+    // hook up info window to each marker
+    // **************
 }
 
-function evaluateDistance(resultRoutes) {
-    log.info('evaluation directions result');
+function OnShowInfowindow() {
+    log.info('map: show infowindow');
+    var tripIndex;    
+    var infoContent;
+    tripId = $('.tripForm #tripId').val();
+    if(tripId !== undefined) {
+        makeRequest(tripId, directionRequest);
+    }
+    tripIndex = getTripIndexById(tripId);
+    if(tripIndex == undefined) return;
+
+    infoContent = trip[tripIndex].locations[i].routeInfo;
+
+}
+
+function evaluateDistance(tripId, resultRoutes) {
+    log.info('evaluating directions result');
     // console.log(resultRoutes);
-
-    if(resultRoutes == undefined) return;
-    if(resultRoutes[0].legs == undefined) return;
-
     var distance;
     var duration;
     var start;
     var end;
+    var tripIndex;
+
+    tripIndex = getTripIndexById(tripId);
+    
+    if(tripIndex == undefined) return;
+    if(resultRoutes == undefined) return;
+    if(resultRoutes[0].legs == undefined) return;
+    
     for(var i=0; i < resultRoutes[0].legs.length; i++) {
         distance = resultRoutes[0].legs[i].distance.text;
         duration = resultRoutes[0].legs[i].duration.text;
         start = resultRoutes[0].legs[i].start_address;
         end = resultRoutes[0].legs[i].end_address;
         log.debug('section: '+ i + ' distance: '+ distance + ' duration: ' + duration + '(from ' + start + ' to ' + end);
+        if(trips[tripIndex].locations[i] != undefined) { 
+            trips[tripIndex].locations[i].routeInfo = distance + ' - ' + duration + '(from ' + start + ' to ' + end;
+        }
     }
 }
 

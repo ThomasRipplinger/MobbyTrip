@@ -53,88 +53,42 @@ fix sporadic route-calc and waypoint problem => output direction service status 
 fix route refresh display problem
 
 ## ----- DONE ------
-show route distances in info-window
-## -----------------
+Unit Testing mit Jasmine
+fix refresh problem for trip map / route
 TEST
+test w/o internet (Funktion auch offline sicherstellen)
+show route distances in info-window
+OnLocationMarkerPositionChanged: get adress of new marker position
+OnTripMarkerPositionChanged: ...?
+create new location: Ort als Pin anzeigen in der Trip Übersicht
+Test mit testing framework ?
+getLocationIndexById: remove tripIndex (make locationId unique)
+
+## -----------------
 
 BUGS:
 
 
 FEATURES:
-create new location: Ort als Pin anzeigen in der Trip Übersicht
 highlight selected location after move
 remove 'save trip' button - only keep 'OK' (there is no cancel - would complicate the entrire UX, rather save each ministep)
-OnLocationMarkerPositionChanged: get adress of new marker position
-OnTripMarkerPositionChanged: ...?
 if no data: add 2 demo tiles
-getLocationIndexById: remove tripIndex (make locationId unique)
-async map request processing // test w/o internet (Funktion auch offline sicherstellen)
 Farbschema geradeziehen, besseres Startbild, 
 color schema (http://www.paletton.com/index.html#uid=75q1M0kiCFn8GVde7NVmtwSqXtg)
-Test mit testing framework ?
 Felder nur bei Bedarf anzeigen: ... => Auswahl weiterer Felder
 add photo to trip-details form
 add trip: bei "enter" nicht Cancel aktivieren...!
-bei "anlegen ok" kurz einen grünen Haken od. OK erscheinen lassen
 convert online map to img and download / link img ?
-
 
 ### ------PRIO 2 ------------------------------
 - Prio2: zentrale Datenspeicherung
 - Prio2: Pins mit Route verbinden
 - Prio2: Route mit anderen teilen
-domain: triplogbook.online / Reisebuch.online    (mobbyTrip.de / .com)
+domain: 
+reiselog.online / 
+travelscript.online / 
+triplogbook.online / Reisebuch.online / travellog.online / reisescript.online    (mobbyTrip.de / .com)
 
-
---------------------------------------------------------------------------------------
-##EVENTS
-
-# On form load
-load data
-show tiles
-
-# add trip
-clear trip form
-show trip form (and hide 'new trip' button)
-
-# save trip form
-save trip data
-hide trip locations form and tiles
-hide trip form (and show 'new trip' button)
-clear trip form
-re-init trip tiles (hide/show)
-
-# cancel trip form
-hide trip form
-clear trip form
-hide trip locations form and tiles
-hide location tiles
-re-init trip tiles (hide/show)
-
-# show trip
-hide trip tiles
-fill in trip form with data
-show trip form (and: hide 'new trip button', initialize Map, show location tiles)
-
-# add new location
-save current location (if visible) 
-clear location form
-add overlay and wait for input, then
-   show trip locations form
-
-# select trip location
-if new selection: save current location 
-fill location form with data
-show trip locations form
-
-# save location form
-save trip+location data  (name, id, desc)
-hide location form
-clear location form
-
-# close location form
-hide location form
-clear location form
 
 ---------------------------------------------------------
 ## saving strategy

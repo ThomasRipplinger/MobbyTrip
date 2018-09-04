@@ -1,11 +1,12 @@
-function OnSettings() {
+function OnSettings(event) {
+    event.preventDefault(); // supress page reload
     popUpAppender.show();
 }
 
 function OnAddTrip() {
     log.info('adding trip...');
     clearTripForm();
-    var tripId = createNewTripId();
+    var tripId = createTrip();
     var isNewTrip = true;
     initDemoLocations(tripId);
     fillTripFormWithData(tripId, isNewTrip);
@@ -59,7 +60,8 @@ function OnCancelTripForm() {
     var isNewTrip = $('.tripForm #isNew').val();
     if(isNewTrip) {
         log.info('cancel new trip - removing tripId');
-        removeTripId();
+        var tripId = $('.tripForm #tripId').val();
+        deleteTrip(parseInt(tripId));
     }
     else {
         log.info('cancel existing trip - just close form');
@@ -159,18 +161,6 @@ function deleteTrip() {
     saveTripsToLocalStore();
 }
 
-function removeTripId() {
-    log.info('remove trip Id...');
-
-    var tripId = $('.tripForm #tripId').val();
-    tripId = parseInt(tripId);
-    log.debug('Trip Id: ' + tripId);
-    var tripIndex = getTripIndexById(tripId);   // if not found: returns undefined
-    if(tripIndex !== undefined) {
-        trips.splice(tripIndex, 1); // remove 1 element starting from index 
-    }
-}
-
 function fillTripFormWithData(tripId, isNewTrip) {
     log.info('fill trip form for trip id:' + tripId);
 
@@ -240,7 +230,7 @@ function logAllTrips(logcomment) {
     }
 }
 
-function createNewTripId() {
+function createTrip() {   // returns a new trip id
     log.info('create new trip id...');
     var largestId = 0;
     var newId;
@@ -271,6 +261,20 @@ function createNewTripId() {
     return newId;
 }
 
+function deleteTrip(tripId) {
+    log.info('delete trip Id...');
+    log.debug('trip Id: ' + tripId);
+
+    if(tripId == undefined) return ERROR;
+    var tripIndex = getTripIndexById(tripId);   // if not found: returns undefined
+    if(tripIndex !== undefined) {
+        trips.splice(tripIndex, 1);             // remove 1 element starting from index
+        return OK; 
+    }
+    else {
+        return ERROR;
+    }
+}
 
 function getTripIndexById(tripId) {
     // find current trip index in array

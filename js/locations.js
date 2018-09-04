@@ -41,12 +41,8 @@ function OnDeleteLocation() {
         log.error('ERROR: cant find location Id');
         return;
     }
-    var locationIndex = getLocationIndexById(tripIndex, locationId);
-    if(locationIndex == undefined) return;
 
-    log.debug('delete location: ' + locationId + ' index: ' + locationIndex);
-
-    trips[tripIndex].locations.splice(locationIndex, 1); // remove 1 element starting from index 
+    deleteLocation(tripId, locationId);
 
     saveTripsToLocalStore();
     clearLocationsForm();
@@ -163,8 +159,7 @@ function OnLocationPopupEntered(event) {
 
     // add locations tile before the 'new location' tile:
     var tripId = $('.tripForm #tripId').val();
-    var locationId = createNewLocationId(tripId);
-    addLocationData(tripId, locationId, locationName);  // add location to array
+    var locationId = createLocation(tripId, locationName);
     showLocationTilesForTrip(tripId);   // update the location tiles
     fillLocationFormWithData(locationId);  // init form and update map
     showLocationForm();  
@@ -323,14 +318,10 @@ function saveLocationsForm() {
     // check if new location (Id field empty)
     var locationId = $('.locationForm #locationId').val();
     if (locationId === '') {
-        log.info('saving new location...');
-        newLocation = true;
-        locationId = createNewLocationId(tripId);
+        log.error('ERROR: location id not found - cant save');
+        return ERROR;
     }
-    else {
-        newLocation = false;
-        locationId = parseInt(locationId);
-    }
+    locationId = parseInt(locationId);
     locationIndex = getLocationIndexById(tripIndex, locationId);
 
     // prepare object with form data
@@ -344,24 +335,19 @@ function saveLocationsForm() {
         source: $('.locationForm #locationSource').val()
     };
 
-    if(newLocation) {
-        // init locations array if empty
-        if (trips[tripIndex].locations === undefined) {
-            trips[tripIndex].locations = [];
-        }
-        trips[tripIndex].locations.push(location); // add new location to array
-    }
-    else {   // just update data
-        trips[tripIndex].locations[locationIndex] = location;
-    };
-
+    trips[tripIndex].locations[locationIndex] = location;
     saveTripsToLocalStore();
 }
 
-function createNewLocationId(tripId) {
+function createLocation(tripId, locationName) {
     log.info('create new location id');
     var tripIndex = getTripIndexById(tripId);
+    if(tripIndex == undefined) {
+        log.error('ERROR: could not find tripIndex');
+        return undefined;
+    }
     var largestId = 0;
+    var newId;
     // iterate over locations of current trip
     if(trips[tripIndex].locations) { 
         if (trips[tripIndex].locations) {
@@ -371,7 +357,31 @@ function createNewLocationId(tripId) {
             }
         }
     }
-    return largestId + 1;
+    newId = largestId + 1;
+
+    // init locations array if empty
+    if (trips[tripIndex].locations === undefined) {
+        trips[tripIndex].locations = [];
+    }
+    trips[tripIndex].locations.push({id: newId, name: locationName}); // add new location to array
+
+    return newId;
+}
+
+function deleteLocation(tripId, locationId) {
+    log.info('delete location');
+    log.debug('location Id: ' + locationId);
+
+    if(tripId == undefined) return ERROR;
+    var tripIndex = getTripIndexById(tripId);   // if not found: returns undefined
+    if(tripIndex == undefined) return ERROR;
+
+    if(locationId == undefined) return ERROR;
+    var locationIndex = getLocationIndexById(tripIndex, locationId);   // if not found: returns undefined
+    if(locationIndex == undefined) return ERROR;
+
+    trips[tripIndex].locations.splice(locationIndex, 1); // remove 1 element starting from index 
+    return OK; 
 }
 
 function swapLocations(tripIndex, firstIndex, secondIndex) {
@@ -379,15 +389,6 @@ function swapLocations(tripIndex, firstIndex, secondIndex) {
     const secondLocation = trips[tripIndex].locations[secondIndex];
     trips[tripIndex].locations[secondIndex] = firstLocation;
     trips[tripIndex].locations[firstIndex] = secondLocation;
-}
-
-function addLocationData(tripId, locationId, locationName) {
-    var tripIndex = getTripIndexById(tripId);
-    // init locations array if empty
-    if (trips[tripIndex].locations === undefined) {
-        trips[tripIndex].locations = [];
-    }
-    trips[tripIndex].locations.push({id: locationId, name: locationName});  
 }
 
 function getLocationIndexById(tripIndex, locationId) {
@@ -410,21 +411,21 @@ function initDemoLocations(tripId) {
     if (trips[tripIndex].locations === undefined) {
         trips[tripIndex].locations = [];
 
-        var locId = createNewLocationId(tripId);
+        var locId = createLocation(tripId);
         trips[tripIndex].locations[0] = {
             id: locId,
             name: 'Ort1',
             desc: 'blabla'
         };
 
-        locId = createNewLocationId(tripId);
+        locId = createLocation(tripId);
         trips[tripIndex].locations.push({
             id: locId,
             name: 'Ort2',
             desc: 'blabla'
         });
 
-        locId = createNewLocationId(tripId);
+        locId = createLocation(tripId);
         trips[tripIndex].locations.push({
             id: locId,
             name: 'Ort3',
