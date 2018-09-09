@@ -53,6 +53,14 @@ fix sporadic route-calc and waypoint problem => output direction service status 
 fix route refresh display problem
 
 ## ----- DONE ------
+
+## usability ++++++++++++++++
+Location: Unterschied Übernachtung / Zwischenstopp anzeigen (fettdruck?)
+Loc. LINKS:  Tag pro Location anzeigen (wie?)
+Loc. RECHTS: Strecke von Loc. zu Loc anzeigen (wie?)
+Scrollverhalten verbessern bzw. Locations und Gesamtübersicht gleichzeitig anzeigbar machen
+## ++++++++++++++++++++++++++
+
 Unit Testing mit Jasmine
 fix refresh problem for trip map / route
 TEST
@@ -63,7 +71,8 @@ OnTripMarkerPositionChanged: ...?
 create new location: Ort als Pin anzeigen in der Trip Übersicht
 Test mit testing framework ?
 getLocationIndexById: remove tripIndex (make locationId unique)
-
+save photos via drag/drop, see https://www.html5rocks.com/en/tutorials/file/dndfiles/
+local backup (?) see https://www.jotform.com/blog/html5-filesystem-api-create-files-store-locally-using-javascript-webkit/ 
 ## -----------------
 
 BUGS:

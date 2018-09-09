@@ -40,10 +40,14 @@ describe("TravelLog test suite", function() {
 
   });
 
-  describe("other tests", function() {
+  describe("local data saving tests", function() {
     
     // beforeEach(function() {
     // });
+
+    it("should pass API availabiltiy", function() {
+      expect(verifyFileAPIsupport()).toEqual(OK);
+    })
 
   });
   
