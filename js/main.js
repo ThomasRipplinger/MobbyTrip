@@ -1,10 +1,12 @@
 const OK = 0;
 const ERROR = 1;
 trips = [];
+locationScrolled = false;     // scoll only once with first display of a location for a trip
 geocoder = null;
 map = null;
+var directionsDisplay;           // map directions object
 var googleLibLoaded = false; 
-var directionsDisplay;
+
 var log = log4javascript.getLogger();
 var popUpAppender = new log4javascript.PopUpAppender();
 popUpAppender.setUseOldPopUp();
@@ -51,6 +53,11 @@ $(document).ready(function () {
     $('.locationForm #locationName').keydown(OnLocationKeydown);
     $('.locationForm #locationName').blur(OnFormLocationEntered);
 
+    $(".locationForm #locationDate").datepicker({
+      showWeek: true,
+      firstDay: 1,
+      dateFormat: "D, d M yy",
+      onSelect: OnFormDateEntered
+    });
+    $(".locationForm #locationDate").datepicker($.datepicker.regional["de"]);
 });
-
-

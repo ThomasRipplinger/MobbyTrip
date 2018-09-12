@@ -51,15 +51,20 @@ logging window bei Bedarf - popUpAppender.show()
 scrolling-Verhalten verbessern
 fix sporadic route-calc and waypoint problem => output direction service status in text field
 fix route refresh display problem
-
+Location: Datum anzeigen incl. Wochentag
+Location tile:Umbau zu Cards
+Location: Datum speichern 
+Location Card: Tag anzeigen 
+Refresh Location Tiles after "OK"
+Location: Übernachtung / Zwischenstopp anzeigen 
 ## ----- DONE ------
 
 ## usability ++++++++++++++++
-Location: Unterschied Übernachtung / Zwischenstopp anzeigen (fettdruck?)
-Loc. LINKS:  Tag pro Location anzeigen (wie?)
-Loc. RECHTS: Strecke von Loc. zu Loc anzeigen (wie?)
-Scrollverhalten verbessern bzw. Locations und Gesamtübersicht gleichzeitig anzeigbar machen
+Location Card: Strecke => berechnete Werte anzeigen 
+Locations und Gesamtübersicht gleichzeitig anzeigbar machen => vertikal anordnen, map rechts daneben
 ## ++++++++++++++++++++++++++
+
+# convert trip + locations to objects 
 
 Unit Testing mit Jasmine
 fix refresh problem for trip map / route
@@ -79,6 +84,7 @@ BUGS:
 
 
 FEATURES:
+Location: Unterschied Übernachtung / Zwischenstopp anzeigen (fettdruck?)
 highlight selected location after move
 remove 'save trip' button - only keep 'OK' (there is no cancel - would complicate the entrire UX, rather save each ministep)
 if no data: add 2 demo tiles

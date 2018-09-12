@@ -53,6 +53,7 @@ function OnSaveTripForm() {
     hideTripForm();     // will also hide location tiles and form
     clearTripForm();    // clear for next time
     displayTripTiles();
+    locationScrolled = false;
 }
 
 function OnCancelTripForm() {
@@ -72,6 +73,7 @@ function OnCancelTripForm() {
     hideTripForm();     // will also hide location tiles and form
     clearTripForm();    // clear for next time
     displayTripTiles();
+    locationScrolled = false;
 }
 
 // destination entered - center map around the dest. 
@@ -98,7 +100,7 @@ function displayTripTiles() {
             // log.debug("adding tile id #" + i);
             // log.debug(trips[i]);
             var html = { text: '' };
-            makeTileHtml(html, trips[i]);
+            makeTripTileHtml(html, trips[i]);
             $('.tripTiles').append(html.text);
         }
 
@@ -109,9 +111,9 @@ function displayTripTiles() {
         $('.deletetrip').click(deleteTrip);
         
     }
-}
+} 
 
-function makeTileHtml(html, trip) {
+function makeTripTileHtml(html, trip) {
 
     html.text = '<div class="col-md-4 triptile" id="' + trip.id + '">'
         + '<div class="row">'

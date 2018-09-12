@@ -155,6 +155,10 @@ function OnDrawRoute(event) {
             evaluateDistance(tripId, result.routes);                  // retrieve distances between locations
             // directionsDisplay.setPanel(document.getElementById('tripDirections'));  // bind directions panel
             // $('#tripDirections').slideToggle(500, 'linear');
+            var overallDistance = getOverallDistance(tripId);
+            if(overallDistance !== undefined){
+                $('#duration').val(overallDistance);  
+            }
         }
         else {
             log.error('ERROR calculating route, status:' + status);
@@ -163,6 +167,15 @@ function OnDrawRoute(event) {
     });
     // hook up info window to each marker
     // **************
+}
+
+function getOverallDistance(tripId) {
+    var tripIndex = getTripIndexById(tripId);
+    var distance = 0;
+    for(var i = 0; i < trips[tripIndex].locations.length; i++) {
+        distance += trips[tripIndex].locations[i].distance;
+    }
+    return distance;
 }
 
 function OnShowInfowindow() {
@@ -201,10 +214,18 @@ function evaluateDistance(tripId, resultRoutes) {
         start = resultRoutes[0].legs[i].start_address;
         end = resultRoutes[0].legs[i].end_address;
         log.debug('section: '+ i + ' distance: '+ distance + ' duration: ' + duration + '(from ' + start + ' to ' + end);
-        if(trips[tripIndex].locations[i] != undefined) { 
-            trips[tripIndex].locations[i].routeInfo = distance + ' - ' + duration + '(from ' + start + ' to ' + end;
+        if(trips[tripIndex].locations[i+1] != undefined) { 
+            // trips[tripIndex].locations[i].routeInfo = distance + ' - ' + duration + '(from ' + start + ' to ' + end;
+            trips[tripIndex].locations[i+1].distance = distance;
+            trips[tripIndex].locations[i+1].duration = duration;
         }
     }
+    // no route info for start location:
+    if(trips[tripIndex].locations[0] != undefined) { 
+        trips[tripIndex].locations[0].distance = '';
+        trips[tripIndex].locations[0].duration = '';
+    }
+
 }
 
 function makeRequest(tripId, directionRequest) {

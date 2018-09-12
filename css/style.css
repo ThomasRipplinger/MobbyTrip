@@ -80,7 +80,7 @@ form {
 
 .btn-location {
     width: 15rem;
-    height: 3rem;
+    height: 6rem;
     margin: 0.5rem;
     font-size: 1.2rem;
     font-weight: bold;
@@ -92,8 +92,22 @@ form {
     transition: background-color 200ms linear 10ms;
 }
 
+/* .btn-location#btn-newlocation {
+    background-color: rgb(23, 219, 88);
+} */
+
 .btn-location:hover {
     background-color: rgb(248, 248, 83);    
+}
+
+.locationTile h4 {
+    padding-left: 15px;
+}
+
+.location-info {
+    font-size: 0.8rem;
+    font-weight: 800;
+    margin-right: 1rem;
 }
 
 #input-newlocation {

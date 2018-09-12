@@ -5,11 +5,15 @@
     <meta charset="utf-8" />
     <title>TravelLogBook</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous"> -->
     <link rel="stylesheet" type="text/css" media="screen" href="resources/bootstrap-4.1.1-dist/css/bootstrap.css" />
-    <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous"> -->
-    <link rel="stylesheet" type="text/css" href="./resources\fontawsome5.1free/css/all.css" />
+    
+    <!--   DT picker, see https://jqueryui.com/datepicker  -->
+    <link rel="stylesheet" type="text/css" href="resources/jquery-ui-1.12.1/jquery-ui.css">   
+    <link rel="stylesheet" type="text/css" href="resources/fontawsome5.1free/css/all.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
+    <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous"> -->
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous"> -->
+    <!-- <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">      -->
 </head>
 
 <body>
@@ -172,24 +176,30 @@
                         </div>
 
                         <div class="form-group row">
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="locationDate" placeholder="Datum" size="30">
+                            </div>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" id="locationNights" placeholder="Nächte">
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" id="locationDistance" placeholder="Anfahrt (km)">
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" id="locationDuration" placeholder="Anfahrt (h)">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                                 <div class="col-sm-12">
-                                    <textarea class="form-control" rows='3' id="locationAddress" placeholder="Adresse"></textarea>
+                                    <textarea class="form-control" rows='2' id="locationAddress" placeholder="Adresse"></textarea>
                                 </div>
                         </div>
 
                         <div class="form-group row">
                                 <div class="col-sm-12">
-                                    <textarea class="form-control" rows='3' id="locationDesc" placeholder="Beschreibung"></textarea>
+                                    <textarea class="form-control" rows='4' id="locationDesc" placeholder="Beschreibung"></textarea>
                                 </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control" id="locationNights" placeholder="Übernachtungen">
-                            </div>
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control" id="locationCost" placeholder="Kosten/Nacht">
-                            </div>
                         </div>
 
                     </div>
@@ -200,13 +210,13 @@
     <footer>
         <hr>
         <span>(C) TR 2018</span>
-        <!-- <link rel="shortcut icon" type="image/png" href="jasmine/lib/jasmine-3.2.1/jasmine_favicon.png"> -->
-        <!-- <link rel="stylesheet" type="text/css" href="jasmine/lib/jasmine-3.2.1/jasmine.css"> -->
     </footer>
 
-    <!-- AIzaSyBmL7Lwc0zAtlphBU9trmScjLJFLhqtziQ -->
     <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
-	<script type="text/javascript" src="js/log4javascript.js"></script> 
+    <script type="text/javascript" src="resources/jquery-ui-1.12.1/jquery-ui.js"></script>       <!--    DT picker -->
+    <script type="text/javascript" src="resources/jquery-ui-1.12.1/i18n/datepicker-de.js"></script>
+    <script type="text/javascript" src="js/log4javascript.js"></script> 
+
     <script type="text/javascript" src="js/main.js"></script>
     <script type="text/javascript" src="js/map.js"></script>
     <script type="text/javascript" src="js/trips.js"></script>
@@ -223,9 +233,6 @@
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script> -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 
-    <!-- <script type="text/javascript" src="jasmine/lib/jasmine-3.2.1/jasmine.js"></script>
-    <script type="text/javascript" src="jasmine/lib/jasmine-3.2.1/jasmine-html.js"></script>
-    <script type="text/javascript" src="jasmine/lib/jasmine-3.2.1/boot.js"></script> -->
 </body>
 
 </html>
