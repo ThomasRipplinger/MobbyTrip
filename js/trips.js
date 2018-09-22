@@ -4,7 +4,7 @@ function OnSettings(event) {
 }
 
 function OnAddTrip() {
-    log.info('adding trip...');
+    log.info('adding new trip');
     clearTripForm();
     var tripId = createTrip();
     var isNewTrip = true;
@@ -12,6 +12,37 @@ function OnAddTrip() {
     fillTripFormWithData(tripId, isNewTrip);
     hideTripTiles();
     showTripForm(tripId);
+}
+
+function OnDeleteTrip() {
+    log.info('delete trip...');
+    
+    var destinationToDelete = $(this).parent().find('h2').text();
+
+    if(destinationToDelete === null) {
+        log.error('ERROR: can´t find destinationToDelete');
+        return;
+    }
+    log.info('delete trip: ' + destinationToDelete);
+    
+    // remove tile
+    $(this).parent().parent().remove();
+
+    // remove from trips array and store
+    var deleteflag = false;
+    for(var i=0; i<trips.length; i++) {
+        if(trips[i].destination === destinationToDelete){
+            log.info('found - deleting trip: ' + destinationToDelete);
+            trips.splice(i, 1); // remove 1 element starting from i 
+            deleteflag = true;
+            break;
+        }
+    }
+    if(deleteflag === false) {
+        log.error('ERROR: can´t find destinationToDelete in trips array');
+    }
+    // setTimeout(saveTripsToLocalStore, 2000);  // only works with timeout 2000ms...
+    saveTripsToLocalStore();
 }
 
 function OnViewTrip() {
@@ -30,6 +61,11 @@ function OnViewTrip() {
 function OnSaveTripForm() {
     log.info('saving trip data...');
     var tripId;
+
+    if($('.tripForm #name').val().length == 0) {
+        log.info('no trip name - no saving');
+        return;
+    }
 
     tripId = $('.tripForm #tripId').val();
     tripId = parseInt(tripId);
@@ -108,7 +144,7 @@ function displayTripTiles() {
         $('.viewtrip').click(OnViewTrip);
 
         // ------------- add 'delete trip' handler ----------
-        $('.deletetrip').click(deleteTrip);
+        $('.deletetrip').click(OnDeleteTrip);
         
     }
 } 
@@ -130,37 +166,6 @@ function makeTripTileHtml(html, trip) {
         + '<p><a class="btn btn-secondary viewtrip" href="#" role="button">Anschauen »</a></p>'
         + '</div>';
     // log.debug(html.text);
-}
-
-function deleteTrip() {
-    log.info('delete trip...');
-    
-    var destinationToDelete = $(this).parent().find('h2').text();
-
-    if(destinationToDelete === null) {
-        log.error('ERROR: can´t find destinationToDelete');
-        return;
-    }
-    log.info('delete trip: ' + destinationToDelete);
-    
-    // remove tile
-    $(this).parent().parent().remove();
-
-    // remove from trips array and store
-    var deleteflag = false;
-    for(var i=0; i<trips.length; i++) {
-        if(trips[i].destination === destinationToDelete){
-            log.info('found - deleting trip: ' + destinationToDelete);
-            trips.splice(i, 1); // remove 1 element starting from i 
-            deleteflag = true;
-            break;
-        }
-    }
-    if(deleteflag === false) {
-        log.error('ERROR: can´t find destinationToDelete in trips array');
-    }
-    // setTimeout(saveTripsToLocalStore, 2000);  // only works with timeout 2000ms...
-    saveTripsToLocalStore();
 }
 
 function fillTripFormWithData(tripId, isNewTrip) {
@@ -216,7 +221,7 @@ function clearTripForm() {
 
 function toggleNewTripButton() {
     log.info('toggle trip button');
-    $('btnCreateNewTrip').slideToggle(500);
+    $('#btnCreateNewTrip').slideToggle(500);
 }
 
 function scrollIntoView(elementSelector) {

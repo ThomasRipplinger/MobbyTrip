@@ -139,9 +139,17 @@ function OnLocationPopupKeydown(event) {
     if(event.keyCode===13) {     // Enter
         OnLocationPopupEntered();
     }
+    else if(event.keyCode===9) { // Tab
+        OnLocationPopupEntered();
+    }
     else if(event.keyCode===27) { // ESC
         $('#input-newlocation').remove();  // hide input field
         addEmptyLocationTile();
+    }
+    else if(event.keyCode===32) { // Space
+        event.preventDefault();
+        var locationName = $('#input-newlocation').val();
+        $('#input-newlocation').val(locationName + ' ');  // add space, but prevent leaving the form
     }
 }
 
