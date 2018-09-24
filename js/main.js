@@ -1,12 +1,17 @@
 const OK = 0;
 const ERROR = 1;
-trips = [];
+
+trip = new Trip();  // create global trip object, will hold all trip data
+
 locationScrolled = false;     // scoll only once with first display of a location for a trip
+
+// Google maps objects & vars
 geocoder = null;
 map = null;
 var directionsDisplay;           // map directions object
 var googleLibLoaded = false; 
 
+// Logging stuff, see http://log4javascript.org/docs/quickstart.html
 var log = log4javascript.getLogger();
 var popUpAppender = new log4javascript.PopUpAppender();
 popUpAppender.setUseOldPopUp();
@@ -17,7 +22,6 @@ popUpAppender.setInitiallyMinimized(true);   // show with click on cog => OnSett
 log.addAppender(popUpAppender);
 // log.setLevel(log4javascript.Level.INFO);
 
-// http://log4javascript.org/docs/quickstart.html
 // log.trace(message[, message2, ... ][, exception])
 // log.debug(message[, message2, ... ][, exception])
 // log.debug(message[, message2, ... ][, exception])

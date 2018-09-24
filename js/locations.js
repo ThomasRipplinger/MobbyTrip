@@ -75,7 +75,7 @@ function OnMoveLocation(event) {
     if(locationIndex == undefined) return;
 
     // verify if at least 2 locations
-    const locationCount = trips[tripIndex].locations.length;
+    const locationCount = trip.tripArray[tripIndex].locations.length;
     if(locationCount < 2) return;
 
     // move upwards
@@ -196,8 +196,8 @@ function OnFormLocationEntered() {
     var locationId = $('.locationForm #locationId').val();
     var tripIndex = getTripIndexById(tripId);
     var locationIndex = getLocationIndexById(tripIndex, locationId);
-    var locationDate = trips[tripIndex].locations[locationIndex].date;
-    trips[tripIndex].locations[locationIndex].name = locationName;
+    var locationDate = trip.tripArray[tripIndex].locations[locationIndex].date;
+    trip.tripArray[tripIndex].locations[locationIndex].name = locationName;
     // update location name in tile:
     updateLocationTile(tripId, locationId, locationName, locationDate);
     // update map
@@ -216,7 +216,7 @@ function OnFormDateEntered(dateText) {
     var locationId = $('.locationForm #locationId').val();
     var tripIndex = getTripIndexById(tripId);
     var locationIndex = getLocationIndexById(tripIndex, locationId);
-    trips[tripIndex].locations[locationIndex].date = dateText;
+    trip.tripArray[tripIndex].locations[locationIndex].date = dateText;
     // update location date in tile:
     updateLocationTile(tripId, locationId, locationName, dateText);
 }
@@ -236,15 +236,19 @@ function addLocationTile_OLD(locationId, locationName) {
 function addLocationTile(tripId, locationId) {
     log.info('add location tile');
 
-    var tripIndex = getTripIndexById(tripId);
-    var locationIndex = getLocationIndexById(tripIndex, locationId);
+    if(!trip.opened) {
+        log.error('ERROR: trip not open, cant add tile');
+        return ERROR;
+    }
 
-    var locationName = trips[tripIndex].locations[locationIndex].name;
-    var locationDate = trips[tripIndex].locations[locationIndex].date;
+    var locationIndex = getLocationIndexById(trip.index, locationId);
+
+    var locationName = trip.tripArray[trip.index].locations[locationIndex].name;
+    var locationDate = trip.tripArray[trip.index].locations[locationIndex].date;
     locationDate = formatDateForTiledisplay(tripId, locationId, locationDate);
-    var distanceFromLastLocation = trips[tripIndex].locations[locationIndex].distance;
+    var distanceFromLastLocation = trip.tripArray[trip.index].locations[locationIndex].distance;
     if(distanceFromLastLocation == undefined) distanceFromLastLocation = '';
-    var durationFromLastLocation = trips[tripIndex].locations[locationIndex].duration;
+    var durationFromLastLocation = trip.tripArray[trip.index].locations[locationIndex].duration;
     if(durationFromLastLocation == undefined) durationFromLastLocation = '';
 
     // var html = '<div class="btn-location locationTile existingLocation col-md-4" id="' + locationId + '">'
@@ -289,9 +293,7 @@ function formatDateForTiledisplay(tripId, locationId, locationDate) {
         return '';
     }
 
-    var tripIndex = getTripIndexById(tripId);
-    if(tripIndex == undefined) return '';
-    var locationIndex = getLocationIndexById(tripIndex, locationId);
+    var locationIndex = getLocationIndexById(trip.index, locationId);
     if(locationIndex == undefined) return '';
 
     // first location? add "start"
@@ -301,26 +303,26 @@ function formatDateForTiledisplay(tripId, locationId, locationDate) {
     }
 
     // last location? add "end"
-    if(locationIndex == trips[tripIndex].locations.length - 1) {
+    if(locationIndex == trip.tripArray[trip.index].locations.length - 1) {
         // log.debug('tripId ' + tripId + ', locationId ' + locationId + ': end');
         return locationDate + ' (Ende)';
     }
 
     // stop w/o overnight? add "stopover"
-    if(trips[tripIndex].locations[locationIndex].nights == 0) {
+    if(trip.tripArray[trip.index].locations[locationIndex].nights == 0) {
         // log.debug('tripId ' + tripId + ', locationId ' + locationId + ': stopover');
         return locationDate + ' (Zwischenstop)';
     }
 
     // 1 night? return date w/o change
-    if(trips[tripIndex].locations[locationIndex].nights == 1) {
+    if(trip.tripArray[trip.index].locations[locationIndex].nights == 1) {
         // log.debug('tripId ' + tripId + ', locationId ' + locationId + ': 1 night');
         return locationDate;
     }
 
     // more than 1 night? add # of nights to date
     // log.debug('tripId ' + tripId + ', locationId ' + locationId + ': several nights');
-    return locationDate + ' (' + trips[tripIndex].locations[locationIndex].nights + ' Tage)';
+    return locationDate + ' (' + trip.tripArray[trip.index].locations[locationIndex].nights + ' Tage)';
 }
 
 function addEmptyLocationTile() {
@@ -333,20 +335,21 @@ function addEmptyLocationTile() {
     $('#btn-newlocation').click(OnNewLocation);
 }
 
-function showLocationTilesForTrip(tripId) {
+function showLocationTilesForTrip() {
     log.info('show location tiles for trip: ' + tripId);
 
-    var tripIndex = getTripIndexById(tripId);
-    if(tripIndex===undefined) return;
+    if(!trip.opened) {
+        log.error('ERROR: trip not open, cant show tiles');
+        return ERROR;
+    }
 
-    // $('.locationTiles').not('#addNewLocation').remove();
     $('.locationTiles').empty();  // delete all existing locations
 
     // add existing locations for this trip:
-    if(trips[tripIndex].locations) {
-        for (var i = 0; i < trips[tripIndex].locations.length; i++) {
-            addLocationTile(tripId, trips[tripIndex].locations[i].id);
-            log.debug('adding location: ' + trips[tripIndex].locations[i].name);
+    if(trip.tripArray[trip.index].locations) {
+        for (var i = 0; i < trip.tripArray[trip.index].locations.length; i++) {
+            addLocationTile(trip.id, trip.tripArray[trip.index].locations[i].id);
+            log.debug('adding location: ' + trip.tripArray[trip.index].locations[i].name);
         }
     }
     // add handlers
@@ -370,19 +373,25 @@ function hideLocationTiles() {
 
 function fillLocationFormWithData(locationId) {
     log.info('fill location form with data');
-    var tripId = $('.tripForm #tripId').val();
-    var tripIndex = getTripIndexById(tripId);
-    var locationIndex = getLocationIndexById(tripIndex, locationId);
-    $('.locationForm #locationId').val(trips[tripIndex].locations[locationIndex].id);
-    $('.locationForm #locationName').val(trips[tripIndex].locations[locationIndex].name);
-    $('.locationForm #locationDate').val(trips[tripIndex].locations[locationIndex].date);
-    $('.locationForm #locationNights').val(trips[tripIndex].locations[locationIndex].nights);
-    $('.locationForm #locationDistance').val(trips[tripIndex].locations[locationIndex].distance);
-    $('.locationForm #locationDuration').val(trips[tripIndex].locations[locationIndex].duration);
-    $('.locationForm #locationAddress').val(trips[tripIndex].locations[locationIndex].address);
-    $('.locationForm #locationDesc').val(trips[tripIndex].locations[locationIndex].desc);
+    $('.locationForm #locationId').val(trip.locId);
+    $('.locationForm #locationName').val(trip.locName);
+    $('.locationForm #locationDate').val(trip.locDate);
+    $('.locationForm #locationNights').val(trip.locNights);
+    $('.locationForm #locationDistance').val(trip.locDistance);
+    $('.locationForm #locationDuration').val(trip.locDuration);
+    $('.locationForm #locationAddress').val(trip.locAddress);
+    $('.locationForm #locationDesc').val(trip.locDescription);
 
-    centerMapAroundAddressForLocation(trips[tripIndex].locations[locationIndex].name);
+    // $('.locationForm #locationId').val(trip.tripArray[tripIndex].locations[locationIndex].id);
+    // $('.locationForm #locationName').val(trip.tripArray[tripIndex].locations[locationIndex].name);
+    // $('.locationForm #locationDate').val(trip.tripArray[tripIndex].locations[locationIndex].date);
+    // $('.locationForm #locationNights').val(trip.tripArray[tripIndex].locations[locationIndex].nights);
+    // $('.locationForm #locationDistance').val(trip.tripArray[tripIndex].locations[locationIndex].distance);
+    // $('.locationForm #locationDuration').val(trip.tripArray[tripIndex].locations[locationIndex].duration);
+    // $('.locationForm #locationAddress').val(trip.tripArray[tripIndex].locations[locationIndex].address);
+    // $('.locationForm #locationDesc').val(trip.tripArray[tripIndex].locations[locationIndex].desc);
+
+    centerMapAroundAddressForLocation(trip.locName);
 }
 
 function showLocationForm() {
@@ -442,7 +451,7 @@ function saveLocationsForm() {
         desc: $('.locationForm #locationDesc').val()
     };
 
-    trips[tripIndex].locations[locationIndex] = location;
+    trip.tripArray[tripIndex].locations[locationIndex] = location;
     saveTripsToLocalStore();
 }
 
@@ -456,21 +465,21 @@ function createLocation(tripId, locationName) {
     var largestId = 0;
     var newId;
     // iterate over locations of current trip
-    if(trips[tripIndex].locations) { 
-        if (trips[tripIndex].locations) {
-            for (var i = 0; i < trips[tripIndex].locations.length; i++) {
-                if (parseInt(trips[tripIndex].locations[i].id) > largestId)
-                    largestId = parseInt(trips[tripIndex].locations[i].id);
+    if(trip.tripArray[tripIndex].locations) { 
+        if (trip.tripArray[tripIndex].locations) {
+            for (var i = 0; i < trip.tripArray[tripIndex].locations.length; i++) {
+                if (parseInt(trip.tripArray[tripIndex].locations[i].id) > largestId)
+                    largestId = parseInt(trip.tripArray[tripIndex].locations[i].id);
             }
         }
     }
     newId = largestId + 1;
 
     // init locations array if empty
-    if (trips[tripIndex].locations === undefined) {
-        trips[tripIndex].locations = [];
+    if (trip.tripArray[tripIndex].locations === undefined) {
+        trip.tripArray[tripIndex].locations = [];
     }
-    trips[tripIndex].locations.push({id: newId, name: locationName}); // add new location to array
+    trip.tripArray[tripIndex].locations.push({id: newId, name: locationName}); // add new location to array
 
     return newId;
 }
@@ -487,21 +496,21 @@ function deleteLocation(tripId, locationId) {
     var locationIndex = getLocationIndexById(tripIndex, locationId);   // if not found: returns undefined
     if(locationIndex == undefined) return ERROR;
 
-    trips[tripIndex].locations.splice(locationIndex, 1); // remove 1 element starting from index 
+    trip.tripArray[tripIndex].locations.splice(locationIndex, 1); // remove 1 element starting from index 
     return OK; 
 }
 
 function swapLocations(tripIndex, firstIndex, secondIndex) {
-    const firstLocation = trips[tripIndex].locations[firstIndex];
-    const secondLocation = trips[tripIndex].locations[secondIndex];
-    trips[tripIndex].locations[secondIndex] = firstLocation;
-    trips[tripIndex].locations[firstIndex] = secondLocation;
+    const firstLocation = trip.tripArray[tripIndex].locations[firstIndex];
+    const secondLocation = trip.tripArray[tripIndex].locations[secondIndex];
+    trip.tripArray[tripIndex].locations[secondIndex] = firstLocation;
+    trip.tripArray[tripIndex].locations[firstIndex] = secondLocation;
 }
 
 function getLocationIndexById(tripIndex, locationId) {
     // find current location index in array
-    for (var i = 0; i < trips[tripIndex].locations.length; i++) {
-        if (parseInt(trips[tripIndex].locations[i].id) === parseInt(locationId)) {
+    for (var i = 0; i < trip.tripArray[tripIndex].locations.length; i++) {
+        if (parseInt(trip.tripArray[tripIndex].locations[i].id) === parseInt(locationId)) {
             return (i);
         }
     }
@@ -515,29 +524,29 @@ function initDemoLocations(tripId) {
     if(tripIndex == undefined) return;
 
     // init if no locations exist yet
-    if (trips[tripIndex].locations === undefined) {
-        trips[tripIndex].locations = [];
+    if (trip.tripArray[tripIndex].locations === undefined) {
+        trip.tripArray[tripIndex].locations = [];
 
         var locId = createLocation(tripId);
-        trips[tripIndex].locations[0] = {
+        trip.tripArray[tripIndex].locations[0] = {
             id: locId,
             name: 'Ort1',
             desc: 'blabla'
         };
 
         locId = createLocation(tripId);
-        trips[tripIndex].locations.push({
+        trip.tripArray[tripIndex].locations.push({
             id: locId,
             name: 'Ort2',
             desc: 'blabla'
         });
 
         locId = createLocation(tripId);
-        trips[tripIndex].locations.push({
+        trip.tripArray[tripIndex].locations.push({
             id: locId,
             name: 'Ort3',
             desc: 'blabla'
         });
-        log.debug(trips[tripIndex].locations);
+        log.debug(trip.tripArray[tripIndex].locations);
     }
 }
