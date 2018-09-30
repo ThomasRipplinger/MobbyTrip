@@ -30,10 +30,10 @@ $(document).ready(function () {
     //  execute after form load --------------------------------------
     
     // log.debug('loadTripsFromLocalStore...');
-    loadTripsFromLocalStore();
+    loadTripsFromLocalStore(trip);
 
     // log.debug('displayTripTiles...');
-    displayTripTiles();
+    displayTripTiles(trip);
 
 
     // register jquery events ----------------------------------------

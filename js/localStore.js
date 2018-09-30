@@ -1,6 +1,6 @@
 
-function loadTripsFromLocalStore() {
-    trips = JSON.parse(localStorage.getItem('tripdata'));
+function loadTripsFromLocalStore(trip) {
+    trip.tripArray = JSON.parse(localStorage.getItem('tripdata'));
     // trips = JSON.parse(localStorage.getItem('trips'));
     logAllTrips('loaded trip data');
     // console.log('Dump of all trip data:');

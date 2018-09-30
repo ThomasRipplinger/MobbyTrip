@@ -9,25 +9,25 @@ class Trip {
     }
 
     get id() {
-        if(this.opened) return this.id;
+        if(this.opened) return this._id;
         else return null;
     }
 
     set id(value) {
         if(this.opened) {
-            this.tripArray[this.index].id = value;
-            this.id = value;
+            // this.tripArray[this.index].id = value;
+            this._id = value;
         }
         else return null;
     }
 
     get index() {
-        if(this.opened) return this.index;
+        if(this.opened) return this._index;
         else return null;
     }
 
     set index(value) {
-        if(this.opened) this.index = value;
+        if(this.opened) this._index = value;
     }
 
     get name() {
@@ -64,9 +64,9 @@ class Trip {
             log.error('ERROR - could not open trip with id ' + tripId);
         } 
         else {
+            this.opened = true;
             this.id = tripId;
             this.index = tripIndex;
-            this.opened = true;
             log.info('+++ Open trip with id / name ' + this.id + ' / ' + this.name);
         }
     }
