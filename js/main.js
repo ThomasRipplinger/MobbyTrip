@@ -1,6 +1,7 @@
 const OK = 0;
 const ERROR = 1;
-trips = [];
+trip = new Trip();              // create global trip object, will hold all trip data
+// trips = [];
 locationScrolled = false;     // scoll only once with first display of a location for a trip
 geocoder = null;
 map = null;
