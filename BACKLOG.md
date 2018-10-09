@@ -61,13 +61,13 @@ bug: trip löschen geht nicht
 bug: toggle 'new trip' geht nicht
 trip save ohne name - sperren
 bug: leerzeichen in ortsname geht nicht
+convert trip + locations to objects 
 ## ----- DONE ------
-# convert trip + locations to objects 
 bug: reset der map overview bei neuem trip geht nicht
 Location Card: Strecke => berechnete Werte anzeigen 
 Locations und Gesamtübersicht gleichzeitig anzeigbar machen => vertikal anordnen, map rechts daneben
 
-
+refactor: const vs. let vs. var
 Unit Testing mit Jasmine
 test w/o internet (Funktion auch offline sicherstellen)
 OnLocationMarkerPositionChanged: get adress of new marker position

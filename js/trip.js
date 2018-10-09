@@ -6,6 +6,7 @@ class Trip {
         this.id =      null;     // id for selected trip
         this.index =   null;     // index for tripArray for selected trip
         this.tripArray = [];     // holds all trip data
+        this.locArray = [];      // access location data
     }
 
     get id() {
@@ -18,7 +19,6 @@ class Trip {
             // this.tripArray[this.index].id = value;
             this._id = value;
         }
-        else return null;
     }
 
     get index() {
@@ -51,8 +51,12 @@ class Trip {
     }
     
     get locArray() {
-        if(this.opened) return this.tripArray[this.index].locArray;
+        if(this.opened) return this.tripArray[this.index].locations;
         else return null;
+    }
+    
+    set locArray(value) {
+        if(this.opened) this.tripArray[this.index].locations = value;
     }
     
     open(tripId)    {   // open a specific trip for further processing. Will set current id/index and open properties

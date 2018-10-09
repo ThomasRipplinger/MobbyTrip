@@ -37,8 +37,9 @@ function OnDeleteLocation() {
         return;
     }
 
-    location.open(locationId);
-    location.delete(locationId);
+    loc.open(locationId);
+    loc.delete(locationId);
+    loc.close();
     
     saveTripsToLocalStore();
     clearLocationsForm();
@@ -49,7 +50,7 @@ function OnMoveLocation(event) {
     event.preventDefault(); // supress page reload
     log.info('move location...');
 
-    if(!location.opened) return;
+    if(!loc.opened) return;
 
     const directionId = $(this).attr('id');
     log.debug('direction: ' + directionId);  // btnUp or btnDown
@@ -61,7 +62,7 @@ function OnMoveLocation(event) {
     // }
 
     // verify if at least 2 locations
-    const locationCount = location.locArray.length;
+    const locationCount = loc.locArray.length;
     if(locationCount < 2) return;
 
     // move upwards
@@ -162,8 +163,8 @@ function OnLocationPopupEntered(event) {
     // add locations tile before the 'new location' tile:
     if(!trip.opened) return;
 
-    var locationId = location.create(locationName);
-    location.open(locationId);
+    var locationId = loc.create(locationName);
+    loc.open(locationId);
     showLocationTiles();  // update the location tiles
     updateLocationForm();         // init form and update map
     showLocationForm();  
@@ -184,10 +185,10 @@ function OnFormLocationEntered() {
     // var locationId = $('.locationForm #locationId').val();
     // var tripIndex = getTripIndexById(tripId);
     // var locationIndex = getLocationIndexById(tripIndex, locationId);
-    location.locArray[location.index].name = locationName;
+    loc.name = locationName;
     // update location name in tile:
-    // var locationDate = location.locArray[location.index].date;
-    // updateLocationTile(trip.id, location.id, locationName, locationDate);
+    // var locationDate = loc.locArray[loc.index].date;
+    // updateLocationTile(trip.id, loc.id, locationName, locationDate);
     updateLocationTile();
     // update map
     centerMapAroundAddressForLocation(locationName);
@@ -198,34 +199,34 @@ function OnFormDateEntered(dateText) {
     log.debug('date: ' + dateText);
 
     // user has entered a new date in location form => update tile
-    location.locArray[location.index].date = dateText;
+    loc.date = dateText;
     // update location date in tile:
     updateLocationTile();
 }
 
 function addLocationTile() {
     log.info('add location tile');
-    if(!location.opened) {
+    if(!loc.opened) {
         log.error('ERROR: location not open, cant add tile');
         return ERROR;
     }
-    if(location.distance === undefined) location.distance = '';
-    if(location.duration === undefined) location.duration = '';
+    if(loc.distance === undefined) loc.distance = '';
+    if(loc.duration === undefined) loc.duration = '';
 
     // var html = '<div class="btn-location locationTile existingLocation col-md-4" id="' + locationId + '">'
-    var html = '<div class="btn-location locationTile existingLocation " id="' + location.id + '">'
+    var html = '<div class="btn-location locationTile existingLocation " id="' + loc.id + '">'
         + '<div class="row">'
         // +   '<h4 class="col-sm-10">' + locationName + '</h4>'
-        +   '<h4>' + location.name + '</h4>'
+        +   '<h4>' + loc.name + '</h4>'
         // +   '<button type="button" class="deletelocation close col-sm-2" aria-label="Close">'
         // +     '<span aria-hidden="true">&times;</span>'
         // +   '</button>'
         + '</div>'
         + '<div>'
-        + '<span class="location-info" id="locationTileDate">' + location.tileDate + '</span>'
+        + '<span class="location-info" id="locationTileDate">' + loc.tileDate + '</span>'
         + '</div>'
-        + '<span class="location-info" id="locationTileDistance">' + location.distance + '</span>'
-        + '<span class="location-info" id="locationTileDuration"> ' + location.duration + '</span>'
+        + '<span class="location-info" id="locationTileDistance">' + loc.distance + '</span>'
+        + '<span class="location-info" id="locationTileDuration"> ' + loc.duration + '</span>'
         // + '<p><a class="btn btn-secondary viewlocation" href="#" role="button">Anschauen »</a></p>'
         + '</div>';
     // log.debug(html);
@@ -234,15 +235,15 @@ function addLocationTile() {
 
 function updateLocationTile() {
     log.info('update location tile');
-    if(!location.opened) {
+    if(!loc.opened) {
         log.error('ERROR: location not open, cant add tile');
         return ERROR;
     }
 
     var $locTile = $('#' + locationId);   // find location tile by Id
     if($locTile.length) {
-        $locTile.find('h4').text(location.name);                  // update name of the location tile 
-        $locTile.find('#locationTileDate').text(location.tileDate);   // update date of the location tile 
+        $locTile.find('h4').text(loc.name);                  // update name of the location tile 
+        $locTile.find('#locationTileDate').text(loc.tileDate);   // update date of the location tile 
     }
     else {
         log.error('ERROR: could not find location tile for name update');
@@ -272,10 +273,11 @@ function showLocationTiles() {
     // add existing locations for this trip:
     if(trip.locArray !== undefined) {
         for (var i = 0; i < trip.locArray.length; i++) {
-            location.open(i);
-            log.debug('adding location: ' + location.name);
+            let locId = trip.locArray[i].id;
+            loc.open(locId);
+            log.debug('adding location: ' + loc.name);
             addLocationTile();
-            location.close();
+            loc.close();
         }
     }
     // add handlers
@@ -298,22 +300,22 @@ function hideLocationTiles() {
 }
 
 function updateLocationForm() {
-    if(!location.opened) {
+    if(!loc.opened) {
         log.error('ERROR: location not open, cant update form');
         return ERROR;
     }
 
     log.info('fill location form with data');
-    $('.locationForm #locationId').val(location.id);
-    $('.locationForm #locationName').val(location.name);
-    $('.locationForm #locationDate').val(location.date);
-    $('.locationForm #locationNights').val(location.nights);
-    $('.locationForm #locationDistance').val(location.distance);
-    $('.locationForm #locationDuration').val(location.duration);
-    $('.locationForm #locationAddress').val(location.address);
-    $('.locationForm #locationDesc').val(location.desc);
+    $('.locationForm #locationId').val(loc.id);
+    $('.locationForm #locationName').val(loc.name);
+    $('.locationForm #locationDate').val(loc.date);
+    $('.locationForm #locationNights').val(loc.nights);
+    $('.locationForm #locationDistance').val(loc.distance);
+    $('.locationForm #locationDuration').val(loc.duration);
+    $('.locationForm #locationAddress').val(loc.address);
+    $('.locationForm #locationDesc').val(loc.desc);
 
-    centerMapAroundAddressForLocation(location.name);
+    centerMapAroundAddressForLocation(loc.name);
 }
 
 function showLocationForm() {
@@ -346,7 +348,7 @@ function clearLocationsForm() {
 function saveLocationsForm() {
     log.info('save location form');
 
-    if(!location.opened || !trip.opened) {
+    if(!loc.opened || !trip.opened) {
         log.error('ERROR: trip / location not open, cant save');
         return ERROR;
     }
@@ -363,6 +365,6 @@ function saveLocationsForm() {
         desc: $('.locationForm #locationDesc').val()
     };
 
-    trip.locArray[location.index] = locationObj;
+    loc.locArray = locationObj;
     saveTripsToLocalStore();
 }
