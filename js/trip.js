@@ -151,13 +151,30 @@ class Trip {
         return null;
     }
 
-}
-
-function logAllTrips(logcomment) {
-    log.info(logcomment);
-    if ((this.tripArray !== null) && (this.tripArray !== undefined)) {
-        for (var i = 0; i < trip.tripArray.length; i++) {
-            log.debug('Trip #' + i + ':', trip.tripArray[i]);
+    logAllTrips(logcomment) {
+        log.info(logcomment);
+        if(!this.opened) return;
+        if ((this.tripArray !== null) && (this.tripArray !== undefined)) {
+            for (var i = 0; i < this.tripArray.length; i++) {
+                log.debug('Trip #' + i + ':', this.tripArray[i]);
+            }
         }
     }
+
+    loadFromLocalStore() {
+        this.tripArray = JSON.parse(localStorage.getItem('tripdata'));
+        this.logAllTrips('loaded trip data');
+        // console.log('Dump of all trip data:');
+        // console.log(JSON.stringify(this.tripArray));
+    }
+    
+    saveToLocalStore() {
+        // localStorage.setItem('tripdata', JSON.stringify(this.tripArray));
+        localStorage.setItem('tripdataTEST', JSON.stringify(this.tripArray));
+        this.logAllTrips('saved trip data');
+    }
+    
+    
+
 }
+

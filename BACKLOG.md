@@ -115,6 +115,8 @@ for locations:
 
 ##Git
     https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging
-    git branch myBranch
-    git checkout myBranch
-    ...
+    create branch:      git branch myBranch
+    switch to branch:   git checkout myBranch
+    merge single file from other branch to current: 
+                        git patch <branch> filename   (use --patch if file exists in current branch)
+

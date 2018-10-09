@@ -41,7 +41,7 @@ function OnDeleteLocation() {
     loc.delete(locationId);
     loc.close();
     
-    saveTripsToLocalStore();
+    trip.saveToLocalStore();
     clearLocationsForm();
     showLocationTiles();
 }
@@ -88,7 +88,7 @@ function OnViewLocation() {
     // toggle state
     $(this).button('toggle');
 
-    // check if same location selected: do nothing
+    // if same location selected: do nothing
     var newLocationId = $(this).attr('id');
     var prevLocationId = $('#prevlocation').text();
     if (prevLocationId == newLocationId) {  // same
@@ -103,17 +103,21 @@ function OnViewLocation() {
         }
         return; 
     }
-    else {
-        // if locationsform displayed: save
-        if ($('.locationForm').is(":visible")) {
-            saveLocationsForm();  
-        }
-        // save new location id
-        $('#prevlocation').text(newLocationId);
+    
+    // different location selected
+        
+    // save new location id
+    $('#prevlocation').text(newLocationId);
 
-        // fill location form (and init map)
-        updateLocationForm();
+    // if locationsform displayed: save current form content
+    if ($('.locationForm').is(":visible")) {
+        saveLocationsForm();
+        loc.close();
     }
+
+    // open new location, fill location form and init map
+    loc.open(newLocationId);
+    updateLocationForm();
     showLocationForm();
     if(!locationScrolled){              // scroll only once
         locationScrolled = true;
@@ -366,5 +370,5 @@ function saveLocationsForm() {
     };
 
     loc.locArray = locationObj;
-    saveTripsToLocalStore();
+    trip.saveToLocalStore();
 }

@@ -31,7 +31,7 @@ $(document).ready(function () {
     //  execute after form load --------------------------------------
     
     // log.debug('loadTripsFromLocalStore...');
-    loadTripsFromLocalStore(trip);
+    trip.loadFromLocalStore();
 
     // log.debug('displayTripTiles...');
     displayTripTiles(trip);

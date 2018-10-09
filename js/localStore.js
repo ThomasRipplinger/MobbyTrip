@@ -1,17 +1,4 @@
 
-function loadTripsFromLocalStore(trip) {
-    trip.tripArray = JSON.parse(localStorage.getItem('tripdata'));
-    // trips = JSON.parse(localStorage.getItem('trips'));
-    logAllTrips('loaded trip data');
-    // console.log('Dump of all trip data:');
-    // console.log(JSON.stringify(trips));
-}
-
-function saveTripsToLocalStore() {
-    localStorage.setItem('tripdata', JSON.stringify(trips));
-    logAllTrips('saved trip data');
-}
-
 function saveToFile(content, fileName, contentType) {
     var a = document.createElement("a");
     var file = new Blob([content], {type: contentType});
