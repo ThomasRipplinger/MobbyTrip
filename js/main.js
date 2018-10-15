@@ -1,8 +1,7 @@
 const OK = 0;
 const ERROR = 1;
-
-trip = new Trip();  // create global trip object, will hold all trip data
-
+trip = new Trip();              // create global trip object, will hold all trip data
+loc = new Location(trip);
 locationScrolled = false;     // scoll only once with first display of a location for a trip
 
 // Google maps objects & vars
@@ -33,10 +32,10 @@ $(document).ready(function () {
     //  execute after form load --------------------------------------
     
     // log.debug('loadTripsFromLocalStore...');
-    loadTripsFromLocalStore();
+    trip.loadFromLocalStore('tripdata');
 
     // log.debug('displayTripTiles...');
-    displayTripTiles();
+    displayTripTiles(trip);
 
 
     // register jquery events ----------------------------------------

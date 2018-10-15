@@ -61,23 +61,23 @@ bug: trip löschen geht nicht
 bug: toggle 'new trip' geht nicht
 trip save ohne name - sperren
 bug: leerzeichen in ortsname geht nicht
-OnCancelTripForm => needs delete w/o name
-add "getter" for trip data
+convert trip + locations to objects 
+BUG: trip metadata saving does not work
+BUG: Loading of existing loc. does not work 
+BUG: switch to other location destroys all trip location data
+Unit Testing mit Jasmine for TRIP
 ## ----- DONE ------
-# convert trip to object 
-  locations: use getter for locData...
-  OnSaveTripForm => refactor saving (add trip.update function)
-  refactor maps
-  refactor locations
-  check: all references to 'trips' removed?
-# convert locations to objects 
+Protractor testing for TRIP
+Unit Testing mit Jasmine for LOCATION
+Protractor testing for LOCATION
 
+optimize scrolling behaviour
+refactor / remove "filltripformwithdata"
+refactor: const vs. let vs. var
 bug: reset der map overview bei neuem trip geht nicht
 Location Card: Strecke => berechnete Werte anzeigen 
+## ----- nice to have ----
 Locations und Gesamtübersicht gleichzeitig anzeigbar machen => vertikal anordnen, map rechts daneben
-
-
-#Unit Testing mit Jasmine
 test w/o internet (Funktion auch offline sicherstellen)
 OnLocationMarkerPositionChanged: get adress of new marker position
 OnTripMarkerPositionChanged: ...?
@@ -85,9 +85,6 @@ create new location: Ort als Pin anzeigen in der Trip Übersicht
 getLocationIndexById: remove tripIndex (make locationId unique)
 save photos via drag/drop, see https://www.html5rocks.com/en/tutorials/file/dndfiles/
 local backup (?) see https://www.jotform.com/blog/html5-filesystem-api-create-files-store-locally-using-javascript-webkit/ 
-## -----------------
-
-FEATURES:
 Location: Unterschied Übernachtung / Zwischenstopp anzeigen (fettdruck?)
 highlight selected location after move
 remove 'save trip' button - only keep 'OK' (there is no cancel - would complicate the entrire UX, rather save each ministep)
@@ -99,7 +96,7 @@ add photo to trip-details form
 add trip: bei "enter" nicht Cancel aktivieren...!
 convert online map to img and download / link img ?
 
-### ------PRIO 2 ------------------------------
+### ------ LEVEL 2 ------------------------------
 - Prio2: zentrale Datenspeicherung
 - Prio2: Pins mit Route verbinden
 - Prio2: Route mit anderen teilen
@@ -124,6 +121,13 @@ for locations:
 
 ##Git
     https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging
-    git branch myBranch
-    git checkout myBranch
-    ...
+    create branch:      git branch myBranch
+    switch to branch:   git checkout myBranch
+    merge single file from other branch to current: 
+                        git patch <branch> filename   (use --patch if file exists in current branch)
+
+
+## jquery
+    // iterate over collection of tiles 
+    var $tripTiles = $('.triptile')    // get collection 
+    for (var i = 0; i < $tripTiles.length; i++) { var $tile = $tripTiles.eq(i); ...}
