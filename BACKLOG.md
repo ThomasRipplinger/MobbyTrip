@@ -65,9 +65,13 @@ convert trip + locations to objects
 BUG: trip metadata saving does not work
 BUG: Loading of existing loc. does not work 
 BUG: switch to other location destroys all trip location data
+Unit Testing mit Jasmine for TRIP
 ## ----- DONE ------
-Unit Testing mit Jasmine
+Protractor testing for TRIP
+Unit Testing mit Jasmine for LOCATION
+Protractor testing for LOCATION
 
+optimize scrolling behaviour
 refactor / remove "filltripformwithdata"
 refactor: const vs. let vs. var
 bug: reset der map overview bei neuem trip geht nicht
