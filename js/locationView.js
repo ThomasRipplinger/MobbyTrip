@@ -41,7 +41,7 @@ function OnDeleteLocation() {
     loc.delete(locationId);
     loc.close();
     
-    trip.saveToLocalStore();
+    trip.saveToLocalStore('tripdata');
     clearLocationsForm();
     showLocationTiles();
 }
@@ -370,5 +370,5 @@ function saveLocationsForm() {
     };
 
     loc.locArray[loc.index] = locationObj;
-    trip.saveToLocalStore();
+    trip.saveToLocalStore('tripdata');
 }

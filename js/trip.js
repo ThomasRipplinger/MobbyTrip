@@ -112,7 +112,7 @@ class Trip {
     }
 
     close()         {         // close an open trip. Will invalidate the properties from above
-        log.info('+++ Close trip with id / name ' + this.id + ' / ' + this.destination);
+        log.info('+++ Close trip with id ' + this.id);
         this.opened = false;
         this.id = null;
         this.index = null;
@@ -199,17 +199,17 @@ class Trip {
         // }
     }
 
-    loadFromLocalStore() {
-        this.tripArray = JSON.parse(localStorage.getItem('tripdata'));
+    loadFromLocalStore(storeKey) {
+        this.tripArray = JSON.parse(localStorage.getItem(storeKey));
         this.logAllTrips('loaded trip data');
         // console.log('Dump of all trip data:');
         // console.log(JSON.stringify(this.tripArray));
     }
     
-    saveToLocalStore() {
+    saveToLocalStore(storeKey) {
         // localStorage.setItem('tripdataBACKUP01', JSON.stringify(this.tripArray));
-        // localStorage.setItem('tripdata', JSON.stringify(this.tripArray));
-        this.logAllTrips('***************NOT saved trip data');
+        localStorage.setItem(storeKey, JSON.stringify(this.tripArray));
+        this.logAllTrips('saved trip data');
     }
 
 }

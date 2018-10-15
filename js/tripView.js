@@ -33,7 +33,7 @@ function OnDeleteTrip() {
 
     // remove trip data
     trip.deleteByName(tripNameToDelete);
-    trip.saveToLocalStore();
+    trip.saveToLocalStore('tripdata');
 }
 
 function OnViewTrip() {
@@ -83,7 +83,7 @@ function OnSaveTripForm() {
     }
 
     // log.debug(trip);   
-    trip.saveToLocalStore(); 
+    trip.saveToLocalStore('tripdata'); 
     hideLocationsForm();
     hideLocationTiles();
     hideTripForm();     // will also hide location tiles and form
