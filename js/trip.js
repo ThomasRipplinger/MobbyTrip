@@ -25,13 +25,16 @@ class Trip {
         if(this.opened) return this._index;
         else return null;
     }
-
     set index(value) {
         if(this.opened) this._index = value;
     }
 
-    get name() {
-        if(this.opened) return this.tripArray[this.index].name;
+    get destination() {
+        if(this.opened) return this.tripArray[this.index].destination;
+        else return null;
+    }
+    set destination(value) {
+        if(this.opened) this.tripArray[this.index].destination = value;
         else return null;
     }
 
@@ -39,9 +42,26 @@ class Trip {
         if(this.opened) return this.tripArray[this.index].length;
         else return null;
     }
+    set length(value) {
+        if(this.opened) this.tripArray[this.index].length = value;
+        else return null;
+    }
+
+    get date() {
+        if(this.opened) return this.tripArray[this.index].date;
+        else return null;
+    }
+    set date(value) {
+        if(this.opened) this.tripArray[this.index].date = value;
+        else return null;
+    }
 
     get duration() {
         if(this.opened) return this.tripArray[this.index].duration;
+        else return null;
+    }
+    set duration(value) {
+        if(this.opened) this.tripArray[this.index].duration = value;
         else return null;
     }
 
@@ -49,14 +69,30 @@ class Trip {
         if(this.opened) return this.tripArray[this.index].description;
         else return null;
     }
-    
-    get locArray() {
-        if(this.opened) return this.tripArray[this.index].locations;
+    set description(value) {
+        if(this.opened) this.tripArray[this.index].description = value;
         else return null;
     }
     
+    get locArray() {
+        // if(this.opened) return this.tripArray[this.index].locations;
+        if(this.opened) {
+            if(this.tripArray[this.index].locArray !== undefined) {
+                // log.info('access new locArray structure')
+                return this.tripArray[this.index].locArray;
+            }
+            // else if(this.tripArray[this.index].locations !== undefined) {
+            //     log.info('*** access old locations structure')
+            //     this.tripArray[this.index].locArray = this.tripArray[this.index].locations.slice();
+            //     return this.tripArray[this.index].locations;
+            // }
+        else    
+            return null;
+        }
+    }
     set locArray(value) {
-        if(this.opened) this.tripArray[this.index].locations = value;
+        // if(this.opened) this.tripArray[this.index].locations = value;
+        if(this.opened) this.tripArray[this.index].locArray = value;
     }
     
     open(tripId)    {   // open a specific trip for further processing. Will set current id/index and open properties
@@ -71,12 +107,12 @@ class Trip {
             this.opened = true;
             this.id = tripId;
             this.index = tripIndex;
-            log.info('+++ Open trip with id / name ' + this.id + ' / ' + this.name);
+            log.info('+++ Open trip with id / name ' + this.id + ' / ' + this.destination);
         }
     }
 
     close()         {         // close an open trip. Will invalidate the properties from above
-        log.info('+++ Close trip with id / name ' + this.id + ' / ' + this.name);
+        log.info('+++ Close trip with id / name ' + this.id + ' / ' + this.destination);
         this.opened = false;
         this.id = null;
         this.index = null;
@@ -102,9 +138,11 @@ class Trip {
             id: newId,
             destination: '',
             name: '',
+            date: '',
             length: '',
             duration: '',
             desc: '',
+            // locArray: ['rom', 'rio'] // init location array with each new trip
             locArray: [] // init location array with each new trip
         };
         this.tripArray.unshift(tripItem); // add new trip to beginning of array
@@ -153,12 +191,12 @@ class Trip {
 
     logAllTrips(logcomment) {
         log.info(logcomment);
-        if(!this.opened) return;
-        if ((this.tripArray !== null) && (this.tripArray !== undefined)) {
-            for (var i = 0; i < this.tripArray.length; i++) {
-                log.debug('Trip #' + i + ':', this.tripArray[i]);
-            }
-        }
+        
+        // if ((this.tripArray !== null) && (this.tripArray !== undefined)) {
+        //     for (var i = 0; i < this.tripArray.length; i++) {
+        //         log.debug('Trip #' + i + ':', this.tripArray[i]);
+        //     }
+        // }
     }
 
     loadFromLocalStore() {
@@ -169,12 +207,10 @@ class Trip {
     }
     
     saveToLocalStore() {
+        // localStorage.setItem('tripdataBACKUP01', JSON.stringify(this.tripArray));
         // localStorage.setItem('tripdata', JSON.stringify(this.tripArray));
-        localStorage.setItem('tripdataTEST', JSON.stringify(this.tripArray));
-        this.logAllTrips('saved trip data');
+        this.logAllTrips('***************NOT saved trip data');
     }
-    
-    
 
 }
 

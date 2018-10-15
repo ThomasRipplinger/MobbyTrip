@@ -1,9 +1,9 @@
 class Location {
-    // the location class has only one global instance object (loc)
-    // it is linked to the global trip object
-    // for data access a specific location needs to be OPENed for further processing (call .open for a location ID)
-    // during OPEN the location index is set and will be used for all further data access via the getters/setters
-    // access is always via the location array (which in turn references the location array within the TRIP object)
+    // The location class has only one global instance object (loc)
+    // It is linked to the global trip object
+    // For data access a specific location needs to be OPENed for further processing (call .open for a location ID)
+    // During OPEN the location index is set and will be used for all further data access via the getters/setters
+    // Access is always via the location array (which in turn references the location array within the TRIP object)
 
     constructor(trip) {
         // properties
@@ -178,14 +178,10 @@ class Location {
 
     create(locationName) {
         log.info('create new location id');
-
-        if (!this.opened) {
-            log.error('ERROR: location not open');
-            return null;
-        }
         var largestId = 0;
         var newId;
-        // iterate over locations of current trip
+
+        // iterate over locations of current trip to find largest id
         if (this.locArray) {
             for (var i = 0; i < this.locArray.length; i++) {
                 if (parseInt(this.locArray[i].id) > largestId)
@@ -194,10 +190,12 @@ class Location {
         }
         newId = largestId + 1;
 
-        // init locations array if empty
-        if (this.locArray === undefined) {
-            this.locArray = [];
-        }
+        // this.open(newId);
+        // // init locations array if empty
+        // if (this.locArray === undefined) {
+        //     this.locArray = [];
+        // }
+
         // add new location to array
         this.locArray.push({
             id: newId,

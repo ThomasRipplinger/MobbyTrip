@@ -1,56 +1,64 @@
+## TEST CASES 
 
-## TRIPS
-# create and delete trip id
-# create and delete location id
-
---- DONE splitter --- 
-
-
-## EVENTS
-
-# On form load
+# On startup
 load data
-show tiles
+show trip tiles
 
-# add trip
-clear trip form
-show trip form (and hide 'new trip' button)
 
-# save trip form
-save trip data
-hide trip locations form and tiles
-hide trip form (and show 'new trip' button)
-clear trip form
-re-init trip tiles (hide/show)
+# trip: display
+hide trip tiles
+fill in trip form with data
+show trip form (and: hide 'new trip button', initialize Map, show location tiles)
 
-# cancel trip form
+# trip: edit and cancel 
 hide trip form
 clear trip form
 hide trip locations form and tiles
 hide location tiles
 re-init trip tiles (hide/show)
 
-# show trip
-hide trip tiles
-fill in trip form with data
-show trip form (and: hide 'new trip button', initialize Map, show location tiles)
 
-# add new location
+# trip: edit and save
+save trip data
+hide trip locations form and tiles
+hide trip form (and show 'new trip' button)
+clear trip form
+re-init trip tiles (hide/show)
+
+
+# trip: add
+clear trip form
+show trip form (and hide 'new trip' button)
+[should work with existing data]
+[should work w/o existing data]
+
+# trip: delete
+remove trip tile
+
+-----------------------
+
+### TESTED splitter -------------------------------
+
+# location: display
+if new selection: save current location 
+fill location form with data
+show trip locations form
+
+# location: edit and save 
+save trip+location data  (name, id, desc)
+hide location form
+clear location form
+
+# location: edit and cancel 
+hide location form
+clear location form
+
+# location: add 
 save current location (if visible) 
 clear location form
 add overlay and wait for input, then
    show trip locations form
 
-# select trip location
-if new selection: save current location 
-fill location form with data
-show trip locations form
+# location: delete
+remove current location
 
-# save location form
-save trip+location data  (name, id, desc)
-hide location form
-clear location form
-
-# close location form
-hide location form
-clear location form

@@ -62,7 +62,7 @@ function OnSaveTripForm() {
     log.info('saving trip data');
     var tripId;
 
-    if($('.tripForm #name').val().length == 0) {
+    if($('.tripForm #destination').val().length == 0) {
         log.info('no trip name - no saving');
         return;
     }
@@ -71,13 +71,15 @@ function OnSaveTripForm() {
     log.debug('saving trip Id: ' + tripId);
    
     // update existing trip
-    // update data, don't touch locations (saving is done when location data changes)
-    if (tripIndex !== undefined) {
-        trip[trip.index].destination = $('.tripForm #destination').val();
-        trip[trip.index].name = $('.tripForm #name').val();
-        trip[trip.index].length = $('.tripForm #length').val();
-        trip[trip.index].duration = $('.tripForm #duration').val();
-        trip[trip.index].desc = $('.tripForm #desc').val();
+    // update trip data, don't touch locations (saving is done when location data changes)
+  
+    trip.open(tripId);
+    if (trip.opened) {
+        trip.destination = $('.tripForm #destination').val();
+        trip.date = $('.tripForm #date').val();
+        trip.length = $('.tripForm #length').val();
+        trip.duration = $('.tripForm #duration').val();
+        trip.description = $('.tripForm #desc').val();
     }
 
     // log.debug(trip);   
@@ -134,6 +136,7 @@ function displayTripTiles() {
     // add all tiles from clean slate
     $('.triptile').remove();   
     if (trip.tripArray) {
+        const numberOfTiles = trip.tripArray.length;
         for (var i = 0; i < trip.tripArray.length; i++) {
             // log.debug("adding tile id #" + i);
             // log.debug(trip.tripArray[i]);
@@ -173,17 +176,23 @@ function makeTripTileHtml(html, tripItem) {
 function fillTripFormWithData(isNewTrip) {
     log.info('fill trip form for trip id:' + trip.id);
 
-    $('.tripForm #tripId').val(trip.tripArray[trip.index].id);
+    $('.tripForm #tripId').val(trip.id);
     $('.tripForm #isNew').val(isNewTrip);
-    $('.tripForm #destination').val(trip.tripArray[trip.index].destination);
-    $('.tripForm #name').val(trip.tripArray[trip.index].name);
-    $('.tripForm #length').val(trip.tripArray[trip.index].length);
-    $('.tripForm #duration').val(trip.tripArray[trip.index].duration);
-    $('.tripForm #date').val(trip.tripArray[trip.index].date);
-    $('.tripForm #desc').val(trip.tripArray[trip.index].desc);
+    $('.tripForm #destination').val(trip.destination);
+    $('.tripForm #length').val(trip.length);
+    $('.tripForm #duration').val(trip.duration);
+    $('.tripForm #date').val(trip.date);
+    $('.tripForm #desc').val(trip.description);
+    // $('.tripForm #tripId').val(trip.tripArray[trip.index].id);
+    // $('.tripForm #isNew').val(isNewTrip);
+    // $('.tripForm #destination').val(trip.tripArray[trip.index].destination);
+    // $('.tripForm #length').val(trip.tripArray[trip.index].length);
+    // $('.tripForm #duration').val(trip.tripArray[trip.index].duration);
+    // $('.tripForm #date').val(trip.tripArray[trip.index].date);
+    // $('.tripForm #desc').val(trip.tripArray[trip.index].description);
 
-    if(trip.tripArray[trip.index].destination !== null) {
-        centerMapAroundAddressForTrip(trip.tripArray[trip.index].destination);
+    if(trip.destination !== null) {
+        centerMapAroundAddressForTrip(trip.destination);
     }
 }
 
@@ -210,7 +219,6 @@ function clearTripForm() {
     $('.tripForm #tripId').val('');
     $('.tripForm #isNew').val('');
     $('.tripForm #destination').val('');
-    $('.tripForm #name').val('');
     $('.tripForm #length').val('');
     $('.tripForm #duration').val('');
     $('.tripForm #date').val('');

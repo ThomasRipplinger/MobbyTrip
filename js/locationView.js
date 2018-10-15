@@ -84,14 +84,14 @@ function OnMoveLocation(event) {
 }
 
 function OnViewLocation() {
-    log.info('view location...');
+    log.info('view location');
     // toggle state
     $(this).button('toggle');
 
     // if same location selected: do nothing
     var newLocationId = $(this).attr('id');
     var prevLocationId = $('#prevlocation').text();
-    if (prevLocationId == newLocationId) {  // same
+    if ((prevLocationId == newLocationId) || (prevLocationId === null)) {  // same or first select
         // if locationsform displayed: save
         if ($('.locationForm').is(":visible")) {
             saveLocationsForm();  
@@ -369,6 +369,6 @@ function saveLocationsForm() {
         desc: $('.locationForm #locationDesc').val()
     };
 
-    loc.locArray = locationObj;
+    loc.locArray[loc.index] = locationObj;
     trip.saveToLocalStore();
 }
