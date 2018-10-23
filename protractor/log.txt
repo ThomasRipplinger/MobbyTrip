@@ -1,0 +1,28 @@
+[00:00:31] I/launcher - Running 1 instances of WebDriver
+[00:00:31] I/hosted - Using the selenium server at http://localhost:4444/wd/hub
+Started
+[31mF[0m[32m.[0m[32m.[0m[32m.[0m
+
+Failures:
+1) Protractor trip UI tests should create a trip
+  Message:
+[31m    Expected 1 to equal 0.[0m
+  Stack:
+    Error: Failed expectation
+        at UserContext.<anonymous> (C:\zDev\codecademy\001womoTrips\protractor\createtrip-spec.js:18:34)
+        at C:\Users\user\AppData\Roaming\npm\node_modules\protractor\node_modules\jasminewd2\index.js:112:25
+        at new ManagedPromise (C:\Users\user\AppData\Roaming\npm\node_modules\protractor\node_modules\selenium-webdriver\lib\promise.js:1077:7)
+        at ControlFlow.promise (C:\Users\user\AppData\Roaming\npm\node_modules\protractor\node_modules\selenium-webdriver\lib\promise.js:2505:12)
+        at schedulerExecute (C:\Users\user\AppData\Roaming\npm\node_modules\protractor\node_modules\jasminewd2\index.js:95:18)
+        at TaskQueue.execute_ (C:\Users\user\AppData\Roaming\npm\node_modules\protractor\node_modules\selenium-webdriver\lib\promise.js:3084:14)
+        at TaskQueue.executeNext_ (C:\Users\user\AppData\Roaming\npm\node_modules\protractor\node_modules\selenium-webdriver\lib\promise.js:3067:27)
+        at asyncRun (C:\Users\user\AppData\Roaming\npm\node_modules\protractor\node_modules\selenium-webdriver\lib\promise.js:2974:25)
+        at C:\Users\user\AppData\Roaming\npm\node_modules\protractor\node_modules\selenium-webdriver\lib\promise.js:668:7
+
+4 specs, 1 failure
+Finished in 2.662 seconds
+
+[00:00:37] I/launcher - 0 instance(s) of WebDriver still running
+[00:00:37] I/launcher - chrome #01 failed 1 test(s)
+[00:00:37] I/launcher - overall: 1 failed spec(s)
+[00:00:37] E/launcher - Process exited with error code 1

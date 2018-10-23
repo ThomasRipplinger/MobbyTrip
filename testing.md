@@ -62,3 +62,8 @@ add overlay and wait for input, then
 # location: delete
 remove current location
 
+
+## ----------------------------------
+Start Selenium: Terminal => webdriver-manager start
+Start Tests:    Terminal => protractor spec.js   (in ../protractor)
+da keine Angular app:       browser.waitForAngularEnabled(false);
