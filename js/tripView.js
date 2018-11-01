@@ -73,6 +73,7 @@ function OnSaveTripForm() {
     // update existing trip
     // update trip data, don't touch locations (saving is done when location data changes)
   
+    loc.close();
     trip.open(tripId);
     if (trip.opened) {
         trip.destination = $('.tripForm #destination').val();

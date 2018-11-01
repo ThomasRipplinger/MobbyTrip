@@ -88,29 +88,31 @@ function OnViewLocation() {
     // toggle state
     $(this).button('toggle');
 
-    // if same location selected: do nothing
-    var newLocationId = $(this).attr('id');
-    var prevLocationId = $('#prevlocation').text();
-    if ((prevLocationId == newLocationId) || (prevLocationId === null)) {  // same or first select
-        // if locationsform displayed: save
-        if ($('.locationForm').is(":visible")) {
-            saveLocationsForm();  
-        }
-        showLocationForm();                 // toggle form
-        if(!locationScrolled){              // scroll only once
-            locationScrolled = true;
-            scrollIntoView('#tripMap');
-        }
-        return; 
-    }
-    
-    // different location selected
-        
-    // save new location id
-    $('#prevlocation').text(newLocationId);
+    var newLocationId = parseInt($(this).attr('id'));
+    var prevLocationId = parseInt($('#prevlocation').text());
 
-    // if locationsform displayed: save current form content
-    if ($('.locationForm').is(":visible")) {
+    // if same location selected: do nothing
+    if (prevLocationId == newLocationId) {  
+        return;
+    }
+
+    // if very first location selection: show form
+    // if (isNaN(prevLocationId)) {  
+    //     $('#prevlocation').text(newLocationId);    // save new location id
+    //     showLocationForm();                 // toggle form
+    //     if(!locationScrolled){              // scroll only once
+    //         locationScrolled = true;
+    //         scrollIntoView('#tripMap');
+    //     }
+    //     return; 
+    // }
+    
+    // different location selected: save current, show new form...
+        
+    $('#prevlocation').text(newLocationId);    // save new location id
+
+    // if locationsform displayed and not very first location selection: save current form content
+    if (($('.locationForm').is(":visible"))  && (Number.isInteger(prevLocationId))) {
         saveLocationsForm();
         loc.close();
     }
@@ -152,7 +154,6 @@ function OnLocationKeydown(event) {
 
 function OnLocationPopupEntered(event) {
     log.info('location entered');
-    // log.debug(event);
     // user has entered a new location in popup overlay
     var locationName = $('#input-newlocation').val();
     $('#input-newlocation').remove();  // hide input field
@@ -168,9 +169,10 @@ function OnLocationPopupEntered(event) {
     if(!trip.opened) return;
 
     var locationId = loc.create(locationName);
+
+    showLocationTiles();    // update the location tiles
     loc.open(locationId);
-    showLocationTiles();  // update the location tiles
-    updateLocationForm();         // init form and update map
+    updateLocationForm();   // init form and update map
     showLocationForm();  
 }
 
@@ -217,7 +219,6 @@ function addLocationTile() {
     if(loc.distance === undefined) loc.distance = '';
     if(loc.duration === undefined) loc.duration = '';
 
-    // var html = '<div class="btn-location locationTile existingLocation col-md-4" id="' + locationId + '">'
     var html = '<div class="btn-location locationTile existingLocation " id="' + loc.id + '">'
         + '<div class="row">'
         // +   '<h4 class="col-sm-10">' + locationName + '</h4>'
@@ -244,9 +245,9 @@ function updateLocationTile() {
         return ERROR;
     }
 
-    var $locTile = $('#' + locationId);   // find location tile by Id
+    var $locTile = $('#' + loc.id);   // find location tile by Id
     if($locTile.length) {
-        $locTile.find('h4').text(loc.name);                  // update name of the location tile 
+        $locTile.find('h4').text(loc.name);                      // update name of the location tile 
         $locTile.find('#locationTileDate').text(loc.tileDate);   // update date of the location tile 
     }
     else {
@@ -334,6 +335,7 @@ function showLocationForm() {
 
 function hideLocationsForm() {
     log.info('hide location form');
+    locationScrolled = false;
     $('.locationForm').fadeOut(1000 );    
 }
 
@@ -359,7 +361,7 @@ function saveLocationsForm() {
     
     // prepare object with form data
     var locationObj = {
-        id: locationId,
+        id: parseInt($('.locationForm #locationId').val()),
         name: $('.locationForm #locationName').val(),
         date: $('.locationForm #locationDate').val(),
         nights: $('.locationForm #locationNights').val(),

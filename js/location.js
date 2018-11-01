@@ -22,11 +22,13 @@ class Location {
     }
 
     get id() {
-        if (this.opened) return this.locArray[this.index].id;
+        // if (this.opened) return this.locArray[this.index].id;
+        if (this.opened) return this._id;
         else return null;
     }
     set id(value) {
-        if (this.opened) this.locArray[this.index].id = value;
+        // if (this.opened) this.locArray[this.index].id = value;
+        if (this.opened) this._id = value;
     }
 
     get name() {
@@ -144,6 +146,7 @@ class Location {
                 if(locationId == this.locArray[i].id) {
                     this.opened = true;
                     this.index = i;
+                    this.id = locationId;
                     log.info('+++ Open location with id / name ' + this.id + ' / ' + this.name);
                     return OK;
                 }

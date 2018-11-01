@@ -66,12 +66,18 @@ BUG: trip metadata saving does not work
 BUG: Loading of existing loc. does not work 
 BUG: switch to other location destroys all trip location data
 Unit Testing mit Jasmine for TRIP
-## ----- DONE ------
 Protractor testing for TRIP
 Unit Testing mit Jasmine for LOCATION
 Protractor testing for LOCATION
-
-optimize scrolling behaviour
+optimize scrolling behaviour: scolling for locations only works once
+Location is not opened after creation  /// Location not openend when selected
+BUG: open/close trip messes up locations...
+BUG: saving location data does not work, modify location data does not work
+## ----- DONE ------
+BUG: delete location does not work
+BUG: highlighting of current loc. selection does not always work
+Closing locations form - no soft scroll behaviour
+use strict
 refactor / remove "filltripformwithdata"
 refactor: const vs. let vs. var
 bug: reset der map overview bei neuem trip geht nicht
