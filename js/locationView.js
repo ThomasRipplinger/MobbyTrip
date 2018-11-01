@@ -336,11 +336,13 @@ function showLocationForm() {
 function hideLocationsForm() {
     log.info('hide location form');
     locationScrolled = false;
+    clearLocationsForm();
     $('.locationForm').fadeOut(1000 );    
 }
 
 function clearLocationsForm() {
     log.info('clear location form');
+    $('.locationsContainer #prevlocation').text('');
     $('.locationForm #locationId').val('');
     $('.locationForm #locationName').val('');
     $('.locationForm #locationDate').val('');
