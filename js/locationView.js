@@ -372,7 +372,8 @@ function saveLocationsForm() {
         address: $('.locationForm #locationAddress').val(),
         desc: $('.locationForm #locationDesc').val()
     };
-
+    log.debug('Saving location data:');
+    log.debug(locationObj);
     loc.locArray[loc.index] = locationObj;
     trip.saveToLocalStore('tripdata');
 }

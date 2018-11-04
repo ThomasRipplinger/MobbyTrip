@@ -169,7 +169,7 @@ function makeTripTileHtml(html, tripItem) {
         + '<span class="trip-duration">' + tripItem.duration + ' Tage</span>'
         + '</div>'
         + '<span class="trip-desc-short">' + tripItem.desc + '</span>'
-        + '<p><a class="btn btn-secondary viewtrip" href="#" role="button">Anschauen »</a></p>'
+        + '<p><a class="btn btn-secondary viewtrip" id="' + tripItem.destination + '" href="#" role="button">Anschauen »</a></p>'
         + '</div>';
     // log.debug(html.text);
 }

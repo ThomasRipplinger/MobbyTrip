@@ -73,9 +73,9 @@ optimize scrolling behaviour: scolling for locations only works once
 Location is not opened after creation  /// Location not openend when selected
 BUG: open/close trip messes up locations...
 BUG: saving location data does not work, modify location data does not work
-## ----- DONE ------
 BUG: delete location does not work
-BUG: highlighting of current loc. selection does not always work
+## ----- DONE ------
+BUG: saving location adress + desc does not work with "trip save"
 Closing locations form - no soft scroll behaviour
 use strict
 refactor / remove "filltripformwithdata"

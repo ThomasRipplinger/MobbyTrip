@@ -9,6 +9,7 @@ exports.config = {
     }],
     
     onPrepare: function () {
+      browser.manage().window().setSize(1280, 1024);
       //console logs configurations
       jasmine.getEnv().addReporter(new SpecReporter({
           displayStacktrace: 'all',      // display stacktrace for each failed assertion, values: (all|specs|summary|none) 
