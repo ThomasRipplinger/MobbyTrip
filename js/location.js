@@ -175,7 +175,7 @@ class Location {
     // }
 
     close() { // close an open location
-        log.info('+++ Close location with id / name ' + this.id + ' / ' + this.name);
+        // log.info('+++ Close location with id / name ' + this.id + ' / ' + this.name);
         this.opened = false;
     }
 
@@ -214,6 +214,7 @@ class Location {
         if (!this.opened) return ERROR;
 
         this.locArray.splice(this.index, 1); // remove 1 element starting from index 
+        this.close();
         return OK;
     }
 

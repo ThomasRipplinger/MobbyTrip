@@ -4,7 +4,6 @@
 load data
 show trip tiles
 
-
 # trip: display
 hide trip tiles
 fill in trip form with data
@@ -17,14 +16,12 @@ hide trip locations form and tiles
 hide location tiles
 re-init trip tiles (hide/show)
 
-
 # trip: edit and save
 save trip data
 hide trip locations form and tiles
 hide trip form (and show 'new trip' button)
 clear trip form
 re-init trip tiles (hide/show)
-
 
 # trip: add
 clear trip form
@@ -34,10 +31,6 @@ show trip form (and hide 'new trip' button)
 
 # trip: delete
 remove trip tile
-
------------------------
-
-### TESTED splitter -------------------------------
 
 # location: display
 if new selection: save current location 
@@ -49,9 +42,7 @@ save trip+location data  (name, id, desc)
 hide location form
 clear location form
 
-# location: edit and cancel 
-hide location form
-clear location form
+### TESTED splitter -------------------------------
 
 # location: add 
 save current location (if visible) 
@@ -62,8 +53,12 @@ add overlay and wait for input, then
 # location: delete
 remove current location
 
+# location: edit and cancel  (REMOVE)
+hide location form
+clear location form
+
 
 ## ----------------------------------
-Start Selenium: Terminal => webdriver-manager start
+Start Selenium: Terminal => webdriver-manager start   (ggf vorher webdriver-manager update)
 Start Tests:    Terminal => protractor spec.js   (in ../protractor)
 da keine Angular app:       browser.waitForAngularEnabled(false);

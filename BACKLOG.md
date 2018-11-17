@@ -74,9 +74,13 @@ Location is not opened after creation  /// Location not openend when selected
 BUG: open/close trip messes up locations...
 BUG: saving location data does not work, modify location data does not work
 BUG: delete location does not work
+BUG: saving location does not work with "trip save"
+BUG: location änderen auf '' nicht abgefangen
 ## ----- DONE ------
-BUG: saving location adress + desc does not work with "trip save"
+Fix Protractor test script
 Closing locations form - no soft scroll behaviour
+## -----------------
+
 use strict
 refactor / remove "filltripformwithdata"
 refactor: const vs. let vs. var
@@ -111,6 +115,16 @@ reiselog.online /
 travelscript.online / 
 triplogbook.online / Reisebuch.online / travellog.online / reisescript.online    (mobbyTrip.de / .com)
 
+### MVP 0.1 ---
+Webseite muss laufen ohne Fehler
+Öffentlich erreichbar (domain)
+Sharing via export/import von trips
+tbd: einzelne Locations sharen bzw. in anderen Trip reinmergen
+### MVP 0.2 ---
+Zentrale Speicherung 
+- geht das ohne Login-System (Missbrauch, wer darf löschen etc.)? 
+- vorhandene Logins mitnutzen (google, fb... => sieht unsicher aus)
+- Fotos speichern - Missbrauch, Kosten für Speicher, ...
 
 ---------------------------------------------------------
 ## saving strategy

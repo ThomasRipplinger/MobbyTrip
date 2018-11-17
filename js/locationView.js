@@ -4,7 +4,7 @@ function OnOkLocationsForm() {
     saveLocationsForm();
     hideLocationsForm();
     clearLocationsForm();  // for next time
-    scrollIntoView('.jumbotron');
+    // scrollIntoView('.jumbotron');
 }
 
 function OnNewLocation() {
@@ -29,19 +29,17 @@ function OnNewLocation() {
 function OnDeleteLocation() {
     log.info('delete location...');
 
-    hideLocationsForm();
-
-    var locationId = $('#locationId').val();
-    if(locationId == undefined) {
-        log.error('ERROR: cant find location Id');
+    var locationId = $('#locationId').val();  
+    if((locationId == undefined) || (locationId == '')) {
+        log.error('ERROR: cant find location Id: ' + locationId);
         return;
     }
 
     loc.open(locationId);
     loc.delete(locationId);
-    loc.close();
     
     trip.saveToLocalStore('tripdata');
+    hideLocationsForm();
     clearLocationsForm();
     showLocationTiles();
 }
@@ -182,6 +180,7 @@ function OnFormLocationEntered() {
     var locationName = $('#locationName').val();
     if((locationName === '') || (locationName == undefined)) {
         log.info('no location entered');
+        $('#locationName').val(loc.name);   // restore previous name in case user has entered ''
         return;
     }
     log.info('modified location: ' + locationName);
@@ -219,7 +218,7 @@ function addLocationTile() {
     if(loc.distance === undefined) loc.distance = '';
     if(loc.duration === undefined) loc.duration = '';
 
-    var html = '<div class="btn-location locationTile existingLocation " id="' + loc.id + '">'
+    var html = '<div class="btn-location locationTile existingLocation" id="' + loc.id + '">'
         + '<div class="row">'
         // +   '<h4 class="col-sm-10">' + locationName + '</h4>'
         +   '<h4>' + loc.name + '</h4>'
@@ -319,6 +318,9 @@ function updateLocationForm() {
     $('.locationForm #locationDuration').val(loc.duration);
     $('.locationForm #locationAddress').val(loc.address);
     $('.locationForm #locationDesc').val(loc.desc);
+
+    var testId = $('.locationForm #locationId').val();   // ***********TODO remove
+    log.debug('loc ID just set: ' + testId);
 
     centerMapAroundAddressForLocation(loc.name);
 }

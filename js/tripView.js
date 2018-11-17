@@ -70,17 +70,23 @@ function OnSaveTripForm() {
     tripId = parseInt($('.tripForm #tripId').val());
     log.debug('saving trip Id: ' + tripId);
    
-    // update existing trip
-    // update trip data, don't touch locations (saving is done when location data changes)
-  
-    loc.close();
-    trip.open(tripId);
+    // Save and close location form if open 
+    if(loc.opened) { 
+        OnOkLocationsForm();
+    }
+    // loc.close();
+    // trip.open(tripId);
+    
     if (trip.opened) {
         trip.destination = $('.tripForm #destination').val();
         trip.date = $('.tripForm #date').val();
         trip.length = $('.tripForm #length').val();
         trip.duration = $('.tripForm #duration').val();
         trip.description = $('.tripForm #desc').val();
+    }
+    else {
+        log.info('trip not open - no saving');
+        return;
     }
 
     // log.debug(trip);   

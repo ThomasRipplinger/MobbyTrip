@@ -43,12 +43,12 @@ $(document).ready(function () {
     $('.jumbotron #btnCreateNewTrip').click(OnAddTrip);
     $('.jumbotron #btnSettings').click(OnSettings);
     
-    $('.tripForm #btnSave').click(OnSaveTripForm);
+    $('.tripForm #btnSaveTrip').click(OnSaveTripForm);
     $('.tripForm #btnCancel').click(OnCancelTripForm);
     $('.tripForm #btnRoute').click(OnDrawRoute);
     $('.tripForm #destination').blur(OnDestinationEntered);
     
-    $('.locationsContainer #btnOk').click(OnOkLocationsForm);
+    $('.locationsContainer #btnLocationOk').click(OnOkLocationsForm);
     $('.locationsContainer #btnDelete').click(OnDeleteLocation);
     $('.locationsContainer #btnUp').click(OnMoveLocation);
     $('.locationsContainer #btnDown').click(OnMoveLocation);
