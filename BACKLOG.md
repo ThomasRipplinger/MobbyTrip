@@ -76,17 +76,22 @@ BUG: saving location data does not work, modify location data does not work
 BUG: delete location does not work
 BUG: saving location does not work with "trip save"
 BUG: location änderen auf '' nicht abgefangen
-## ----- DONE ------
 Fix Protractor test script
 Closing locations form - no soft scroll behaviour
-## -----------------
-
+## ----- DONE ------
+use carousel for locations (center mode, vertical?) http://kenwheeler.github.io/slick/
 use strict
+complete Protractor tests with corner cases (modify location name, reorder location, delete location)
+BUG: moving location order does not work
+BUG: route calculation does not work
+
 refactor / remove "filltripformwithdata"
 refactor: const vs. let vs. var
 bug: reset der map overview bei neuem trip geht nicht
 Location Card: Strecke => berechnete Werte anzeigen 
+
 ## ----- nice to have ----
+Display info message if adress could not be resolved
 Locations und Gesamtübersicht gleichzeitig anzeigbar machen => vertikal anordnen, map rechts daneben
 test w/o internet (Funktion auch offline sicherstellen)
 OnLocationMarkerPositionChanged: get adress of new marker position
@@ -119,8 +124,8 @@ triplogbook.online / Reisebuch.online / travellog.online / reisescript.online   
 Webseite muss laufen ohne Fehler
 Öffentlich erreichbar (domain)
 Sharing via export/import von trips
-tbd: einzelne Locations sharen bzw. in anderen Trip reinmergen
 ### MVP 0.2 ---
+tbd: einzelne Locations sharen bzw. in anderen Trip reinmergen
 Zentrale Speicherung 
 - geht das ohne Login-System (Missbrauch, wer darf löschen etc.)? 
 - vorhandene Logins mitnutzen (google, fb... => sieht unsicher aus)

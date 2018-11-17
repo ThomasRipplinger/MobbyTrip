@@ -59,6 +59,7 @@ function OnViewTrip() {
 }
 
 function OnSaveTripForm() {
+    event.preventDefault(); // supress page reload
     log.info('saving trip data');
     var tripId;
 
@@ -74,8 +75,6 @@ function OnSaveTripForm() {
     if(loc.opened) { 
         OnOkLocationsForm();
     }
-    // loc.close();
-    // trip.open(tripId);
     
     if (trip.opened) {
         trip.destination = $('.tripForm #destination').val();
@@ -97,9 +96,12 @@ function OnSaveTripForm() {
     clearTripForm();    // clear for next time
     displayTripTiles();
     locationScrolled = false;
+    scrollIntoView('.jumbotron');
+
 }
 
 function OnCancelTripForm() {
+    event.preventDefault(); // supress page reload
     log.info('cancel trip form...');
     var isNewTrip = $('.tripForm #isNew').val();
     if(isNewTrip) {
@@ -116,6 +118,7 @@ function OnCancelTripForm() {
     clearTripForm();    // clear for next time
     displayTripTiles();
     locationScrolled = false;
+    scrollIntoView('.jumbotron');
 }
 
 // destination entered - center map around the dest. 
@@ -239,5 +242,6 @@ function toggleNewTripButton() {
 }
 
 function scrollIntoView(elementSelector) {
+    log.info('scrolling into view: ' + elementSelector);
     $('html, body').animate({ scrollTop: $(elementSelector).offset().top } , 1000 );    
 }

@@ -1,4 +1,4 @@
-describe('Protractor trip UI tests', function () {
+describe('Protractor location UI tests', function () {
 
     // let baseURL = 'https://thomasripplinger.github.io/TravelLogBook';
     let baseURL = 'file:///C:/zDev/codecademy/001womoTrips/index.html';
@@ -23,51 +23,6 @@ describe('Protractor trip UI tests', function () {
         expect(element(by.css('.tripForm')).isDisplayed()).toBe(false);
     });
 
-    it('should open TEST-01 trip and set trip properties', function () {
-        browser.waitForAngularEnabled(false);
-        // browser.get('https://thomasripplinger.github.io/TravelLogBook');
-        browser.get(baseURL);
-        expect(browser.getTitle()).toEqual('TravelLogBook');
-
-        browser.sleep(1000);
-        // open trip (*** works only for one trip ***)
-        // element(by.css('.viewtrip')).click();
-        element(by.id('TEST-01')).click();
-        // verify form is open
-        expect(element(by.css('.tripForm')).isDisplayed()).toBe(true);
-        // set duration, etc.
-        element(by.id('date')).sendKeys('date-01');
-        element(by.id('length')).sendKeys('length-01');
-        element(by.id('duration')).sendKeys('duration-01');
-        element(by.id('desc')).sendKeys('desc-01');
-        // save & close trip form
-        element(by.id('btnSaveTrip')).click();
-        // verify form is closed (not visible) 
-        expect(element(by.css('.tripForm')).isDisplayed()).toBe(false);
-    });
-
-    it('should verify TEST-01 trip properties', function () {
-        browser.waitForAngularEnabled(false);
-        // browser.get('https://thomasripplinger.github.io/TravelLogBook');
-        browser.get(baseURL);
-        expect(browser.getTitle()).toEqual('TravelLogBook');
-
-        element(by.id('TEST-01')).click();
-        // verify form is open
-        expect(element(by.css('.tripForm')).isDisplayed()).toBe(true);
-        // check duration, etc.
-        expect(element(by.id('date')).getAttribute('value')).toEqual('date-01');
-        expect(element(by.id('length')).getAttribute('value')).toEqual('length-01');
-        expect(element(by.id('duration')).getAttribute('value')).toEqual('duration-01');
-        expect(element(by.id('desc')).getAttribute('value')).toEqual('desc-01');
-        // wait - display form with test data.....
-        browser.sleep(1000);
-        // close form
-        element(by.id('btnCancel')).click();
-        // verify form is closed (not visible) 
-        expect(element(by.css('.tripForm')).isDisplayed()).toBe(false);
-    });
-
     it('should add a location to TEST-01 trip', function () {
         browser.waitForAngularEnabled(false);
         // browser.get('https://thomasripplinger.github.io/TravelLogBook');
@@ -82,7 +37,6 @@ describe('Protractor trip UI tests', function () {
         browser.wait(function() {  
             return $('#btn-newlocation').isPresent();
          }, 5000);
-         // browser.sleep(2000);  // required - CLARIFY TODO
         element(by.id('btn-newlocation')).click();
 
         browser.wait(function() {  
@@ -122,7 +76,7 @@ describe('Protractor trip UI tests', function () {
         expect(element(by.css('.locationForm')).isDisplayed()).toBe(false);
     });
 
-    it('should verify test-01 location data is correct', function () {
+    it('should verify location properties', function () {
         browser.waitForAngularEnabled(false);
         // browser.get('https://thomasripplinger.github.io/TravelLogBook');
         browser.get(baseURL);
@@ -155,6 +109,53 @@ describe('Protractor trip UI tests', function () {
         
         // close trip form
         $('#btnCancel').click();   
+        // verify trip form is closed (not visible) 
+        expect(element(by.css('.tripForm')).isDisplayed()).toBe(false);
+        // verify location form is closed
+        expect(element(by.css('.locationForm')).isDisplayed()).toBe(false);
+    });
+
+    xit('should rename the location', function () {
+        browser.waitForAngularEnabled(false);
+        // browser.get('https://thomasripplinger.github.io/TravelLogBook');
+        browser.get(baseURL);
+        expect(browser.getTitle()).toEqual('TravelLogBook');
+
+        element(by.id('TEST-01')).click();
+        // verify form is open
+        expect(element(by.css('.tripForm')).isDisplayed()).toBe(true);
+
+        // open location
+        browser.wait(function() {  // ...............wait for location tiles to be displayed
+            return $('.existingLocation').isPresent();
+         }, 5000);
+        $('.existingLocation').click();
+
+        browser.wait(function() {  // .............. wait until location form is open
+            return $('.locationForm').isPresent();
+         }, 5000);
+        // browser.sleep(2000);
+
+        expect(element(by.css('.locationForm')).isDisplayed()).toBe(true);
+        // set location data
+        element(by.id('locationName')).clear();
+        element(by.id('locationName')).sendKeys('locationNEW');
+
+        // wait - display form with test data.....
+        browser.sleep(1000);
+        // save and close location form
+        element(by.id('btnLocationOk')).click(); 
+        browser.sleep(1000);
+        
+        // verify location has been renamed
+        let newLocationName = $('h4').getInnerHtml();  
+        expect(newLocationName).toBe('locationNEW'); 
+
+        // save & close location form
+        browser.wait(function() {  
+            return $('#btnSaveTrip').isPresent();
+         }, 5000);
+        element(by.id('btnSaveTrip')).click();
         // verify trip form is closed (not visible) 
         expect(element(by.css('.tripForm')).isDisplayed()).toBe(false);
         // verify location form is closed

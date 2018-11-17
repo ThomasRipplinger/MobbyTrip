@@ -42,13 +42,14 @@ save trip+location data  (name, id, desc)
 hide location form
 clear location form
 
-### TESTED splitter -------------------------------
 
 # location: add 
 save current location (if visible) 
 clear location form
 add overlay and wait for input, then
    show trip locations form
+
+### TESTED splitter -------------------------------
 
 # location: delete
 remove current location

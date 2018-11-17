@@ -1,10 +1,9 @@
 
 function OnOkLocationsForm() {
+    event.preventDefault(); // supress page reload
     log.info('saving location form');
     saveLocationsForm();
     hideLocationsForm();
-    clearLocationsForm();  // for next time
-    // scrollIntoView('.jumbotron');
 }
 
 function OnNewLocation() {
@@ -27,6 +26,7 @@ function OnNewLocation() {
     }}
 
 function OnDeleteLocation() {
+    event.preventDefault(); // supress page reload
     log.info('delete location...');
 
     var locationId = $('#locationId').val();  
@@ -339,7 +339,13 @@ function hideLocationsForm() {
     log.info('hide location form');
     locationScrolled = false;
     clearLocationsForm();
-    $('.locationForm').fadeOut(1000 );    
+    // toggle only if visible
+    if(($('.locationForm').is(':visible'))) {
+        $('.locationForm').slideToggle(500, 'linear', function () {
+            scrollIntoView('.jumbotron');
+        });
+    }
+    // $('.locationForm').fadeOut(1000 );    
 }
 
 function clearLocationsForm() {
