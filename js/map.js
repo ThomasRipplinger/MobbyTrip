@@ -137,14 +137,11 @@ function OnDrawRoute(event) {
         directionsDisplay = new google.maps.DirectionsRenderer();   // this is a global var. Required for reset before redraw.
     }
     
-    tripId = $('.tripForm #tripId').val();
-    if(tripId !== undefined) {
-        makeRequest(tripId, directionRequest);
+    // tripId = $('.tripForm #tripId').val();
+    makeRequest(trip.id, directionRequest);
+    if(directionRequest.content == null) {
+        return;
     }
-    else {
-        log.error('ERROR: tripId not found');
-    }
-    if(directionRequest == null) return;
 
     directionsDisplay.setMap(null);  // remove existing directions
     directionsDisplay.setMap(MAP);   // bind to map object
@@ -230,20 +227,18 @@ function evaluateDistance(tripId, resultRoutes) {
 
 function makeRequest(tripId, directionRequest) {
     log.info('map: create direction request for trip');
-    
-    var tripIndex = getTripIndexById(tripId);
-    if(tripIndex == undefined) {
+
+    if(!trip.opened) {
         directionRequest.content = null;
-        log.error('ERROR invalid trip id');
+        log.error('ERROR trip not open');
         return;
     }
-    // console.log(trips[tripIndex]);
-    if(trips[tripIndex].locations == undefined) {
+    if(trip.locArray == undefined) {
         directionRequest.content = null;
         log.error('ERROR invalid location array');
         return;
     }
-    var locationCount = trips[tripIndex].locations.length;
+    var locationCount = trip.locArray.length;
     if(locationCount < 2) { // with 2 locations there's origin and destination, otherwise not
         directionRequest.content = null;
         log.info('less than 2 locations - will not return direction request');
@@ -251,8 +246,8 @@ function makeRequest(tripId, directionRequest) {
     }
     // at least 2 locations exist
     directionRequest.content =  {
-        origin: trips[tripIndex].locations[0].name,
-        destination: trips[tripIndex].locations[locationCount-1].name,
+        origin: trip.locArray[0].name,
+        destination: trip.locArray[locationCount-1].name,
         waypoints: [],
         provideRouteAlternatives: false,
         optimizeWaypoints: false,
@@ -260,9 +255,9 @@ function makeRequest(tripId, directionRequest) {
         unitSystem: google.maps.UnitSystem.METRIC
     };    
     // for more than 2 locations: add waypoints
-    for(var i=1; i<trips[tripIndex].locations.length-1; i++) {
+    for(var i=1; i<locationCount-1; i++) {
         var waypointObject = {
-            location: trips[tripIndex].locations[i].name,
+            location: trip.locArray[i].name,
             stopover: true
         }
         directionRequest.content.waypoints.push(waypointObject);

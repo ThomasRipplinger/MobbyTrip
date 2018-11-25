@@ -53,12 +53,6 @@ function OnMoveLocation(event) {
     const directionId = $(this).attr('id');
     log.debug('direction: ' + directionId);  // btnUp or btnDown
 
-    // var locationId = $('#locationId').val();
-    // if(locationId == undefined) {
-    //     log.error('ERROR: cant find location Id');
-    //     return;
-    // }
-
     // verify if at least 2 locations
     const locationCount = loc.locArray.length;
     if(locationCount < 2) return;
@@ -66,16 +60,16 @@ function OnMoveLocation(event) {
     // move upwards
     if(directionId == 'btnUp') {
         // verify if already on first location
-        if(locationIndex == 0) return;
+        if(loc.index == 0) return;
         // swap current with prev. location
-        swapLocations(locationIndex, locationIndex-1);
+        loc.swap(loc.index, loc.index - 1);
     }
     // move downwards
     if(directionId == 'btnDown') {
         // verify if already on last location
-        if(locationIndex == locationCount-1) return;
+        if(loc.index == locationCount-1) return;
         // swap current with next location
-        swapLocations(locationIndex, locationIndex+1);
+        loc.swap(loc.index, loc.index + 1);
     }
 
     showLocationTiles();
@@ -265,13 +259,16 @@ function addEmptyLocationTile() {
 }
 
 function showLocationTiles() {
+    var openedLocation = null;
     log.info('show location tiles for trip: ' + trip.id);
 
     if(!trip.opened) {
         log.error('ERROR: trip not open, cant show tiles');
         return ERROR;
     }
-
+    if(loc.opened) {
+        openedLocation = loc.id;  // save current ID
+    }
     $('.locationTiles').empty();  // delete all existing locations
 
     // add existing locations for this trip:
@@ -283,6 +280,10 @@ function showLocationTiles() {
             addLocationTile();
             loc.close();
         }
+        // restore last open location
+        if(openedLocation != null) {
+            loc.open(openedLocation);
+        }
     }
     // add handlers
     $('.existingLocation').click(OnViewLocation);
@@ -290,6 +291,19 @@ function showLocationTiles() {
     // button 'add new' at the end:
     addEmptyLocationTile(); 
 
+    // // initialize slick carousel
+    // $('.locationTiles').slick({
+    //     centerMode: true,
+    //     // variableWidth: true,
+    //     // variableHeight: true,
+    //     // vertical: true,
+    //     slidesToShow: 7,
+    //     // responsive: true,
+    //     // focusOnSelect: true,
+    //     initialSlide: 1,
+    //     speed: 250
+    //   });  
+  
     // show location tiles
     if(!($('.locationsContainer').is(':visible'))) {
         $('.locationsContainer').slideToggle(500, 'linear', function () {
@@ -319,10 +333,7 @@ function updateLocationForm() {
     $('.locationForm #locationAddress').val(loc.address);
     $('.locationForm #locationDesc').val(loc.desc);
 
-    var testId = $('.locationForm #locationId').val();   // ***********TODO remove
-    log.debug('loc ID just set: ' + testId);
-
-    centerMapAroundAddressForLocation(loc.name);
+    centerMapAroundAddressForLocation(loc.name);   
 }
 
 function showLocationForm() {

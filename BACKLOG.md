@@ -79,14 +79,15 @@ BUG: location änderen auf '' nicht abgefangen
 Fix Protractor test script
 Closing locations form - no soft scroll behaviour
 ## ----- DONE ------
-use carousel for locations (center mode, vertical?) http://kenwheeler.github.io/slick/
-use strict
-complete Protractor tests with corner cases (modify location name, reorder location, delete location)
+BUG: display location
 BUG: moving location order does not work
 BUG: route calculation does not work
+complete Protractor tests with corner cases (modify location name, reorder location, delete location)
 
+use strict
 refactor / remove "filltripformwithdata"
 refactor: const vs. let vs. var
+use carousel for locations http://kenwheeler.github.io/slick/
 bug: reset der map overview bei neuem trip geht nicht
 Location Card: Strecke => berechnete Werte anzeigen 
 
@@ -116,6 +117,16 @@ convert online map to img and download / link img ?
 - Prio2: Pins mit Route verbinden
 - Prio2: Route mit anderen teilen
 domain: 
+# TravelScripter.com
+# Reiselogger.de
+
+TripScripter.com
+ReiseScript.de
+travelscript.online   (plan & go   // planning made easy)
+travelskript.com  (mit k)
+
+reisescript.de    
+
 reiselog.online / 
 travelscript.online / 
 triplogbook.online / Reisebuch.online / travellog.online / reisescript.online    (mobbyTrip.de / .com)
