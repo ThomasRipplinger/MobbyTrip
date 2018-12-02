@@ -8,7 +8,7 @@ popUpAppender.setWidth(800);
 log.addAppender(popUpAppender);
 
 
-describe("TravelLogBook test suite", function() {
+describe("Jasmine test suite for TRIP class", function() {
 
   // beforeEach(function() {
   // });

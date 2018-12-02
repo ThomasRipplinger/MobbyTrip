@@ -4,6 +4,7 @@ function OnOkLocationsForm() {
     log.info('saving location form');
     saveLocationsForm();
     hideLocationsForm();
+    loc.close();
 }
 
 function OnNewLocation() {
@@ -120,7 +121,7 @@ function OnViewLocation() {
 }
 
 function OnLocationPopupKeydown(event) {
-    log.debug(event.keyCode);
+    // log.debug(event.keyCode);
     if(event.keyCode===13) {     // Enter
         OnLocationPopupEntered();
     }
@@ -380,6 +381,12 @@ function saveLocationsForm() {
         return ERROR;
     }
     
+    // check if valid id present
+    if (parseInt($('.locationForm #locationId').val()) == NaN) {
+        log.error('Error saving location form - no valid id');
+        return;
+    }
+
     // prepare object with form data
     var locationObj = {
         id: parseInt($('.locationForm #locationId').val()),

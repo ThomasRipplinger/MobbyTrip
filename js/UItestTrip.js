@@ -5,7 +5,8 @@ describe('Protractor trip UI tests', function () {
 
 
     it('should create new trip TEST-01', function () {
-        
+        debugger;
+
         browser.waitForAngularEnabled(false);
         browser.get(baseURL);
         expect(browser.getTitle()).toEqual('TravelLogBook');
@@ -17,10 +18,9 @@ describe('Protractor trip UI tests', function () {
         expect(element(by.css('.tripForm')).isDisplayed()).toBe(true);
         // create trip TEST-01 and save
         element(by.id('destination')).sendKeys('TEST-01');
-        browser.sleep(2000);
+        browser.sleep(1000);
         element(by.id('btnSaveTrip')).click();
         // verify form is closed (not visible) 
-        browser.sleep(2000);
         expect(element(by.css('.tripForm')).isDisplayed()).toBe(false);
     });
 
@@ -29,10 +29,9 @@ describe('Protractor trip UI tests', function () {
         browser.get(baseURL);
         expect(browser.getTitle()).toEqual('TravelLogBook');
 
-        browser.sleep(2000);
+        browser.sleep(1000);
         element(by.id('TEST-01')).click();
         // verify form is open
-        browser.sleep(2000);
         expect(element(by.css('.tripForm')).isDisplayed()).toBe(true);
         // set duration, etc.
         element(by.id('date')).sendKeys('date-01');
@@ -42,7 +41,6 @@ describe('Protractor trip UI tests', function () {
         // save & close trip form
         element(by.id('btnSaveTrip')).click();
         // verify form is closed (not visible) 
-        browser.sleep(2000);
         expect(element(by.css('.tripForm')).isDisplayed()).toBe(false);
     });
 
@@ -54,7 +52,6 @@ describe('Protractor trip UI tests', function () {
 
         element(by.id('TEST-01')).click();
         // verify form is open
-        browser.sleep(2000);
         expect(element(by.css('.tripForm')).isDisplayed()).toBe(true);
         // check duration, etc.
         expect(element(by.id('date')).getAttribute('value')).toEqual('date-01');
@@ -66,7 +63,6 @@ describe('Protractor trip UI tests', function () {
         // close form
         element(by.id('btnCancel')).click();
         // verify form is closed (not visible) 
-        browser.sleep(2000);
         expect(element(by.css('.tripForm')).isDisplayed()).toBe(false);
     });
 
@@ -94,7 +90,6 @@ describe('Protractor trip UI tests', function () {
         // save & close trip form
         element(by.id('btnSaveTrip')).click();
         // verify form is closed (not visible) 
-        browser.sleep(2000);
         expect(element(by.css('.tripForm')).isDisplayed()).toBe(false);
         // verify TRIP-02 tile exists
         expect(element(by.id('TEST-02')).isPresent()).toBe(true);

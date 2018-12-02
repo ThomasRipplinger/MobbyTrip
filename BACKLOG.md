@@ -78,18 +78,22 @@ BUG: saving location does not work with "trip save"
 BUG: location änderen auf '' nicht abgefangen
 Fix Protractor test script
 Closing locations form - no soft scroll behaviour
+BUG: save new location does not work
 ## ----- DONE ------
-BUG: display location
 BUG: moving location order does not work
 BUG: route calculation does not work
+create new location: Ort als Pin anzeigen in der Trip Übersicht
+bug: reset der map overview bei neuem trip geht nicht
+Location Card: Strecke => berechnete Werte anzeigen 
+
+Remove all wait(...) from Protractor tests 
 complete Protractor tests with corner cases (modify location name, reorder location, delete location)
+set up build and deploy pipleline => publish after tests are OK
 
 use strict
 refactor / remove "filltripformwithdata"
 refactor: const vs. let vs. var
 use carousel for locations http://kenwheeler.github.io/slick/
-bug: reset der map overview bei neuem trip geht nicht
-Location Card: Strecke => berechnete Werte anzeigen 
 
 ## ----- nice to have ----
 Display info message if adress could not be resolved
@@ -97,7 +101,6 @@ Locations und Gesamtübersicht gleichzeitig anzeigbar machen => vertikal anordne
 test w/o internet (Funktion auch offline sicherstellen)
 OnLocationMarkerPositionChanged: get adress of new marker position
 OnTripMarkerPositionChanged: ...?
-create new location: Ort als Pin anzeigen in der Trip Übersicht
 getLocationIndexById: remove tripIndex (make locationId unique)
 save photos via drag/drop, see https://www.html5rocks.com/en/tutorials/file/dndfiles/
 local backup (?) see https://www.jotform.com/blog/html5-filesystem-api-create-files-store-locally-using-javascript-webkit/ 

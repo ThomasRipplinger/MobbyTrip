@@ -61,5 +61,5 @@ clear location form
 
 ## ----------------------------------
 Start Selenium: Terminal => webdriver-manager start   (ggf vorher webdriver-manager update)
-Start Tests:    Terminal => protractor spec.js   (in ../protractor)
+Start Tests:    Terminal => protractor conf.js   (in ../protractor)
 da keine Angular app:       browser.waitForAngularEnabled(false);
